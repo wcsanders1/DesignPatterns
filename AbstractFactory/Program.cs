@@ -46,7 +46,7 @@ namespace SimpleFactory
 
                 Console.WriteLine("Choose which sort method you want to use (these methods are listed in order of slowest to fastest:");
                 Console.WriteLine("1: Selection Sort");
-                Console.WriteLine("2: Intertion Sort");
+                Console.WriteLine("2: Insertion Sort");
                 Console.WriteLine("3: Shell Sort");
                 Console.WriteLine("4: Top Down Merge Sort\n");
 

@@ -2,9 +2,9 @@
 {
     public enum Sorters
     {
-        SelectionSorter = 1,
-        InsertionSorter = 2,
-        ShellSorter = 3,
-        TopDownMergeSorter = 4
+        SelectionSort = 1,
+        InsertionSort = 2,
+        ShellSort = 3,
+        TopDownMergeSort = 4
     }
 }
