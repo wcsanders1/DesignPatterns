@@ -4,6 +4,8 @@ namespace SimpleFactory
 {
     public class TopDownMergeSorter<T> : AbstractSorter<T> where T : IComparable
     {
+        public override string Name { get; } = "Top Down Merge Sorter";
+
         private T[] Aux { get; set; }
 
         public override void Sort(T[] a)

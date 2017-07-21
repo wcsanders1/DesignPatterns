@@ -4,6 +4,8 @@ namespace SimpleFactory
 {
     abstract public class AbstractSorter<T> : ISorter where T : IComparable
     {
+        public abstract string Name { get; }
+
         public virtual void Sort(T[] a)
         {
             Console.WriteLine("This sort method doesn't actually do anything except print this line out to the screen.\n");

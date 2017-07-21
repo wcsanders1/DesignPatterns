@@ -4,6 +4,8 @@ namespace SimpleFactory
 {
     public class InsertionSorter<T> : AbstractSorter<T> where T : IComparable
     {
+        public override string Name { get; } = "Insertion Sorter";
+
         public override void Sort(T[] a)
         {
             int n = a.Length;
