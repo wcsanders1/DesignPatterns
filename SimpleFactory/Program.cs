@@ -12,6 +12,10 @@ namespace SimpleFactory
             var keepLooping = true;
             var stopWatch = new Stopwatch();
 
+            Console.WriteLine("**********************************************************************************************************");
+            Console.WriteLine("                  WELCOME TO THE SORT PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
+            Console.WriteLine("**********************************************************************************************************\n");
+
             while (keepLooping)
             {
                 var array = GetArrayToSort();
@@ -58,11 +62,17 @@ namespace SimpleFactory
 
         static private int[] GetArrayToSort()
         {
-            Console.WriteLine("Enter the amount of numbers you want to sort.\n");
+            Console.WriteLine($"Enter the amount of numbers you want to sort. The number must be less than {Int32.MaxValue.ToString("N0")}.\n");
 
             if (!Int32.TryParse(Console.ReadLine(), out var arraySize))
             {
-                Console.WriteLine("That's not a valid number. I guess we'll try this again.\n");
+                Console.WriteLine("That's not valid input. I guess we'll try this again.\n");
+                return null;
+            }
+
+            if (arraySize < 2)
+            {
+                Console.WriteLine("Come on, how can a collection with less than one element be sorted? Let's try this again.\n");
                 return null;
             }
 
@@ -116,7 +126,18 @@ namespace SimpleFactory
             var sorterFactory = new SorterFactory<int>();
             var sortMethod = (Sorters)sortChosen;
 
-            return sorterFactory.CreateInstance(sortMethod);
+            AbstractSorter<int> sorter;
+            try
+            {
+                sorter = sorterFactory.CreateInstance(sortMethod);
+            }
+            catch
+            {
+                Console.WriteLine("Unable to get the kind of sort method you wanted, so I guess we'll try this again.\n");
+                return null;
+            }
+
+            return sorter;
         }
 
         static TimeSpan SortArray(int[] array, AbstractSorter<int> sorter, Stopwatch stopWatch)
