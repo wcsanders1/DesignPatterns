@@ -6,8 +6,20 @@ using System.Threading.Tasks;
 
 namespace Builder
 {
-    public class CharacterBuilder
+    public abstract class CharacterBuilder
     {
-        Character character;
+        protected Character character;
+
+        public Character GetCharacter()
+        {
+            return character;
+        }
+
+        public void CreateNewCharacter()
+        {
+            character = new Character();
+        }
+
+
     }
 }

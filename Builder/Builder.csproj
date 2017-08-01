@@ -44,6 +44,8 @@
   <ItemGroup>
     <Compile Include="Character.cs" />
     <Compile Include="CharacterBuilder.cs" />
+    <Compile Include="CharacterMaker.cs" />
+    <Compile Include="Personality.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
