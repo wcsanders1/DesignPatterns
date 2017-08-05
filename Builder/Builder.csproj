@@ -42,6 +42,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CharacterBuilders\Characters.cs" />
+    <Compile Include="CharacterBuilders\ComplacentCharacterBuilder.cs" />
+    <Compile Include="CharacterBuilders\RealisticCharacterBuilder.cs" />
+    <Compile Include="CharacterBuilders\StrivingCharacterBuilder.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="CharacterBuilders\AbstractCharacterBuilder.cs" />
     <Compile Include="CharacterMaker.cs" />
