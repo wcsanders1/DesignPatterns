@@ -10,6 +10,8 @@ namespace Builder
     {
         static void Main(string[] args)
         {
+            var x = new EccentricCharacterBuilder();
+            var character = x.GetCharacter();
         }
     }
 }

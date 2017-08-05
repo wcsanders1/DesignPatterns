@@ -1,28 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Builder
+﻿namespace Builder
 {
     public class CharacterMaker
     {
-        private readonly CharacterBuilder _builder;
+        private readonly AbstractCharacterBuilder _builder;
 
-        public CharacterMaker(CharacterBuilder builder)
+        public CharacterMaker(AbstractCharacterBuilder builder)
         {
             _builder = builder;
         }
 
-        public void BuildCharacter()
-        {
-
-        }
-
         public Character GetCharacter()
         {
+            BuildCharacter();
             return _builder.GetCharacter();
+        }
+
+        private void BuildCharacter()
+        {
+            _builder.DetermineMaterialSuccess();
+            _builder.DetermineSocialSuccess();
+            _builder.DetermineSpiritualSuccess();
         }
     }
 }

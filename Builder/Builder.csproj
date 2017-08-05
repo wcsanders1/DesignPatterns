@@ -42,12 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
-    <Compile Include="CharacterBuilder.cs" />
+    <Compile Include="Models\Character.cs" />
+    <Compile Include="CharacterBuilders\AbstractCharacterBuilder.cs" />
     <Compile Include="CharacterMaker.cs" />
-    <Compile Include="Personality.cs" />
+    <Compile Include="CharacterBuilders\EccentricCharacterBuilder.cs" />
+    <Compile Include="Models\Education.cs" />
+    <Compile Include="Models\Hobbies.cs" />
+    <Compile Include="Models\Personality.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Models\Religion.cs" />
+    <Compile Include="Models\Sociability.cs" />
+    <Compile Include="Models\WorkEthic.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
