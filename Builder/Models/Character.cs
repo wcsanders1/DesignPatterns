@@ -2,6 +2,7 @@
 {
     public class Character
     {
+        public string Name { get; set; }
         public Personality Personality { get; set; }
         public WorkEthic WorkEthic { get; set; }
         public Sociability Sociability { get; set; }

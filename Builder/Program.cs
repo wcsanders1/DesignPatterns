@@ -1,9 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
+using System.Text.RegularExpressions;
 
 namespace Builder
 {
@@ -12,6 +10,7 @@ namespace Builder
         static void Main(string[] args)
         {
             var keepLooping = true;
+            const string invalidChoiceMessage = "\nThat isn't a number of one of the characters, which is what you were asked to provide, so let's try this again.\n";
 
             Console.WriteLine("**********************************************************************************************************");
             Console.WriteLine("                  WELCOME TO THE CHARACTER BUILDER PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
@@ -19,10 +18,29 @@ namespace Builder
 
             while (keepLooping)
             {
-                Console.WriteLine("Enter the number of the character that you want to build.");
+                Console.WriteLine("Enter the number of the character that you want to build.\n");
 
                 var (characterBuilders, characterNames) = GetCharacterBuildersAndNames();
                 PrintCharacters(characterNames);
+
+                var choiceString = Console.ReadLine();
+
+                if (!Int32.TryParse(choiceString, out var choice))
+                {
+                    Console.WriteLine($"{invalidChoiceMessage}");
+                    continue;
+                }
+
+                if (!characterBuilders.TryGetValue(choice, out var builder))
+                {
+                    Console.WriteLine($"{invalidChoiceMessage}");
+                    continue;
+                }
+
+                var characterBuilder = (AbstractCharacterBuilder)Activator.CreateInstance(builder);
+                var character = CharacterMaker.GetCharacter(characterBuilder);
+
+                DescribeCharacter(character);
 
                 keepLooping = KeepGoing();
             }            
@@ -36,6 +54,7 @@ namespace Builder
                 Console.WriteLine($"{key}. {name}");
                 key++;
             }
+            Console.WriteLine();
         }
 
         static (Dictionary<int, Type>, List<string>) GetCharacterBuildersAndNames()
@@ -50,7 +69,8 @@ namespace Builder
             characters.ForEach(character =>
             {
                 var nameArray = character.ToString().Split('.');
-                var name = nameArray[nameArray.Length - 1];
+                var nameString = nameArray[nameArray.Length - 1];
+                var name = GetFirstWordInPascalCase(nameString);
                 characterNames.Add(name);
             });
 
@@ -59,7 +79,10 @@ namespace Builder
             var key = 1;
             characterNames.ForEach(name =>
             {
-                var builder = characters.Where(x => x.ToString().Contains(name)).FirstOrDefault();
+                var builder = characters
+                    .Where(x => x.ToString().Contains(name))
+                    .FirstOrDefault();
+
                 characterBuilders.Add(key, builder);
                 key++;
             });
@@ -67,9 +90,34 @@ namespace Builder
             return (characterBuilders, characterNames);
         }
 
+        static string GetFirstWordInPascalCase(string s)
+        {
+            var name = Regex.Replace(s, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ")
+                .Split(' ');
+
+            return name[0];
+        }
+
+        static void DescribeCharacter(Character character)
+        {
+            string article;
+            if ("aeiou".IndexOf(character.Name[0].ToString(), StringComparison.InvariantCultureIgnoreCase) >= 0)
+            {
+                article = "an";
+            }
+            else
+            {
+                article = "a";
+            }
+
+            Console.WriteLine($"\nYou chose to build {article} {character.Name} character.\n");
+        }
+
         static bool KeepGoing()
         {
-            Console.WriteLine("Press 1 if you want to build another character, or press anything else ");
+            Console.WriteLine("\nPress 1 if you want to build another character, or press anything else to exit this program\n" +
+                                "and do something else with the time you have here on this earth.\n");
+
             var result = Console.ReadLine();
 
             if (result == "1")

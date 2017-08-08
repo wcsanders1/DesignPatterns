@@ -22,5 +22,10 @@
             character.Hobbies  = Hobbies.Boating | Hobbies.Golf;
             character.IsWise   = false;
         }
+
+        public override void SetName()
+        {
+            character.Name = "Complacent";
+        }
     }
 }

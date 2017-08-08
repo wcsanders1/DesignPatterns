@@ -1,25 +1,14 @@
 ﻿namespace Builder
 {
-    public class CharacterMaker
+    public static class CharacterMaker
     {
-        private readonly AbstractCharacterBuilder _builder;
-
-        public CharacterMaker(AbstractCharacterBuilder builder)
+        public static Character GetCharacter(AbstractCharacterBuilder builder)
         {
-            _builder = builder;
-        }
-
-        public Character GetCharacter()
-        {
-            BuildCharacter();
-            return _builder.GetCharacter();
-        }
-
-        private void BuildCharacter()
-        {
-            _builder.DetermineMaterialSuccess();
-            _builder.DetermineSocialSuccess();
-            _builder.DetermineSpiritualSuccess();
+            builder.SetName();
+            builder.DetermineMaterialSuccess();
+            builder.DetermineSocialSuccess();
+            builder.DetermineSpiritualSuccess();
+            return builder.GetCharacter();
         }
     }
 }

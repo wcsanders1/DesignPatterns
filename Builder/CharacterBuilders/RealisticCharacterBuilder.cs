@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Builder.CharacterBuilders
+﻿namespace Builder.CharacterBuilders
 {
     class RealisticCharacterBuilder : AbstractCharacterBuilder
     {
@@ -23,6 +21,11 @@ namespace Builder.CharacterBuilders
             character.Religion = Religion.Catholic | Religion.MedicineMan;
             character.Hobbies  = Hobbies.Golf | Hobbies.Boating;
             character.IsWise   = false;
+        }
+
+        public override void SetName()
+        {
+            character.Name = "Realistic";
         }
     }
 }

@@ -22,5 +22,10 @@
             character.Hobbies = Hobbies.Astronomics | Hobbies.Blasting;
             character.IsWise = false;
         }
+
+        public override void SetName()
+        {
+            character.Name = "Eccentric";
+        }
     }
 }

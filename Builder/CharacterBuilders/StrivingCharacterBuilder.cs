@@ -22,5 +22,10 @@
             character.Hobbies  = Hobbies.Golf;
             character.IsWise   = true;
         }
+
+        public override void SetName()
+        {
+            character.Name = "Striving";
+        }
     }
 }
