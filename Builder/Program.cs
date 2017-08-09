@@ -70,7 +70,7 @@ namespace Builder
             {
                 var nameArray = character.ToString().Split('.');
                 var nameString = nameArray[nameArray.Length - 1];
-                var name = GetFirstWordInPascalCase(nameString);
+                var name = PascalToStringArray(nameString)[0];
                 characterNames.Add(name);
             });
 
@@ -90,12 +90,10 @@ namespace Builder
             return (characterBuilders, characterNames);
         }
 
-        static string GetFirstWordInPascalCase(string s)
+        static string[] PascalToStringArray(string s)
         {
-            var name = Regex.Replace(s, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ")
+            return Regex.Replace(s, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ")
                 .Split(' ');
-
-            return name[0];
         }
 
         static void DescribeCharacter(Character character)
@@ -111,6 +109,26 @@ namespace Builder
             }
 
             Console.WriteLine($"\nYou chose to build {article} {character.Name} character.\n");
+
+            character.GetType().GetProperties().ToList().ForEach(prop =>
+            {
+                string toBe;
+                if (prop.PropertyType == typeof(bool))
+                {
+                    if ((bool)prop.GetValue(character))
+                    {
+                        toBe = "is";
+                    }
+                    else
+                    {
+                        toBe = "is not";
+                    }
+
+                    var stringArray = PascalToStringArray(prop.Name);
+                    Console.WriteLine($"This person {toBe} {stringArray[1]}.");
+                }
+            });
+
         }
 
         static bool KeepGoing()
