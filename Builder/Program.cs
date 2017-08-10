@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Builder
@@ -90,10 +91,20 @@ namespace Builder
             return (characterBuilders, characterNames);
         }
 
+        static string CleanString(string s)
+        {
+            return Regex.Replace(s, @"\s+", "");
+        }
+
+        static string PascalToString(string s)
+        {
+            var cleanedString = CleanString(s);
+            return Regex.Replace(cleanedString, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
+        }
+
         static string[] PascalToStringArray(string s)
         {
-            return Regex.Replace(s, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ")
-                .Split(' ');
+            return PascalToString(s).Split(' ');
         }
 
         static void DescribeCharacter(Character character)
@@ -110,8 +121,14 @@ namespace Builder
 
             Console.WriteLine($"\nYou chose to build {article} {character.Name} character.\n");
 
-            character.GetType().GetProperties().ToList().ForEach(prop =>
+            foreach (var prop in character.GetType().GetProperties())
             {
+                if (prop.Name == "Name")
+                {
+
+                    continue;
+                }
+
                 string toBe;
                 if (prop.PropertyType == typeof(bool))
                 {
@@ -126,9 +143,42 @@ namespace Builder
 
                     var stringArray = PascalToStringArray(prop.Name);
                     Console.WriteLine($"This person {toBe} {stringArray[1]}.");
+                    continue;
                 }
-            });
 
+                var propValueArray = prop.GetValue(character, null).ToString().Split(',');
+                var propValueString = GetFormattedString(propValueArray);
+
+                Console.WriteLine($"This person's {PascalToString(prop.Name)} status consists of {propValueString}.");
+            }
+        }
+
+        static string GetFormattedString(string[] stringArray)
+        {
+            if (stringArray.Length <= 1)
+            {
+                return PascalToString(stringArray[0]);
+            }
+
+            if (stringArray.Length == 2)
+            {
+                return $"{PascalToString(stringArray[0])} and {PascalToString(stringArray[1])}";
+            }
+
+            var result = new StringBuilder();
+            for (int i = 0; i < stringArray.Length; i++)
+            {
+                if (i == stringArray.Length - 1)
+                {
+                    result.Append($"and {PascalToString(stringArray[i])}");
+
+                    return result.ToString();
+                }
+
+                result.Append($"{PascalToString(stringArray[i])}, ");
+            }
+
+            return result.ToString();
         }
 
         static bool KeepGoing()

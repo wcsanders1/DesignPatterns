@@ -46,6 +46,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CharacterBuilders\ComplacentCharacterBuilder.cs" />
+    <Compile Include="CharacterBuilders\OddCharacterBuilder.cs" />
     <Compile Include="CharacterBuilders\RealisticCharacterBuilder.cs" />
     <Compile Include="CharacterBuilders\StrivingCharacterBuilder.cs" />
     <Compile Include="Models\Character.cs" />
@@ -53,7 +54,7 @@
     <Compile Include="CharacterMaker.cs" />
     <Compile Include="CharacterBuilders\EccentricCharacterBuilder.cs" />
     <Compile Include="Models\Education.cs" />
-    <Compile Include="Models\Hobbies.cs" />
+    <Compile Include="Models\Hobby.cs" />
     <Compile Include="Models\Personality.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

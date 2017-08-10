@@ -19,7 +19,7 @@
         public override void DetermineSpiritualSuccess()
         {
             character.Religion = Religion.Buddhist | Religion.Catholic;
-            character.Hobbies  = Hobbies.Golf;
+            character.Hobby  = Hobby.Golf;
             character.IsWise   = true;
         }
 

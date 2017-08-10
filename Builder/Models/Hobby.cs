@@ -3,7 +3,7 @@
 namespace Builder
 {
     [Flags]
-    public enum Hobbies
+    public enum Hobby
     {
         Golf        = 0b00000001,
         Boating     = 0b00000010,
