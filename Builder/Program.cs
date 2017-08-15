@@ -8,7 +8,7 @@ namespace Builder
 {
     class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             var keepLooping = true;
             const string invalidChoiceMessage = "\nThat isn't a number of one of the characters, which is what you were asked to provide, so let's try this again.\n";

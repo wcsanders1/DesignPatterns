@@ -6,7 +6,7 @@ namespace SimpleFactory
 {
     public class Program
     {
-        static void Main(string[] args)
+        static void Main()
         {
             const int MAX_ELEMENTS_TO_PRINT = 1000;
             var keepLooping = true;
