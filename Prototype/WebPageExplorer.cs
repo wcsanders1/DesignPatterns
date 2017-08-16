@@ -14,7 +14,7 @@ namespace Prototype
         public WebPageExplorer(string url)
         {
             Client = new HttpClient();
-            Url    = url;
+            Url    = $"http://www.{url}";
         }
 
         public async Task<(HttpResponseMessage, ErrorMessage)> GetInformationAsync()

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Prototype
 {
@@ -6,23 +7,75 @@ namespace Prototype
     {
         static void Main()
         {
-            Console.WriteLine("Enter the url of the website you'd like information about");
-            var url = Console.ReadLine();
+            var keepLooping = true;
+            const string invalidChoiceMessage = "\nThat's not a valid choice, so I guess we'll try this again.\n";
 
-            var explorer = new WebPageExplorer(url);
-            var (info, error) = explorer.GetInformationAsync().Result;
+            Console.WriteLine("**********************************************************************************************************");
+            Console.WriteLine("                  WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
+            Console.WriteLine("**********************************************************************************************************\n");
 
-            if (error != null)
+            while (keepLooping)
             {
-                Console.WriteLine($"{error.Message}");
-                Console.WriteLine($"{error.Exception.Message}");
+                Console.WriteLine("Enter the number of one of the classic websites below to get information about that site!");
+                var urls = GetUrls();
+
+                for (int i = 0; i < urls.Count; i++)
+                {
+                    Console.WriteLine($"{i + 1}. {urls[i]}");
+                }
+
+                Console.WriteLine();
+
+                var choiceString = Console.ReadLine();
+                if (!Int32.TryParse(choiceString, out var choice))
+                {
+                    Console.WriteLine($"{invalidChoiceMessage}");
+                    continue;
+                }
+
+                var url = urls[choice - 1];
+
+                var explorer = new WebPageExplorer(url);
+                var (info, error) = explorer.GetInformationAsync().Result;
+
+                if (error != null)
+                {
+                    Console.WriteLine($"{error.Message}");
+                    Console.WriteLine($"{error.Exception.Message}");
+                }
+                else
+                {
+                    Console.WriteLine($"The version number of {url} is {info.Version.ToString()}. Neat!\n");
+                }
+
+                keepLooping = KeepGoing();
             }
-            else
+        }
+
+        static List<string> GetUrls()
+        {
+            return new List<string>
             {
-                Console.WriteLine($"{info.Content.ToString()}");
+                "exotic-recipes.com",
+                "keithsandersmusic.com",
+                "williamsandersdev.com",
+                "golfbagonline.com"
+            };
+        }
+
+        static bool KeepGoing()
+        {
+            Console.WriteLine("\nPress 1 if you want to do this again, or press anything else to exit this program\n" +
+                                "and do something else I guess.\n");
+
+            var result = Console.ReadLine();
+
+            if (result == "1")
+            {
+                return true;
             }
 
-            Console.ReadKey();
+            return false;
         }
     }
 }
