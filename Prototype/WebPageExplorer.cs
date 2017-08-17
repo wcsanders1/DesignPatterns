@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Prototype
 {
-    public class WebPageExplorer
+    public class WebPageExplorer : ICloneable
     {
         private HttpClient Client { get; }
         private string Url { get; }
@@ -35,6 +35,11 @@ namespace Prototype
             }
 
             return (response, null);
+        }
+
+        public object Clone()
+        {
+            return MemberwiseClone();
         }
     }
 }
