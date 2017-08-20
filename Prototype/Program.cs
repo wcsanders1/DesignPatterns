@@ -7,9 +7,10 @@ namespace Prototype
     {
         static void Main()
         {
+            var urls = GetUrls();
+            var explorers = GetExplorers(urls);
             var keepLooping = true;
             const string invalidChoiceMessage = "\nThat's not a valid choice, so I guess we'll try this again.\n";
-            var explorer = new WebPageExplorer(string.Empty);
 
             Console.WriteLine("**********************************************************************************************************");
             Console.WriteLine("                  WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
@@ -18,7 +19,6 @@ namespace Prototype
             while (keepLooping)
             {
                 Console.WriteLine("Enter the number of one of the classic websites below to get information about that site!");
-                var urls = GetUrls();
 
                 for (int i = 0; i < urls.Count; i++)
                 {
@@ -34,20 +34,18 @@ namespace Prototype
                     continue;
                 }
 
-                string url;
+                WebPageExplorer explorer;
                 try
                 {
-                    url = urls[choice - 1];
+                    explorer = explorers[choice];
                 }
                 catch
                 {
                     Console.WriteLine(invalidChoiceMessage);
                     continue;
                 }
-              
-                var clonedExplorer = explorer.Clone(url);
                 
-                var (info, error) = clonedExplorer.GetInformationAsync().Result;
+                var (info, error) = explorer.GetInformationAsync().Result;
 
                 if (error != null)
                 {
@@ -56,7 +54,7 @@ namespace Prototype
                 }
                 else
                 {
-                    Console.WriteLine($"The version number of {url} is {info.Version.ToString()}. Neat!\n");
+                    Console.WriteLine($"The version number of {explorer.CurrentUrl} is {info.Version.ToString()}. Neat!\n");
                 }
 
                 keepLooping = KeepGoing();
@@ -72,6 +70,18 @@ namespace Prototype
                 "williamsandersdev.com",
                 "golfbagonline.com"
             };
+        }
+
+        static List<WebPageExplorer> GetExplorers(List<string> urls)
+        {
+            var explorer = new WebPageExplorer(string.Empty);
+            var explorers = new List<WebPageExplorer>();
+            urls.ForEach(url =>
+            {
+                explorers.Add(explorer.Clone(url));
+            });
+
+            return explorers;
         }
 
         static bool KeepGoing()

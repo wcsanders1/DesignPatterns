@@ -24,6 +24,14 @@ namespace Prototype
             }
         }
 
+        public string CurrentUrl
+        {
+            get
+            {
+                return _url;
+            }
+        }
+
         public WebPageExplorer(string url)
         {
             Client = new HttpClient();
