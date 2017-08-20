@@ -13,4 +13,4 @@ Choose a character from among several interesting options, and the program will 
 
 ### Prototype
 
-This is a simple implementation of the prototype pattern. 
+This is a simple implementation of the prototype pattern. Choose a website from among a list of several classic sites, and the `WebPageExplorer` class, which implements .NET `HttpClient`, will return interesting information about that site! The client operates by creating a list of instances of `WebPageExplorer` by cloning an initial instance rather than constructing new instances.
