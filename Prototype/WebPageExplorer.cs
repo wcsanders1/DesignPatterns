@@ -6,15 +6,27 @@ using System.Threading.Tasks;
 
 namespace Prototype
 {
-    public class WebPageExplorer : ICloneable
+    public class WebPageExplorer
     {
+        private string _url;
+
         private HttpClient Client { get; }
-        private string Url { get; }
+        private string Url
+        {
+            get
+            {
+                return _url;
+            }
+            
+            set
+            {
+                _url = $"http://www.{value}";
+            }
+        }
 
         public WebPageExplorer(string url)
         {
             Client = new HttpClient();
-            Url    = $"http://www.{url}";
         }
 
         public async Task<(HttpResponseMessage, ErrorMessage)> GetInformationAsync()
@@ -37,9 +49,12 @@ namespace Prototype
             return (response, null);
         }
 
-        public object Clone()
+        public WebPageExplorer Clone(string url)
         {
-            return MemberwiseClone();
+            var clone = MemberwiseClone() as WebPageExplorer;
+            clone.Url = url;
+
+            return clone;
         }
     }
 }

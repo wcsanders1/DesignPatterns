@@ -9,6 +9,7 @@ namespace Prototype
         {
             var keepLooping = true;
             const string invalidChoiceMessage = "\nThat's not a valid choice, so I guess we'll try this again.\n";
+            var explorer = new WebPageExplorer(string.Empty);
 
             Console.WriteLine("**********************************************************************************************************");
             Console.WriteLine("                  WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
@@ -33,10 +34,20 @@ namespace Prototype
                     continue;
                 }
 
-                var url = urls[choice - 1];
-
-                var explorer = new WebPageExplorer(url);
-                var (info, error) = explorer.GetInformationAsync().Result;
+                string url;
+                try
+                {
+                    url = urls[choice - 1];
+                }
+                catch
+                {
+                    Console.WriteLine(invalidChoiceMessage);
+                    continue;
+                }
+              
+                var clonedExplorer = explorer.Clone(url);
+                
+                var (info, error) = clonedExplorer.GetInformationAsync().Result;
 
                 if (error != null)
                 {
