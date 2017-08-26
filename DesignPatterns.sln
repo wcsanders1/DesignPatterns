@@ -11,6 +11,10 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype", "Prototype\Prot
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singleton", "Singleton\Singleton.csproj", "{FEF95FA9-24DC-404B-A8C3-5AF96E6CEBCE}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7B07CE54-DDB2-41A3-844E-A28174D6DB52}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactoryTests", "SimpleFactoryTests\SimpleFactoryTests.csproj", "{F256C6C2-2F52-4668-BD21-994988FFF3FD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,9 +37,16 @@ Global
 		{FEF95FA9-24DC-404B-A8C3-5AF96E6CEBCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FEF95FA9-24DC-404B-A8C3-5AF96E6CEBCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FEF95FA9-24DC-404B-A8C3-5AF96E6CEBCE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F256C6C2-2F52-4668-BD21-994988FFF3FD} = {7B07CE54-DDB2-41A3-844E-A28174D6DB52}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {0B596888-40BE-409D-8F70-0D340FA5D6F1}
