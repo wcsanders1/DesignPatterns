@@ -14,3 +14,7 @@ Choose a character from among several interesting options, and the program will 
 ### Prototype
 
 This is a simple implementation of the prototype pattern. Choose a website from among a list of several classic sites, and the `WebPageExplorer` class, which implements .NET `HttpClient`, will return interesting information about that site! The client operates by creating a list of instances of `WebPageExplorer` by cloning an initial instance rather than constructing new instances.
+
+### Singleton
+
+(This example is not finished yet.) Did you come here for an argument? Good, because that's something you can do here. Choose from a variety of topics on which to argue. If you get tired of arguing a certain topic, you can switch to a different topic. The arguer is talented--although there is only one, it is able to argue any of the available topics. In addition, the arguer will record the state of your arguments, and provide you with a rating of your persuasiveness.
