@@ -38,13 +38,13 @@ namespace SimpleFactory
         {
             _sorters = new Dictionary<string, Type>();
 
-            var sortersInThisAssembly = Assembly.GetExecutingAssembly().GetTypes();
+            var typesInThisAssembly = Assembly.GetExecutingAssembly().GetTypes();
 
-            foreach (var sorter in sortersInThisAssembly)
+            foreach (var type in typesInThisAssembly)
             {
-                if (sorter.GetInterface(typeof(ISorter).ToString()) != null)
+                if (type.GetInterface(typeof(ISorter).ToString()) != null)
                 {
-                    _sorters.Add(sorter.Name.ToLower(), sorter);
+                    _sorters.Add(type.Name.ToLower(), type);
                 }
             }
         }

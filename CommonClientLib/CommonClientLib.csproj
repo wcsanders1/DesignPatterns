@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{2CAB3485-14F9-47F9-B41E-67006AFF56D3}</ProjectGuid>
-    <OutputType>Exe</OutputType>
-    <RootNamespace>Builder</RootNamespace>
-    <AssemblyName>Builder</AssemblyName>
+    <ProjectGuid>{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CommonClientLib</RootNamespace>
+    <AssemblyName>CommonClientLib</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -34,9 +33,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.ValueTuple, Version=4.0.1.1, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
-      <HintPath>..\packages\System.ValueTuple.4.3.1\lib\netstandard1.0\System.ValueTuple.dll</HintPath>
-    </Reference>
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -45,32 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterBuilders\ComplacentCharacterBuilder.cs" />
-    <Compile Include="CharacterBuilders\OddCharacterBuilder.cs" />
-    <Compile Include="CharacterBuilders\RealisticCharacterBuilder.cs" />
-    <Compile Include="CharacterBuilders\StrivingCharacterBuilder.cs" />
-    <Compile Include="Models\Character.cs" />
-    <Compile Include="CharacterBuilders\AbstractCharacterBuilder.cs" />
-    <Compile Include="CharacterMaker.cs" />
-    <Compile Include="CharacterBuilders\EccentricCharacterBuilder.cs" />
-    <Compile Include="Models\Education.cs" />
-    <Compile Include="Models\Hobby.cs" />
-    <Compile Include="Models\Personality.cs" />
-    <Compile Include="Program.cs" />
+    <Compile Include="TextParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Models\Religion.cs" />
-    <Compile Include="Models\Sociability.cs" />
-    <Compile Include="Models\WorkEthic.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="App.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\CommonClientLib\CommonClientLib.csproj">
-      <Project>{55c34cf0-2a76-41ca-b10b-f62ad3b224b9}</Project>
-      <Name>CommonClientLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

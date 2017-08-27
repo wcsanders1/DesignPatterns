@@ -17,7 +17,7 @@ namespace Singleton
 
         private List<string> GenericResponses = new List<string>
         {
-            "Interesting point. Could you explain further.",
+            "Interesting point. Could you explain further?",
             "I think I see what you mean. Perhaps you could say more?",
             "Oh. I hadn't thought of that. Please tell me more so as to further educate me."
         };  

@@ -9,11 +9,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Builder", "Builder\Builder.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Prototype", "Prototype\Prototype.csproj", "{8A93BCC6-F806-492D-B969-CB26E416B5CC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Singleton", "Singleton\Singleton.csproj", "{FEF95FA9-24DC-404B-A8C3-5AF96E6CEBCE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Singleton", "Singleton\Singleton.csproj", "{FEF95FA9-24DC-404B-A8C3-5AF96E6CEBCE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{7B07CE54-DDB2-41A3-844E-A28174D6DB52}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactoryTests", "SimpleFactoryTests\SimpleFactoryTests.csproj", "{F256C6C2-2F52-4668-BD21-994988FFF3FD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonClientLib", "CommonClientLib\CommonClientLib.csproj", "{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -41,6 +43,10 @@ Global
 		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F256C6C2-2F52-4668-BD21-994988FFF3FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -1,13 +1,15 @@
-﻿using System;
+﻿using CommonClientLib;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using System.Text.RegularExpressions;
 
 namespace Builder
 {
     class Program
     {
+        private static TextParser TxtParser = new TextParser();
+
         static void Main()
         {
             var keepLooping = true;
@@ -71,7 +73,7 @@ namespace Builder
             {
                 var nameArray = character.ToString().Split('.');
                 var nameString = nameArray[nameArray.Length - 1];
-                var name = PascalToStringArray(nameString)[0];
+                var name = TxtParser.PascalToStringArray(nameString)[0];
                 characterNames.Add(name);
             });
 
@@ -89,22 +91,6 @@ namespace Builder
             });
 
             return (characterBuilders, characterNames);
-        }
-
-        static string CleanString(string s)
-        {
-            return Regex.Replace(s, @"\s+", "");
-        }
-
-        static string PascalToString(string s)
-        {
-            var cleanedString = CleanString(s);
-            return Regex.Replace(cleanedString, "([a-z](?=[A-Z])|[A-Z](?=[A-Z][a-z]))", "$1 ");
-        }
-
-        static string[] PascalToStringArray(string s)
-        {
-            return PascalToString(s).Split(' ');
         }
 
         static void DescribeCharacter(Character character)
@@ -141,7 +127,7 @@ namespace Builder
                         toBe = "is not";
                     }
 
-                    var stringArray = PascalToStringArray(prop.Name);
+                    var stringArray = TxtParser.PascalToStringArray(prop.Name);
                     Console.WriteLine($"This person {toBe} {stringArray[1]}.");
                     continue;
                 }
@@ -149,7 +135,7 @@ namespace Builder
                 var propValueArray = prop.GetValue(character, null).ToString().Split(',');
                 var propValueString = GetFormattedString(propValueArray);
 
-                Console.WriteLine($"This person's {PascalToString(prop.Name)} status consists of {propValueString}.");
+                Console.WriteLine($"This person's {TxtParser.PascalToString(prop.Name)} status consists of {propValueString}.");
             }
         }
 
@@ -157,12 +143,12 @@ namespace Builder
         {
             if (stringArray.Length <= 1)
             {
-                return PascalToString(stringArray[0]);
+                return TxtParser.PascalToString(stringArray[0]);
             }
 
             if (stringArray.Length == 2)
             {
-                return $"{PascalToString(stringArray[0])} and {PascalToString(stringArray[1])}";
+                return $"{TxtParser.PascalToString(stringArray[0])} and {TxtParser.PascalToString(stringArray[1])}";
             }
 
             var result = new StringBuilder();
@@ -170,12 +156,12 @@ namespace Builder
             {
                 if (i == stringArray.Length - 1)
                 {
-                    result.Append($"and {PascalToString(stringArray[i])}");
+                    result.Append($"and {TxtParser.PascalToString(stringArray[i])}");
 
                     return result.ToString();
                 }
 
-                result.Append($"{PascalToString(stringArray[i])}, ");
+                result.Append($"{TxtParser.PascalToString(stringArray[i])}, ");
             }
 
             return result.ToString();
