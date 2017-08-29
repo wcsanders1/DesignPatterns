@@ -10,9 +10,9 @@ namespace Prototype
 
         static void Main()
         {
-            var urls = GetUrls();
-            var explorers = GetExplorers(urls);
-            var keepLooping = true;
+            var urls                          = GetUrls();
+            var explorers                     = GetExplorers(urls);
+            var keepLooping                   = true;
             const string invalidChoiceMessage = "\nThat's not a valid choice, so I guess we'll try this again.\n";
 
             Console.WriteLine("**********************************************************************************************************");

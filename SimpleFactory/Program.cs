@@ -12,8 +12,8 @@ namespace SimpleFactory
         static void Main()
         {
             const int MAX_ELEMENTS_TO_PRINT = 1000;
-            var keepLooping = true;
-            var stopWatch = new Stopwatch();
+            var keepLooping                 = true;
+            var stopWatch                   = new Stopwatch();
 
             Console.WriteLine("**********************************************************************************************************");
             Console.WriteLine("                  WELCOME TO THE SORT PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");

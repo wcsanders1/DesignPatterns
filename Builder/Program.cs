@@ -1,19 +1,19 @@
 ﻿using CommonClientLib;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Builder
 {
     class Program
     {
-        private static TextParser TxtParser = new TextParser();
+        private static TextParser TxtParser                          = new TextParser();
+        private static TypeParser TypParser                          = new TypeParser(TxtParser);
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
 
         static void Main()
         {
-            var keepLooping = true;
+            var keepLooping                   = true;
             const string invalidChoiceMessage = "\nThat isn't a number of one of the characters, which is what you were asked to provide, so let's try this again.\n";
 
             Console.WriteLine("**********************************************************************************************************");
@@ -24,7 +24,7 @@ namespace Builder
             {
                 Console.WriteLine("Enter the number of the character that you want to build.\n");
 
-                var (characterBuilders, characterNames) = GetCharacterBuildersAndNames();
+                var (characterBuilders, characterNames) = TypParser.GetTypeDictionaryAndNameList<AbstractCharacterBuilder>();
                 PrintCharacters(characterNames);
 
                 var choiceString = Console.ReadLine();
@@ -59,39 +59,6 @@ namespace Builder
                 key++;
             }
             Console.WriteLine();
-        }
-
-        static (Dictionary<int, Type>, List<string>) GetCharacterBuildersAndNames()
-        {
-            var characterBuilders = new Dictionary<int, Type>();
-            var characters = AppDomain.CurrentDomain.GetAssemblies()
-                                .SelectMany(assembly => assembly.GetTypes())
-                                .Where(type => type.IsSubclassOf(typeof(AbstractCharacterBuilder)))
-                                .ToList();
-
-            var characterNames = new List<string>();
-            characters.ForEach(character =>
-            {
-                var nameArray = character.ToString().Split('.');
-                var nameString = nameArray[nameArray.Length - 1];
-                var name = TxtParser.PascalToStringArray(nameString)[0];
-                characterNames.Add(name);
-            });
-
-            characterNames.Sort();
-
-            var key = 1;
-            characterNames.ForEach(name =>
-            {
-                var builder = characters
-                    .Where(x => x.ToString().Contains(name))
-                    .FirstOrDefault();
-
-                characterBuilders.Add(key, builder);
-                key++;
-            });
-
-            return (characterBuilders, characterNames);
         }
 
         static void DescribeCharacter(Character character)
