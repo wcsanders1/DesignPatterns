@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonClientLib;
+using System;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 
@@ -6,6 +7,8 @@ namespace SimpleFactory
 {
     public class Program
     {
+        private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+
         static void Main()
         {
             const int MAX_ELEMENTS_TO_PRINT = 1000;
@@ -54,7 +57,7 @@ namespace SimpleFactory
 
                 PrintResults(elapsedTime);
 
-                keepLooping = GoAgain();
+                keepLooping = ContinuationDeterminer.GoAgain();
                 stopWatch.Reset();
                 Console.WriteLine();
             }
@@ -158,19 +161,6 @@ namespace SimpleFactory
             Console.Write("Here is how long it took to sort that array: ");
             var elapsedTimeToString = String.Format("{0:00}:{1:00}:{2:00}.{3:00}", elapsedTime.Hours, elapsedTime.Minutes, elapsedTime.Seconds, elapsedTime.Milliseconds);
             Console.WriteLine(elapsedTimeToString + "\n");
-        }
-
-        static bool GoAgain()
-        {
-            Console.WriteLine("Enter 0 to quit, or something else to have some more fun.\n");
-            var goAgain = Console.ReadLine();
-
-            if (goAgain == "0")
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

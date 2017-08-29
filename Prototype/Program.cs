@@ -1,10 +1,13 @@
-﻿using System;
+﻿using CommonClientLib;
+using System;
 using System.Collections.Generic;
 
 namespace Prototype
 {
     class Program
     {
+        private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+
         static void Main()
         {
             var urls = GetUrls();
@@ -57,7 +60,7 @@ namespace Prototype
                     Console.WriteLine($"The version number of {explorer.CurrentUrl} is {info.Version.ToString()}. Neat!\n");
                 }
 
-                keepLooping = KeepGoing();
+                keepLooping = ContinuationDeterminer.GoAgain();
             }
         }
 
@@ -82,21 +85,6 @@ namespace Prototype
             });
 
             return explorers;
-        }
-
-        static bool KeepGoing()
-        {
-            Console.WriteLine("\nPress 1 if you want to do this again, or press anything else to exit this program\n" +
-                                "and do something else I guess.\n");
-
-            var result = Console.ReadLine();
-
-            if (result == "1")
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }

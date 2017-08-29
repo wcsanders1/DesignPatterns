@@ -9,6 +9,7 @@ namespace Singleton
     class Program
     {
         private static TextParser TxtParser = new TextParser();
+        private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
 
         static void Main(string[] args)
         {
@@ -23,8 +24,7 @@ namespace Singleton
             {
                 PrintTopics(topicNames);
 
-
-                keepLooping = GoAgain();
+                keepLooping = ContinuationDeterminer.GoAgain();
             }
         }
 
@@ -69,19 +69,6 @@ namespace Singleton
                 key++;
             }
             Console.WriteLine();
-        }
-
-        static bool GoAgain()
-        {
-            Console.WriteLine("Enter 0 to quit, or something else to have some more fun.\n");
-            var goAgain = Console.ReadLine();
-
-            if (goAgain == "0")
-            {
-                return false;
-            }
-
-            return true;
         }
     }
 }

@@ -9,6 +9,7 @@ namespace Builder
     class Program
     {
         private static TextParser TxtParser = new TextParser();
+        private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
 
         static void Main()
         {
@@ -45,7 +46,7 @@ namespace Builder
 
                 DescribeCharacter(character);
 
-                keepLooping = KeepGoing();
+                keepLooping = ContinuationDeterminer.GoAgain();
             }            
         }
 
@@ -165,21 +166,6 @@ namespace Builder
             }
 
             return result.ToString();
-        }
-
-        static bool KeepGoing()
-        {
-            Console.WriteLine("\nPress 1 if you want to build another character, or press anything else to exit this program\n" +
-                                "and do something else with the time you have here on this earth.\n");
-
-            var result = Console.ReadLine();
-
-            if (result == "1")
-            {
-                return true;
-            }
-
-            return false;
         }
     }
 }
