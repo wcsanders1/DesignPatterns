@@ -1,14 +1,16 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
 namespace Singleton.Topics
 {
-    public sealed class Weather : IArguable
+    public sealed class Capitalism : IArguable
     {
         public string Topic { get; }
         public List<Argument> ForArguments { get; }
         public List<Argument> AgainstArguments { get; }
 
-        public static Weather Instance
+        public static Capitalism Instance
         {
             get
             {
@@ -16,11 +18,11 @@ namespace Singleton.Topics
             }
         }
 
-        private static readonly Weather instance = new Weather();
+        private static readonly Capitalism instance = new Capitalism();
 
-        private Weather()
+        private Capitalism()
         {
-            Topic = "Weather";
+            Topic = "Capitalism";
             ForArguments = GetForArguments();
             AgainstArguments = GetAgainstArguments();
         }
@@ -32,17 +34,17 @@ namespace Singleton.Topics
                 new Argument
                 {
                     Position = ForOrAgainst.For,
-                    Proposition = "I think weather is a good thing, and that we should continue to have it."
+                    Proposition = "I think capitalism is pretty neat!"
                 },
                 new Argument
                 {
                     Position = ForOrAgainst.For,
-                    Proposition = "I like being outside in the weather."
+                    Proposition = "Capitalism helps us buy things."
                 },
                 new Argument
                 {
                     Position = ForOrAgainst.For,
-                    Proposition = "The weather is what gives us nice days."
+                    Proposition = "Capitalism is a good way for an economy to be."
                 }
             };
         }
@@ -54,17 +56,17 @@ namespace Singleton.Topics
                 new Argument
                 {
                     Position = ForOrAgainst.Against,
-                    Proposition = "Weather is bad because it makes rain and strong wind."
+                    Proposition = "Capitalism isn't cool."
                 },
                 new Argument
                 {
                     Position = ForOrAgainst.Against,
-                    Proposition = "If we didn't have weather, then it wouldn't get too hot!"
+                    Proposition = "Capitalism just allows people to make money, which isn't everything."
                 },
                 new Argument
                 {
                     Position = ForOrAgainst.Against,
-                    Proposition = "Weather is bad because it's always making different skies."
+                    Proposition = "Capitalism is bad because it makes the weather too hot."
                 }
             };
         }
