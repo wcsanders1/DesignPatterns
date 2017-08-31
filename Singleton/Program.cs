@@ -10,6 +10,9 @@ namespace Singleton
         private static TextParser TxtParser                          = new TextParser();
         private static TypeParser TypParser                          = new TypeParser(TxtParser);
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+        private static Arguer Arguer                                 = new Arguer(new Random());
+
+        private static string InvalidChoiceMessage = "\nThat isn't one of the available topics. So, let's try this again, eh?";
 
         static void Main(string[] args)
         {
@@ -22,10 +25,46 @@ namespace Singleton
 
             while (keepLooping)
             {
-                PrintTopics(topicNames);
+                Console.WriteLine("Enter the number of the topic on which you'd like to argue.");
+
+                while (true)
+                {
+                    var topicChosen = GetType(topicDictionary, topicNames);
+                    if (topicChosen == null)
+                    {
+                        continue;
+                    }
+
+                    var activatedTopic = ActivateTopic(topicChosen);
+                }
 
                 keepLooping = ContinuationDeterminer.GoAgain();
             }
+        }
+
+        static Type GetType(Dictionary<int, Type> typeDict, List<string> typeNames)
+        {
+            PrintTopics(typeNames);
+            if (!Int32.TryParse(Console.ReadLine(), out int choice))
+            {
+                Console.WriteLine("That's not a valid choice. We'll try this again I guess.");
+                return null;
+            }
+
+            if (!typeDict.TryGetValue(choice, out var topicChosen))
+            {
+                Console.WriteLine(InvalidChoiceMessage);
+                return null;
+            }
+
+            return topicChosen;
+        }
+
+        static IArguable ActivateTopic(Type topic)
+        {
+
+
+            return null;
         }
 
         static void PrintTopics(List<string> topics)

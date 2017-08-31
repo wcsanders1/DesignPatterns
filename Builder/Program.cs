@@ -31,13 +31,13 @@ namespace Builder
 
                 if (!Int32.TryParse(choiceString, out var choice))
                 {
-                    Console.WriteLine($"{invalidChoiceMessage}");
+                    Console.WriteLine(invalidChoiceMessage);
                     continue;
                 }
 
                 if (!characterBuilders.TryGetValue(choice, out var builder))
                 {
-                    Console.WriteLine($"{invalidChoiceMessage}");
+                    Console.WriteLine(invalidChoiceMessage);
                     continue;
                 }
 

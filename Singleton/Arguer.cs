@@ -6,25 +6,40 @@ namespace Singleton
 {
     public sealed class Arguer
     {
-        public IArguable Topic { get; set; }
-        
-        private Random RandomGenerator { get; set; }
+        private IArguable _topic;
+        private bool _initialStatement = true;
+        private Random _randomGenerator;
+
+        public IArguable Topic
+        {
+            get
+            {
+                return _topic;
+            }
+
+            set
+            {
+                if (value != _topic)
+                {
+                    _initialStatement = true;
+                }
+                else
+                {
+                    _initialStatement = false;
+                }
+
+                _topic = value;
+            }
+        }
 
         public Arguer(Random random)
         {
-            RandomGenerator = random;
+            _randomGenerator = random;
         }
-
-        private List<string> GenericResponses = new List<string>
-        {
-            "Interesting point. Could you explain further?",
-            "I think I see what you mean. Perhaps you could say more?",
-            "Oh. I hadn't thought of that. Please tell me more so as to further educate me."
-        };  
 
         public string GetArgument(Argument argument)
         {
-            if (Topic == null)
+            if (_topic == null)
             {
                 return "You must choose a topic on which to argue.";
             }
@@ -32,9 +47,9 @@ namespace Singleton
             switch (argument.Position)
             {
                 case ForOrAgainst.For:
-                    return GetResponse(Topic.AgainstArguments);
+                    return GetResponse(_topic.AgainstArguments);
                 case ForOrAgainst.Against:
-                    return GetResponse(Topic.ForArguments);
+                    return GetResponse(_topic.ForArguments);
                 default:
                     return "There seems to be a problem with the arguer.";
             }
@@ -42,14 +57,21 @@ namespace Singleton
 
         private string GetResponse(List<Argument> possibleArguments)
         {
-            var statement = RandomGenerator.Next(0, possibleArguments.Count);
-            if (statement == possibleArguments.Count)
+            var statement = _randomGenerator.Next(0, possibleArguments.Count);
+            if (statement == possibleArguments.Count && _initialStatement)
             {
-                var genRsp = RandomGenerator.Next(0, GenericResponses.Count - 1);
+                var genRsp = _randomGenerator.Next(0, GenericResponses.Count - 1);
                 return GenericResponses[genRsp];
             }
 
             return possibleArguments[statement].Proposition;
         }
+
+        private List<string> GenericResponses = new List<string>
+        {
+            "Interesting point. Could you explain further?",
+            "I think I see what you mean. Perhaps you could say more?",
+            "Oh. I hadn't thought of that. Please tell me more so as to further educate me."
+        };
     }
 }
