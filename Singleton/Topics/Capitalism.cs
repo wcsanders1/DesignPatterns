@@ -4,11 +4,11 @@ using System.Text;
 
 namespace Singleton.Topics
 {
-    public sealed class Capitalism : AbstractArguable<Capitalism>, IArguable
+    public sealed class Capitalism : IArguable
     {
-        public override string Topic { get; }
-        public override List<Argument> ForArguments { get; }
-        public override List<Argument> AgainstArguments { get; }
+        public string Topic { get; }
+        public List<Argument> ForArguments { get; }
+        public List<Argument> AgainstArguments { get; }
 
         public Capitalism()
         {

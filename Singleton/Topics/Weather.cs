@@ -2,11 +2,11 @@
 
 namespace Singleton.Topics
 {
-    public sealed class Weather : AbstractArguable<Weather>, IArguable
+    public sealed class Weather : IArguable
     {
-        public override string Topic { get; }
-        public override List<Argument> ForArguments { get; }
-        public override List<Argument> AgainstArguments { get; }
+        public string Topic { get; }
+        public List<Argument> ForArguments { get; }
+        public List<Argument> AgainstArguments { get; }
 
         public Weather()
         {
