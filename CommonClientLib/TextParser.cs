@@ -1,4 +1,5 @@
-﻿using System.Text.RegularExpressions;
+﻿using System;
+using System.Text.RegularExpressions;
 
 namespace CommonClientLib
 {
@@ -18,6 +19,17 @@ namespace CommonClientLib
         public string[] PascalToStringArray(string s)
         {
             return PascalToString(s).Split(' ');
+        }
+
+        public void PrintEnum<T>() where T : struct
+        {
+            var sorters = Enum.GetValues(typeof(T));
+            foreach (var sorter in sorters)
+            {
+                var sorterName = Regex.Replace(sorter.ToString(), "(\\B[A-Z])", " $1");
+                Console.WriteLine($"{(int)sorter}. {sorterName}");
+            }
+            Console.WriteLine();
         }
     }
 }

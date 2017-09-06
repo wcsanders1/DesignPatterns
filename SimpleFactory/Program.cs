@@ -8,6 +8,7 @@ namespace SimpleFactory
     public class Program
     {
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+        private static TextParser TxtParser                          = new TextParser();
 
         static void Main()
         {
@@ -75,7 +76,7 @@ namespace SimpleFactory
 
             if (arraySize < 2)
             {
-                Console.WriteLine("Come on, how can a collection with less than one element be sorted? Let's try this again.\n");
+                Console.WriteLine("Come on, how can a collection with less than two elements be sorted? Let's try this again.\n");
                 return null;
             }
 
@@ -103,22 +104,10 @@ namespace SimpleFactory
             }
         }
 
-        static void PrintSorters()
-        {
-            Console.WriteLine("Choose which sort method you want to use (these methods are listed in order of slowest to fastest):\n");
-
-            var sorters = Enum.GetValues(typeof(Sorters));
-            foreach (var sorter in sorters)
-            {
-                var sorterName = Regex.Replace(sorter.ToString(), "(\\B[A-Z])", " $1");
-                Console.WriteLine($"{(int)sorter}. {sorterName}");
-            }
-            Console.WriteLine();
-        }
-
         static AbstractSorter<int> GetSorter()
         {
-            PrintSorters();
+            Console.WriteLine("Choose which sort method you want to use (these methods are listed in order of slowest to fastest):\n");
+            TxtParser.PrintEnum<Sorters>();
 
             if (!Int32.TryParse(Console.ReadLine(), out int sortChosen))
             {

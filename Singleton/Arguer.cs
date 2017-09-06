@@ -57,13 +57,19 @@ namespace Singleton
 
         private string GetResponse(List<Argument> possibleArguments)
         {
-            var statement = _randomGenerator.Next(0, possibleArguments.Count);
-            if (statement == possibleArguments.Count && _initialStatement)
+            var statement = _randomGenerator.Next(0, possibleArguments.Count + 1);
+            if (statement == possibleArguments.Count && !_initialStatement)
             {
+                _initialStatement = false;
                 var genRsp = _randomGenerator.Next(0, GenericResponses.Count - 1);
                 return GenericResponses[genRsp];
             }
 
+            _initialStatement = false;           
+            if (statement >= possibleArguments.Count)
+            {
+                statement--;
+            }
             return possibleArguments[statement].Proposition;
         }
 

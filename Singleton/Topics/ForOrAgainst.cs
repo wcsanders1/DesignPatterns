@@ -2,7 +2,7 @@
 {
     public enum ForOrAgainst
     {
-        For,
-        Against
+        For     = 1,
+        Against = 2
     }
 }

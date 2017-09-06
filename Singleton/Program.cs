@@ -11,17 +11,18 @@ namespace Singleton
     {
         private static TextParser TxtParser                          = new TextParser();
         private static TypeParser TypParser                          = new TypeParser(TxtParser);
-        private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+        //private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private static Arguer Arguer                                 = new Arguer(new Random());
         private static Container Container                           = new Container(new ContainerBuilder());
+        private static ForOrAgainst CurrentPosition;
 
         private static string InvalidChoiceMessage = "\nThat isn't one of the available topics. So, let's try this again, eh?";
 
         static void Main(string[] args)
         {
             var keepLooping                   = true;
-            var (topicDictionary, topicNames) = GetTypeDictionaryAndNameList<IArguable>();//TypParser.GetTypeDictionaryAndNameList<IArguable>();
-            var topicContainer = Container.GetContainer(topicDictionary);
+            var (topicDictionary, topicNames) = GetTypeDictionaryAndNameList<IArguable>();
+            var topicContainer                = Container.GetContainer(topicDictionary);
 
             Console.WriteLine("**********************************************************************************************************");
             Console.WriteLine("    WELCOME TO THE ARGUMENT PROGRAM -- WHICH IS A PROGRAM THAT'S KIND OF FUN, AT LEAST AT FIRST MAYBE.");
@@ -29,48 +30,95 @@ namespace Singleton
 
             while (keepLooping)
             {
-                Console.WriteLine("Enter the number of the topic on which you'd like to argue.");
-
-                while (true)
+                var topic = GetTopic(topicNames, topicContainer);
+                if (topic == null)
                 {
-                    //var topicChosen = GetType(topicDictionary, topicNames);
-                    //if (topicChosen == null)
-                    //{
-                    //    continue;
-                    //}
-
-                    var t = topicContainer.ResolveKeyed<IArguable>(1);
-
-                    Console.WriteLine($"The topic is {t.Topic}");
+                    break;
                 }
 
-                keepLooping = ContinuationDeterminer.GoAgain();
+                Arguer.Topic = topic;
+
+                switch (Argue(topic))
+                {
+                    case Choice.ChangeTopic:
+                        continue;
+                    default:
+                        keepLooping = false;
+                        break;
+                }
             }
         }
 
-        static Type GetType(Dictionary<int, Type> typeDict, List<string> typeNames)
+        static IArguable GetTopic(List<string> topicNames, IContainer topicContainer)
         {
-            PrintTopics(typeNames);
-            if (!Int32.TryParse(Console.ReadLine(), out int choice))
+            while (true)
             {
-                Console.WriteLine("That's not a valid choice. We'll try this again I guess.");
-                return null;
-            }
+                Console.WriteLine("\nEnter the number of the topic on which you'd like to argue, or press 0 to exit the program.");
+                PrintTopics(topicNames);
+                if (!Int32.TryParse(Console.ReadLine(), out int choice))
+                {
+                    Console.WriteLine(InvalidChoiceMessage);
+                    continue;
+                }
 
-            if (!typeDict.TryGetValue(choice, out var topicChosen))
-            {
-                Console.WriteLine(InvalidChoiceMessage);
-                return null;
-            }
+                if (choice == 0)
+                {
+                    return null;
+                }
 
-            return topicChosen;
+                try
+                {
+                    return topicContainer.ResolveKeyed<IArguable>(choice);
+                }
+                catch
+                {
+                    Console.WriteLine(InvalidChoiceMessage);
+                }
+            }
         }
 
-        static IArguable ActivateTopic(Type topic)
+        static ForOrAgainst GetPosition(string topic)
         {
+            while (true)
+            {
+                Console.WriteLine($"\nChose the position you will take with regard to the topic of {topic}.");
+                TxtParser.PrintEnum<ForOrAgainst>();
 
+                if (!Int32.TryParse(Console.ReadLine(), out int positionChosen) ||
+                    !Enum.IsDefined(typeof(ForOrAgainst), positionChosen))
+                {
+                    Console.WriteLine("That input isn't valid. Let's try again.\n");
+                    continue;
+                }
 
-            return null;
+                return (ForOrAgainst)positionChosen;
+            }
+        }
+
+        static Choice Argue(IArguable topic)
+        {
+            CurrentPosition = GetPosition(topic.Topic);
+
+            while (true)
+            {
+                Console.WriteLine($"\nType your argument {CurrentPosition.ToString()} {topic.Topic} here, or:");
+                Console.WriteLine($"enter P to change your position on the topic of {topic.Topic}, X to choose another topic, 0 to quit.\n");
+                var choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "0":
+                        return Choice.Quit;
+                    case "X":
+                        return Choice.ChangeTopic;
+                    case "P":
+                        CurrentPosition = GetPosition(topic.Topic);
+                        break;
+                    default:
+                        Console.WriteLine($"{Arguer.GetArgument(new Argument { Position = CurrentPosition })}\n");
+                        break;
+                }
+            }
         }
 
         static void PrintTopics(List<string> topics)
