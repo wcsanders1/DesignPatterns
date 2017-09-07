@@ -13,7 +13,7 @@ namespace CommonClientLib
             TxtParser = txtParser;
         }
 
-        public (Dictionary<int, Type>, List<string>) GetTypeDictionaryAndNameList<T>() where T : class
+        public (Dictionary<int, T>, List<string>) GetTypeDictionaryAndNameList<T>() where T : class
         {
             var typeNames = new List<string>();
             var types     = GetTypeList<T>();
@@ -28,7 +28,7 @@ namespace CommonClientLib
             typeNames.Sort();
 
             var key = 1;
-            var typeDict = new Dictionary<int, Type>();
+            var typeDict = new Dictionary<int, T>();
             typeNames.ForEach(name =>
             {
                 var type = types.Where(x => x.ToString().Contains(name))
@@ -40,9 +40,9 @@ namespace CommonClientLib
             return (typeDict, typeNames);
         }
 
-        private List<Type> GetTypeList<T>()
+        private List<T> GetTypeList<T>() where T : class
         {
-            return AppDomain.CurrentDomain.GetAssemblies()
+            var types = AppDomain.CurrentDomain.GetAssemblies()
                             .SelectMany(assembly => assembly.GetTypes())
                             .Where(type =>
                             {
@@ -54,6 +54,14 @@ namespace CommonClientLib
                                 return type.IsSubclassOf(typeof(T));
                             })
                             .ToList();
+
+            var tpList = new List<T>();
+            types.ForEach(tp =>
+            {
+                tpList.Add(Activator.CreateInstance(tp) as T);
+            });
+
+            return tpList;
         }
     }
 }

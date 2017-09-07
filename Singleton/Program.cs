@@ -3,7 +3,6 @@ using Singleton.Topics;
 using System;
 using System.Collections.Generic;
 using Autofac;
-using System.Linq;
 
 namespace Singleton
 {
@@ -20,7 +19,7 @@ namespace Singleton
         static void Main(string[] args)
         {
             var keepLooping                   = true;
-            var (topicDictionary, topicNames) = GetTypeDictionaryAndNameList<IArguable>();
+            var (topicDictionary, topicNames) = TypParser.GetTypeDictionaryAndNameList<IArguable>();
             var topicContainer                = Container.GetContainer(topicDictionary);
 
             Console.WriteLine("**********************************************************************************************************");
@@ -119,51 +118,6 @@ namespace Singleton
                         break;
                 }
             }
-        }
-
-        static (Dictionary<int, IArguable>, List<string>) GetTypeDictionaryAndNameList<T>() where T : class
-        {
-            var typeNames = new List<string>();
-            var types = GetTypeList<T>();
-            types.ForEach(type =>
-            {
-                var nameArray = type.ToString().Split('.');
-                var nameString = nameArray[nameArray.Length - 1];
-                var name = TxtParser.PascalToStringArray(nameString)[0];
-                typeNames.Add(name);
-            });
-
-            typeNames.Sort();
-
-            var key = 1;
-            var typeDict = new Dictionary<int, IArguable>();
-            typeNames.ForEach(name =>
-            {
-                var type = types.Where(x => x.ToString().Contains(name))
-                                .FirstOrDefault();
-
-                var tp = Activator.CreateInstance(type) as IArguable;
-
-                typeDict.Add(key++, tp);
-            });
-
-            return (typeDict, typeNames);
-        }
-
-        static List<Type> GetTypeList<T>()
-        {
-            return AppDomain.CurrentDomain.GetAssemblies()
-                            .SelectMany(assembly => assembly.GetTypes())
-                            .Where(type =>
-                            {
-                                if (typeof(T).IsInterface)
-                                {
-                                    return type.GetInterface(typeof(T).ToString()) != null;
-                                }
-
-                                return type.IsSubclassOf(typeof(T));
-                            })
-                            .ToList();
         }
     }
 }

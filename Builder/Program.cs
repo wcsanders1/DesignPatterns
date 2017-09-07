@@ -41,8 +41,7 @@ namespace Builder
                     continue;
                 }
 
-                var characterBuilder = (AbstractCharacterBuilder)Activator.CreateInstance(builder);
-                var character = CharacterMaker.GetCharacter(characterBuilder);
+                var character = CharacterMaker.GetCharacter(builder);
 
                 DescribeCharacter(character);
 
