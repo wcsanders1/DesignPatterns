@@ -9,11 +9,10 @@ namespace Singleton
 {
     class Program
     {
-        private static TextParser TxtParser                          = new TextParser();
-        private static TypeParser TypParser                          = new TypeParser(TxtParser);
-        //private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
-        private static Arguer Arguer                                 = new Arguer(new Random());
-        private static Container Container                           = new Container(new ContainerBuilder());
+        private static TextParser TxtParser = new TextParser();
+        private static TypeParser TypParser = new TypeParser(TxtParser);
+        private static Arguer Arguer        = new Arguer(new Random());
+        private static Container Container  = new Container(new ContainerBuilder());
         private static ForOrAgainst CurrentPosition;
 
         private static string InvalidChoiceMessage = "\nThat isn't one of the available topics. So, let's try this again, eh?";
@@ -54,7 +53,8 @@ namespace Singleton
             while (true)
             {
                 Console.WriteLine("\nEnter the number of the topic on which you'd like to argue, or press 0 to exit the program.");
-                PrintTopics(topicNames);
+                TxtParser.PrintStringList(topicNames);
+                
                 if (!Int32.TryParse(Console.ReadLine(), out int choice))
                 {
                     Console.WriteLine(InvalidChoiceMessage);
@@ -119,17 +119,6 @@ namespace Singleton
                         break;
                 }
             }
-        }
-
-        static void PrintTopics(List<string> topics)
-        {
-            var key = 1;
-            foreach (var topic in topics)
-            {
-                Console.WriteLine($"{key}. {topic}");
-                key++;
-            }
-            Console.WriteLine();
         }
 
         static (Dictionary<int, IArguable>, List<string>) GetTypeDictionaryAndNameList<T>() where T : class

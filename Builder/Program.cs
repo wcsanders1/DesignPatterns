@@ -25,7 +25,7 @@ namespace Builder
                 Console.WriteLine("Enter the number of the character that you want to build.\n");
 
                 var (characterBuilders, characterNames) = TypParser.GetTypeDictionaryAndNameList<AbstractCharacterBuilder>();
-                PrintCharacters(characterNames);
+                TxtParser.PrintStringList(characterNames);
 
                 var choiceString = Console.ReadLine();
 
@@ -48,17 +48,6 @@ namespace Builder
 
                 keepLooping = ContinuationDeterminer.GoAgain();
             }            
-        }
-
-        static void PrintCharacters(List<string> names)
-        {
-            var key = 1;
-            foreach (var name in names)
-            {
-                Console.WriteLine($"{key}. {name}");
-                key++;
-            }
-            Console.WriteLine();
         }
 
         static void DescribeCharacter(Character character)

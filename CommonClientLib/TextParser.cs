@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace CommonClientLib
@@ -29,6 +30,16 @@ namespace CommonClientLib
                 var sorterName = Regex.Replace(sorter.ToString(), "(\\B[A-Z])", " $1");
                 Console.WriteLine($"{(int)sorter}. {sorterName}");
             }
+            Console.WriteLine();
+        }
+
+        public void PrintStringList(List<string> strings)
+        {
+            var key = 1;
+            strings.ForEach(s =>
+            {
+                Console.WriteLine($"{key++}. {s}");
+            });
             Console.WriteLine();
         }
     }
