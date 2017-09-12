@@ -67,7 +67,10 @@ namespace Singleton
 
                 try
                 {
-                    return topicContainer.ResolveKeyed<IArguable>(choice);
+                    using (var scope = topicContainer.BeginLifetimeScope())
+                    {
+                        return scope.ResolveKeyed<IArguable>(choice);
+                    }
                 }
                 catch
                 {
