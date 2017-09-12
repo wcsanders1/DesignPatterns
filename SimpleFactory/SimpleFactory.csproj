@@ -49,6 +49,7 @@
     <Compile Include="Sorters\ISorter.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Sorters\QuicksortSorter.cs" />
     <Compile Include="Sorters\SelectionSorter.cs" />
     <Compile Include="Sorters\ShellSorter.cs" />
     <Compile Include="Sorters\AbstractSorter.cs" />
