@@ -17,4 +17,8 @@ This is a simple implementation of the prototype pattern. Choose a website from 
 
 ### Singleton
 
-(This example is not finished yet.) Did you come here for an argument? Good, because that's something you can do here. Choose from a variety of topics on which to argue. If you get tired of arguing a certain topic, you can switch to a different topic. The arguer is talented--although there is only one, it is able to argue any of the available topics. In addition, the arguer will record the state of your arguments, and provide you with a rating of your persuasiveness.
+Did you come here for an argument? Good, because you'll get one. Choose from a variety of topics on which to argue. If you get tired of arguing a certain topic, you can switch to a different topic. Every topic is a class registered with an IoC container which provides a only a single instance of each.
+
+## Structural Patterns
+
+### Adapter
