@@ -4,13 +4,13 @@ using System.Collections.Generic;
 
 namespace Adapter.PersonalInformation
 {
-    public class HitByTrain : IPersonalInformationGettable
+    public class HitByTrain : AbstractPersonalInformation, IPersonalInformationGettable
     {
         public string QuestionTopic { get; } = "Times Hit By Train";
 
         private readonly ContinuationDeterminer continuationDeterminer;
 
-        public HitByTrain(ContinuationDeterminer continuationDeterminer)
+        public HitByTrain(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
         {
             this.continuationDeterminer = continuationDeterminer;
         }
@@ -25,15 +25,8 @@ namespace Adapter.PersonalInformation
                 Console.WriteLine("Type the number corresponding to the correct answer below.");
                 PrintPossibleAnswers(possibleAnswers);
 
-                if (!Int32.TryParse(Console.ReadLine(), out var choice))
+                if (!GetChoice(possibleAnswers, out var answer))
                 {
-                    keepLooping = continuationDeterminer.GoAgainWithInvalidChoiceMessage();
-                    continue;
-                }
-
-                if (!possibleAnswers.TryGetValue(choice, out var answer))
-                {
-                    keepLooping = continuationDeterminer.GoAgainWithInvalidChoiceMessage("That isn't one of the choices.");
                     continue;
                 }
 
@@ -56,14 +49,6 @@ namespace Adapter.PersonalInformation
                 {2, "Five Times" },
                 {3, "Nearly Six Times" }
             };
-        }
-
-        private void PrintPossibleAnswers(Dictionary<int, string> possibleAnswers)
-        {
-            foreach (var kv in possibleAnswers)
-            {
-                Console.WriteLine($"{kv.Key}. {kv.Value}");
-            }
         }
     }
 }
