@@ -17,7 +17,7 @@ This is a simple implementation of the prototype pattern. Choose a website from 
 
 ### Singleton
 
-Did you come here for an argument? Good, because you'll get one. Choose from a variety of topics on which to argue. If you get tired of arguing a certain topic, you can switch to a different topic. Every topic is a class registered with an IoC container which provides a only a single instance of each.
+Did you come here for an argument? Good. Choose from a variety of topics on which to argue. If you get tired of arguing a certain topic, you can switch to a different topic. Every topic is a class registered with an IoC container which provides a only a single instance of each.
 
 ## Structural Patterns
 

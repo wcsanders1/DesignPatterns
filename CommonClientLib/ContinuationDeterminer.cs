@@ -7,6 +7,19 @@ namespace CommonClientLib
         public bool GoAgain()
         {
             Console.WriteLine("Enter 0 to quit, or something else to have some more fun.\n");
+
+            return GetChoice();
+        }
+
+        public bool GoAgainWithInvalidChoiceMessage(string message = "That choice is invalid.")
+        {
+            Console.WriteLine($"{message} Enter 0 to quit or anything else to try again.");
+
+            return GetChoice();
+        }
+
+        private bool GetChoice()
+        {
             var goAgain = Console.ReadLine();
 
             if (goAgain == "0")

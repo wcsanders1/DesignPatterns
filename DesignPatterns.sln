@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.10
+VisualStudioVersion = 15.0.26730.15
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactory", "SimpleFactory\SimpleFactory.csproj", "{F1E0D86C-940B-4310-B5A0-F1471A81AD4B}"
 EndProject
@@ -16,6 +16,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactoryTests", "SimpleFactoryTests\SimpleFactoryTests.csproj", "{F256C6C2-2F52-4668-BD21-994988FFF3FD}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonClientLib", "CommonClientLib\CommonClientLib.csproj", "{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{C5E80F77-12C6-428E-9274-6FB94A031160}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -47,6 +49,10 @@ Global
 		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C5E80F77-12C6-428E-9274-6FB94A031160}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C5E80F77-12C6-428E-9274-6FB94A031160}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C5E80F77-12C6-428E-9274-6FB94A031160}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C5E80F77-12C6-428E-9274-6FB94A031160}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
