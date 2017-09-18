@@ -27,10 +27,14 @@ namespace Adapter.PersonalInformation
 
                 if (!GetChoice(possibleAnswers, out var answer))
                 {
+                    keepLooping = false;
                     continue;
                 }
 
-                return $"You've been hit by a train {answer.ToLower()}.";
+                if (answer != null)
+                {
+                    return $"You've been hit by a train {answer.ToLower()}.";
+                }
             }
 
             return null;
