@@ -9,6 +9,7 @@ namespace Adapter.PersonalInformation
         public string QuestionTopic { get; } = "Times Hit By Train";
 
         private readonly ContinuationDeterminer continuationDeterminer;
+        private readonly string question = "How many times have you been hit by a train?";
 
         public HitByTrain(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
         {
@@ -36,9 +37,14 @@ namespace Adapter.PersonalInformation
             }
         }
 
+        public string GetQuestion()
+        {
+            return question;
+        }
+
         private void AskQuestion()
         {
-            Console.WriteLine("How many times have you been hit by a train?");
+            Console.WriteLine(question);
         }
 
         private Dictionary<int, string> GetPossibleAnswers()

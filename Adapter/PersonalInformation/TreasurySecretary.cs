@@ -9,6 +9,7 @@ namespace Adapter.PersonalInformation
         public string QuestionTopic { get; } = "Favorite Treasury Secretary";
 
         private readonly ContinuationDeterminer continuationDeterminer;
+        private readonly string question = "Who is your favorite secretary of the treasury?";
 
         public TreasurySecretary(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
         {
@@ -36,9 +37,14 @@ namespace Adapter.PersonalInformation
             }
         }
 
+        public string GetQuestion()
+        {
+            return question;
+        }
+
         private void AskQuestion()
         {
-            Console.WriteLine("Who is your favorite secretary of the treasury?");
+            Console.WriteLine(question);
         }
 
         private Dictionary<int, string> GetPossibleAnswers()
