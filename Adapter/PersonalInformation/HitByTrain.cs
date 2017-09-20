@@ -17,18 +17,16 @@ namespace Adapter.PersonalInformation
         
         public string GetAnswer()
         {
-            var keepLooping = true;
-            while (keepLooping)
+            while (true)
             {
                 AskQuestion();
                 var possibleAnswers = GetPossibleAnswers();
-                Console.WriteLine("Type the number corresponding to the correct answer below.");
+                Console.WriteLine(Instruction);
                 PrintPossibleAnswers(possibleAnswers);
 
                 if (!GetChoice(possibleAnswers, out var answer))
                 {
-                    keepLooping = false;
-                    continue;
+                    return null;
                 }
 
                 if (answer != null)
@@ -36,8 +34,6 @@ namespace Adapter.PersonalInformation
                     return $"You've been hit by a train {answer.ToLower()}.";
                 }
             }
-
-            return null;
         }
 
         private void AskQuestion()

@@ -6,6 +6,8 @@ namespace Adapter.PersonalInformation
 {
     public abstract class AbstractPersonalInformation
     {
+        public string Instruction { get; } = "Type the number corresponding to the correct answer below.";
+
         private readonly ContinuationDeterminer continuationDeterminer;
 
         public AbstractPersonalInformation(ContinuationDeterminer continuationDeterminer)
