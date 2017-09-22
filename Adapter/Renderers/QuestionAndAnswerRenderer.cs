@@ -5,16 +5,18 @@ namespace Adapter.Renderers
 {
     public class QuestionAndAnswerRenderer
     {
-        private readonly IQuestionAndAnswerRendererAdapter renderer;
+        private readonly IQuestionAndAnswerRendererAdapter adapter;
 
-        public QuestionAndAnswerRenderer(IQuestionAndAnswerRendererAdapter renderer)
+        public QuestionAndAnswerRenderer(IQuestionAndAnswerRendererAdapter adapter)
         {
-            this.renderer = renderer;
+            this.adapter = adapter;
         }
+
+        public QuestionAndAnswerRenderer() : this (new QuestionsAndAnswersRendererAdapter()) {}
 
         public string ListQuestionsAndAnswers(IEnumerable<QuestionAndAnswer> questionsAndAnswers)
         {
-            return renderer.ListQuestionsAndAnswers(questionsAndAnswers);
+            return adapter.ListQuestionsAndAnswers(questionsAndAnswers);
         }
     }
 }
