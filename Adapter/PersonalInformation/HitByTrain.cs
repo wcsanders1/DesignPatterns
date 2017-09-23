@@ -11,6 +11,7 @@ namespace Adapter.PersonalInformation
         private readonly ContinuationDeterminer continuationDeterminer;
         private readonly string question = "How many times have you been hit by a train?";
 
+        public HitByTrain() : this(new ContinuationDeterminer()) {}
         public HitByTrain(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
         {
             this.continuationDeterminer = continuationDeterminer;

@@ -11,10 +11,13 @@ namespace Adapter.PersonalInformation
         private readonly ContinuationDeterminer continuationDeterminer;
         private readonly string question = "Who is your favorite secretary of the treasury?";
 
+        public TreasurySecretary() : this(new ContinuationDeterminer()) {}
         public TreasurySecretary(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
         {
             this.continuationDeterminer = continuationDeterminer;
         }
+
+         
 
         public string GetAnswer()
         {
