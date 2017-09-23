@@ -12,7 +12,7 @@ namespace Adapter.Renderers
             this.adapter = adapter;
         }
 
-        public QuestionAndAnswerRenderer() : this (new QuestionsAndAnswersRendererAdapter()) {}
+        public QuestionAndAnswerRenderer() : this (new QuestionAndAnswerRendererAdapter()) {}
 
         public string ListQuestionsAndAnswers(IEnumerable<QuestionAndAnswer> questionsAndAnswers)
         {

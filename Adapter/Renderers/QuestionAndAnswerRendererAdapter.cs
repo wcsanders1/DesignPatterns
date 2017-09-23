@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Adapter.Renderers
 {
-    class QuestionsAndAnswersRendererAdapter : IQuestionAndAnswerRendererAdapter
+    class QuestionAndAnswerRendererAdapter : IQuestionAndAnswerRendererAdapter
     {
         private DataRenderer dataRenderer;
 

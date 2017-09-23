@@ -1,6 +1,7 @@
 ﻿namespace Adapter.Renderers
 {
-    public class EvaluationRenderer : IEvaluationRenderer
+    public class EvaluationRenderer : IEvaluationRendererAdapter
     {
+
     }
 }
