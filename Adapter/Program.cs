@@ -2,6 +2,7 @@
 using CommonClientLib;
 using System.Collections.Generic;
 using Adapter.PersonalInformation;
+using Adapter.Renderers;
 
 namespace Adapter
 {
@@ -14,10 +15,16 @@ namespace Adapter
         static void Main(string[] args)
         {
             Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("                  WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
+            Console.WriteLine("                  WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
             Console.WriteLine("**********************************************************************************************************\n");
 
             var questionsAndAnswers = GetQuestionsAndAnswers();
+            var renderer = new QuestionAndAnswerRenderer();
+
+            var questionsAndAnswersString = renderer.ListQuestionsAndAnswers(questionsAndAnswers);
+
+            Console.WriteLine(questionsAndAnswersString);
+            Console.ReadKey();
         }
 
         private static IEnumerable<QuestionAndAnswer> GetQuestionsAndAnswers()

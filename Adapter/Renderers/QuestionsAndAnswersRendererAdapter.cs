@@ -40,6 +40,7 @@ namespace Adapter.Renderers
                     var row = dataTable.NewRow();
                     row[0] = qa.Question;
                     row[1] = qa.Answer;
+                    dataTable.Rows.Add(row);
                 }
                 dataSet.Tables.Add(dataTable);
                 dataSet.AcceptChanges();
