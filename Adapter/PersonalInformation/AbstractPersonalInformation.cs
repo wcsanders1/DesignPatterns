@@ -24,7 +24,6 @@ namespace Adapter.PersonalInformation
 
             if (!possibleAnswers.TryGetValue(tempChoice, out choice))
             {
-                choice = null;
                 return continuationDeterminer.GoAgainWithInvalidChoiceMessage("That isn't one of the choices.");
             }
             

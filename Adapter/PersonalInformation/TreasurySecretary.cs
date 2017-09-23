@@ -17,8 +17,6 @@ namespace Adapter.PersonalInformation
             this.continuationDeterminer = continuationDeterminer;
         }
 
-         
-
         public string GetAnswer()
         {
             while (true)

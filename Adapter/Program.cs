@@ -19,6 +19,11 @@ namespace Adapter
             Console.WriteLine("**********************************************************************************************************\n");
 
             var questionsAndAnswers = GetQuestionsAndAnswers();
+            if (questionsAndAnswers == null)
+            {
+                return;
+            }
+
             var renderer = new QuestionAndAnswerRenderer();
 
             var questionsAndAnswersString = renderer.ListQuestionsAndAnswers(questionsAndAnswers);
@@ -34,10 +39,16 @@ namespace Adapter
 
             foreach (var kv in personalInformationGetters)
             {
+                var answer = kv.Value.GetAnswer();
+                if (string.IsNullOrWhiteSpace(answer))
+                {
+                    return null;
+                }
+
                 questionsAndAnswers.Add(new QuestionAndAnswer
                 {
                     Question = kv.Value.GetQuestion(),
-                    Answer   = kv.Value.GetAnswer()
+                    Answer   = answer
                 });
             }
 

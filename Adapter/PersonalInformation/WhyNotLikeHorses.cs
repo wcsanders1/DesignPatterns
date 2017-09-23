@@ -1,22 +1,22 @@
-﻿using CommonClientLib;
-using System;
+﻿using System;
 using System.Collections.Generic;
+using CommonClientLib;
 
 namespace Adapter.PersonalInformation
 {
-    public class HitByTrain : AbstractPersonalInformation, IPersonalInformationGettable
+    public class WhyNotLikeHorses : AbstractPersonalInformation, IPersonalInformationGettable
     {
-        public string QuestionTopic { get; } = "Times Hit By Train";
+        public string QuestionTopic { get; } = "Reason for Not Liking Horses";
 
         private readonly ContinuationDeterminer continuationDeterminer;
-        private readonly string question = "How many times have you been hit by a train?";
+        private readonly string question = "Why don't you like horses?";
 
-        public HitByTrain() : this(new ContinuationDeterminer()) {}
-        public HitByTrain(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
+        public WhyNotLikeHorses() : this(new ContinuationDeterminer()) { }
+        public WhyNotLikeHorses(ContinuationDeterminer continuationDeterminer) : base(continuationDeterminer)
         {
             this.continuationDeterminer = continuationDeterminer;
         }
-        
+
         public string GetAnswer()
         {
             while (true)
@@ -33,7 +33,7 @@ namespace Adapter.PersonalInformation
 
                 if (answer != null)
                 {
-                    return $"You've been hit by a train {answer.ToLower()}.";
+                    return $"You don't like horses because {answer.ToLower()}.";
                 }
             }
         }
@@ -52,9 +52,9 @@ namespace Adapter.PersonalInformation
         {
             return new Dictionary<int, string>
             {
-                {1, "Twice" },
-                {2, "Five times" },
-                {3, "Nearly six times" }
+                {1, "They're stupid" },
+                {2, "They age without grace" },
+                {3, "It's raining" }
             };
         }
     }
