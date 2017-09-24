@@ -1,0 +1,41 @@
+﻿{
+  "InfoGetters": 
+  [
+    {
+      "PossibleAnswers": {
+        "1": "Twice",
+        "2": "Five Times",
+        "3": "Nearly Six Times"
+      },
+      "QuestionTopic": "Times Hit By Train",
+      "Question": "How many times have you been hit by a train?",
+      "AnswerPrefix": "You've been hit by a train",
+      "LowerCase": true,
+      "CorrectAnswer": 2
+    },
+    {
+      "PossibleAnswers": {
+        "1": "Salmon P. Chase",
+        "2": "Bud Bedsy",
+        "3": "Bill Cosby"
+      },
+      "QuestionTopic": "Favorite Treasury Secretary",
+      "Question": "Who is your favorite secretary of the treasury?",
+      "AnswerPrefix": "Your favorite Treasury Secretary is",
+      "LowerCase": false,
+      "CorrectAnswer": 1
+    },
+    {
+      "PossibleAnswers": {
+        "1": "They're stupid",
+        "2": "They age without grace",
+        "3": "It's raining"
+      },
+      "QuestionTopic": "Reason For Not Liking Horses",
+      "Question": "Why don't you like horses?",
+      "AnswerPrefix": "You don't like horses because",
+      "LowerCase": true,
+      "CorrectAnswer": 2
+    }
+  ]
+}

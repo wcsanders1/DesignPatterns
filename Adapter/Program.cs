@@ -18,7 +18,9 @@ namespace Adapter
             Console.WriteLine("                  WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
             Console.WriteLine("**********************************************************************************************************\n");
 
-            var questionsAndAnswers = GetQuestionsAndAnswers();
+            var infoGetters = DefaultInfoGetters.GetDefaultInfoGetters();
+            var questionsAndAnswers = QuestionAndAnswerGetter.GetQuestionsAndAnswers(infoGetters);
+
             if (questionsAndAnswers == null)
             {
                 return;
@@ -45,32 +47,6 @@ namespace Adapter
             }
 
             Console.ReadKey();
-        }
-
-        private static IEnumerable<QuestionAndAnswer> GetQuestionsAndAnswers()
-        {
-            var (personalInformationGetters, _) = TypeParser.GetTypeDictionaryAndNameList<IPersonalInformationGettable>();
-            var questionsAndAnswers             = new List<QuestionAndAnswer>();
-
-            foreach (var kv in personalInformationGetters)
-            {
-                var answerGiven = kv.Value.GetAnswer();
-                if (string.IsNullOrWhiteSpace(answerGiven))
-                {
-                    return null;
-                }
-
-                questionsAndAnswers.Add(new QuestionAndAnswer
-                {
-                    Question             = kv.Value.GetQuestion(),
-                    Topic                = kv.Value.QuestionTopic,
-                    AnswerGiven          = answerGiven,
-                    AnswerGivenShortForm = kv.Value.GetAnswerShortForm(),
-                    CorrectAnswer        = kv.Value.GetCorrectAnswer(),
-                });
-            }
-
-            return questionsAndAnswers;
         }
 
         private static Renderer GetRenderer()
