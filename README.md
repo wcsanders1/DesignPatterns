@@ -22,3 +22,5 @@ Did you come here for an argument? Good. Choose from a variety of topics on whic
 ## Structural Patterns
 
 ### Adapter
+
+After making your way through some questions about yourself, the program will render a report regarding your answers. The report can render either as a simple list of the questions and the answers you provided, or it can show you your incorrect answers along with a total of your score. The adapter pattern is used to allow render methods of various signatures to use the functionality that another render method provides.
