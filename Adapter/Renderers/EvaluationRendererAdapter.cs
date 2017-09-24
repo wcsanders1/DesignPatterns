@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Adapter.Renderers
+﻿namespace Adapter.Renderers
 {
-    class EvaluationRendererAdapter
+    class EvaluationRendererAdapter : IEvaluationRendererAdapter
     {
     }
 }

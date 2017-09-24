@@ -5,5 +5,6 @@
         string QuestionTopic { get; }
         string GetQuestion();
         string GetAnswer();
+        string GetCorrectAnswer();
     }
 }

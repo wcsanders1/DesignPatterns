@@ -6,6 +6,15 @@ namespace Adapter.PersonalInformation
 {
     public class WhyNotLikeHorses : AbstractPersonalInformation, IPersonalInformationGettable
     {
+        private static Dictionary<int, string> PossibleAnswers = new Dictionary<int, string>
+        {
+            {1, "They're stupid" },
+            {2, "They age without grace" },
+            {3, "It's raining" }
+        };
+
+        private const int CorrectAnswer = 2;
+
         public string QuestionTopic { get; } = "Reason for Not Liking Horses";
 
         private readonly ContinuationDeterminer continuationDeterminer;
@@ -43,6 +52,11 @@ namespace Adapter.PersonalInformation
             return question;
         }
 
+        public string GetCorrectAnswer()
+        {
+            return PossibleAnswers[CorrectAnswer];
+        }
+
         private void AskQuestion()
         {
             Console.WriteLine(question);
@@ -50,12 +64,7 @@ namespace Adapter.PersonalInformation
 
         private Dictionary<int, string> GetPossibleAnswers()
         {
-            return new Dictionary<int, string>
-            {
-                {1, "They're stupid" },
-                {2, "They age without grace" },
-                {3, "It's raining" }
-            };
+            return PossibleAnswers;
         }
     }
 }

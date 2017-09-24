@@ -6,6 +6,15 @@ namespace Adapter.PersonalInformation
 {
     public class TreasurySecretary : AbstractPersonalInformation, IPersonalInformationGettable
     {
+        private static Dictionary<int, string> PossibleAnswers = new Dictionary<int, string>
+        {          
+            {1, "Salmon P. Chase" },
+            {2, "Bud Bedsy" },
+            {3, "Bill Cosby" }
+        };
+
+        private const int CorrectAnswer = 1;
+        
         public string QuestionTopic { get; } = "Favorite Treasury Secretary";
 
         private readonly ContinuationDeterminer continuationDeterminer;
@@ -43,6 +52,11 @@ namespace Adapter.PersonalInformation
             return question;
         }
 
+        public string GetCorrectAnswer()
+        {
+            return PossibleAnswers[CorrectAnswer];
+        }
+
         private void AskQuestion()
         {
             Console.WriteLine(question);
@@ -50,12 +64,7 @@ namespace Adapter.PersonalInformation
 
         private Dictionary<int, string> GetPossibleAnswers()
         {
-            return new Dictionary<int, string>
-            {
-                {1, "Salmon P. Chase" },
-                {2, "Salmon P. Chase" },
-                {3, "Bill Cosby" }
-            };
+            return PossibleAnswers;
         }
     }
 }
