@@ -14,7 +14,7 @@ namespace Adapter
 
         public void Render(TextWriter writer)
         {
-            writer.WriteLine("Rendering Data:");
+            writer.WriteLine("Rendering Data:\n");
             var dataSet = new DataSet();
 
             dbDataAdapter.Fill(dataSet);

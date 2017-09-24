@@ -69,6 +69,7 @@ namespace Adapter.PersonalInformation
 
         private static void PrintPossibleAnswers(Dictionary<int, string> possibleAnswers)
         {
+            Console.WriteLine();
             foreach (var kv in possibleAnswers)
             {
                 Console.WriteLine($"{kv.Key}. {kv.Value}");
@@ -77,6 +78,7 @@ namespace Adapter.PersonalInformation
 
         private static bool GetChoice(Dictionary<int, string> possibleAnswers, out string choice, out int tempChoice)
         {
+            Console.WriteLine();
             if (!Int32.TryParse(Console.ReadLine(), out tempChoice))
             {
                 choice = null;
@@ -87,6 +89,7 @@ namespace Adapter.PersonalInformation
             {
                 return ContinuationDeterminer.GoAgainWithInvalidChoiceMessage("That isn't one of the choices.");
             }
+            Console.WriteLine();
 
             return true;
         }

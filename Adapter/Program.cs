@@ -11,8 +11,6 @@ namespace Adapter
     class Program
     {
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
-        private static TextParser TextParser                         = new TextParser();
-        private static TypeParser TypeParser                         = new TypeParser(TextParser);
         private const string ConfigurableInformationGettersPath      = "PersonalInformation/ConfigurableQuestionsAndAnswers.json";
 
         static void Main(string[] args)
@@ -21,50 +19,55 @@ namespace Adapter
             Console.WriteLine("                  WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
             Console.WriteLine("**********************************************************************************************************\n");
 
-            List<InfoGetter> infoGetters;
-            try
+            var keepLooping = true;
+            while (keepLooping)
             {
-                using (var reader = new StreamReader(ConfigurableInformationGettersPath))
+                List<InfoGetter> infoGetters;
+                try
                 {
-                    var json = reader.ReadToEnd();
-                    infoGetters = JsonConvert.DeserializeObject<List<InfoGetter>>(json);
+                    using (var reader = new StreamReader(ConfigurableInformationGettersPath))
+                    {
+                        var json = reader.ReadToEnd();
+                        infoGetters = JsonConvert.DeserializeObject<List<InfoGetter>>(json);
+                    }
                 }
-            }
-            catch (Exception)
-            {
-                Console.WriteLine($"Unable to retrieve questions and answers from '{ConfigurableInformationGettersPath}'.");
-                Console.WriteLine("Using default questions and answers instead.\n");
-                infoGetters = DefaultInfoGetters.GetDefaultInfoGetters();
-            }
-            
-            var questionsAndAnswers = QuestionAndAnswerGetter.GetQuestionsAndAnswers(infoGetters);
+                catch (Exception)
+                {
+                    Console.WriteLine($"Unable to retrieve questions and answers from '{ConfigurableInformationGettersPath}'.");
+                    Console.WriteLine("Using default questions and answers instead.\n");
+                    infoGetters = DefaultInfoGetters.GetDefaultInfoGetters();
+                }
 
-            if (questionsAndAnswers == null)
-            {
-                return;
-            }
+                var questionsAndAnswers = QuestionAndAnswerGetter.GetQuestionsAndAnswers(infoGetters);
 
-            var choice = GetRenderer();
-            if (choice == 0)
-            {
-                return;
-            }
+                if (questionsAndAnswers == null)
+                {
+                    return;
+                }
 
-            switch (choice)
-            {
-                case Renderer.EvaluationRenderer:
-                    var evaluationRenderer = new EvaluationRenderer();
-                    var (results, score) = evaluationRenderer.ListTopicsAndScores(questionsAndAnswers);
-                    Console.WriteLine(results);
-                    Console.WriteLine($"You got a total of {score} questions correct.");
-                    break;
-                case Renderer.QuestionAndAnswerRenderer:
-                    var questionAndAnswerRenderer = new QuestionAndAnswerRenderer();
-                    Console.WriteLine(questionAndAnswerRenderer.ListQuestionsAndAnswers(questionsAndAnswers));
-                    break;
-            }
+                var choice = GetRenderer();
+                if (choice == 0)
+                {
+                    return;
+                }
 
-            Console.ReadKey();
+                switch (choice)
+                {
+                    case Renderer.EvaluationRenderer:
+                        var evaluationRenderer = new EvaluationRenderer();
+                        var (results, score) = evaluationRenderer.ListTopicsAndScores(questionsAndAnswers);
+                        var questionWord = score > 1 ? "questions" : "question";
+                        Console.WriteLine(results);
+                        Console.WriteLine($"You got a total of {score} {questionWord} correct.\n");
+                        break;
+                    case Renderer.QuestionAndAnswerRenderer:
+                        var questionAndAnswerRenderer = new QuestionAndAnswerRenderer();
+                        Console.WriteLine(questionAndAnswerRenderer.ListQuestionsAndAnswers(questionsAndAnswers));
+                        break;
+                }
+
+                keepLooping = ContinuationDeterminer.GoAgain();
+            }
         }
 
         private static Renderer GetRenderer()
@@ -90,6 +93,7 @@ namespace Adapter
                     }
                     continue;
                 }
+                Console.WriteLine();
 
                 return (Renderer)choice;
             }
