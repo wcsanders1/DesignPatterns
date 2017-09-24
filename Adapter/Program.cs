@@ -24,11 +24,26 @@ namespace Adapter
                 return;
             }
 
-            var renderer = new QuestionAndAnswerRenderer();
+            var choice = GetRenderer();
+            if (choice == 0)
+            {
+                return;
+            }
 
-            var questionsAndAnswersString = renderer.ListQuestionsAndAnswers(questionsAndAnswers);
+            switch (choice)
+            {
+                case Renderer.EvaluationRenderer:
+                    var evaluationRenderer = new EvaluationRenderer();
+                    var (results, score) = evaluationRenderer.ListTopicsAndScores(questionsAndAnswers);
+                    Console.WriteLine(results);
+                    Console.WriteLine($"You got a total of {score} questions correct.");
+                    break;
+                case Renderer.QuestionAndAnswerRenderer:
+                    var questionAndAnswerRenderer = new QuestionAndAnswerRenderer();
+                    Console.WriteLine(questionAndAnswerRenderer.ListQuestionsAndAnswers(questionsAndAnswers));
+                    break;
+            }
 
-            Console.WriteLine(questionsAndAnswersString);
             Console.ReadKey();
         }
 
@@ -39,20 +54,51 @@ namespace Adapter
 
             foreach (var kv in personalInformationGetters)
             {
-                var answer = kv.Value.GetAnswer();
-                if (string.IsNullOrWhiteSpace(answer))
+                var answerGiven = kv.Value.GetAnswer();
+                if (string.IsNullOrWhiteSpace(answerGiven))
                 {
                     return null;
                 }
 
                 questionsAndAnswers.Add(new QuestionAndAnswer
                 {
-                    Question = kv.Value.GetQuestion(),
-                    Answer   = answer
+                    Question             = kv.Value.GetQuestion(),
+                    Topic                = kv.Value.QuestionTopic,
+                    AnswerGiven          = answerGiven,
+                    AnswerGivenShortForm = kv.Value.GetAnswerShortForm(),
+                    CorrectAnswer        = kv.Value.GetCorrectAnswer(),
                 });
             }
 
             return questionsAndAnswers;
+        }
+
+        private static Renderer GetRenderer()
+        {
+            while (true)
+            {
+                Console.WriteLine("Press 1 if you want your answers evaluated for correctness, or press 2 if you merely want them listed.");
+
+                if (!Int32.TryParse(Console.ReadLine(), out var choice))
+                {
+                    if (!ContinuationDeterminer.GoAgainWithInvalidChoiceMessage())
+                    {
+                        return 0;
+                    }
+                    continue;
+                }
+
+                if (!Enum.IsDefined(typeof(Renderer), choice))
+                {
+                    if (!ContinuationDeterminer.GoAgainWithInvalidChoiceMessage())
+                    {
+                        return 0;
+                    }
+                    continue;
+                }
+
+                return (Renderer)choice;
+            }
         }
     }
 }

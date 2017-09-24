@@ -14,6 +14,7 @@ namespace Adapter.PersonalInformation
         };
 
         private const int CorrectAnswer = 2;
+        private int AnswerChoice { get; set; }
 
         public string QuestionTopic { get; } = "Times Hit By Train";
 
@@ -35,16 +36,22 @@ namespace Adapter.PersonalInformation
                 Console.WriteLine(Instruction);
                 PrintPossibleAnswers(possibleAnswers);
 
-                if (!GetChoice(possibleAnswers, out var answer))
+                if (!GetChoice(possibleAnswers, out var answer, out var index))
                 {
                     return null;
                 }
 
                 if (answer != null)
                 {
+                    AnswerChoice = index;
                     return $"You've been hit by a train {answer.ToLower()}.";
                 }
             }
+        }
+
+        public string GetAnswerShortForm()
+        {
+            return PossibleAnswers[AnswerChoice];
         }
 
         public string GetQuestion()

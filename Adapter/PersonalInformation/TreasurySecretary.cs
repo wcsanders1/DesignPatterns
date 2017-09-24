@@ -14,6 +14,7 @@ namespace Adapter.PersonalInformation
         };
 
         private const int CorrectAnswer = 1;
+        private int AnswerChoice { get; set; }
         
         public string QuestionTopic { get; } = "Favorite Treasury Secretary";
 
@@ -35,13 +36,14 @@ namespace Adapter.PersonalInformation
                 Console.WriteLine(Instruction);
                 PrintPossibleAnswers(possibleAnswers);
 
-                if (!GetChoice(possibleAnswers, out var answer))
+                if (!GetChoice(possibleAnswers, out var answer, out var index))
                 {
                     return null;
                 }
 
                 if (answer != null)
                 {
+                    AnswerChoice = index;
                     return $"Your favorite Treasury Secretary is {answer}.";
                 }
             }
@@ -55,6 +57,11 @@ namespace Adapter.PersonalInformation
         public string GetCorrectAnswer()
         {
             return PossibleAnswers[CorrectAnswer];
+        }
+
+        public string GetAnswerShortForm()
+        {
+            return PossibleAnswers[AnswerChoice];
         }
 
         private void AskQuestion()

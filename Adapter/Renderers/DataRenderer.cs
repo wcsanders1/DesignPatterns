@@ -23,7 +23,7 @@ namespace Adapter
             {
                 foreach (DataColumn column in table.Columns)
                 {
-                    writer.Write($"{column.ColumnName.PadRight(20)} ");
+                    writer.Write($"{column.ColumnName.PadRight(30)} ");
                 }
                 writer.WriteLine();
 
@@ -31,7 +31,7 @@ namespace Adapter
                 {
                     for (int i = 0; i < table.Columns.Count; i++)
                     {
-                        writer.Write($"{row[i].ToString().PadRight(20)} ");
+                        writer.Write($"{row[i].ToString().PadRight(30)} ");
                     }
                     writer.WriteLine();
                 }

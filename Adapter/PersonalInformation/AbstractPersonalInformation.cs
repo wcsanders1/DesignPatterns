@@ -14,9 +14,10 @@ namespace Adapter.PersonalInformation
         {
             this.continuationDeterminer = continuationDeterminer;
         }
-        protected bool GetChoice(Dictionary<int, string> possibleAnswers, out string choice)
+
+        protected bool GetChoice(Dictionary<int, string> possibleAnswers, out string choice, out int tempChoice)
         {
-            if (!Int32.TryParse(Console.ReadLine(), out var tempChoice))
+            if (!Int32.TryParse(Console.ReadLine(), out tempChoice))
             {
                 choice = null;
                 return continuationDeterminer.GoAgainWithInvalidChoiceMessage();

@@ -16,7 +16,7 @@ namespace Adapter.Renderers
 
         public (string, int) ListTopicsAndScores(IEnumerable<QuestionAndAnswer> questionsAndAnswers)
         {
-            return (null, 0);
+            return adapter.ListTopicsAndScores(questionsAndAnswers);
         }
     }
 }

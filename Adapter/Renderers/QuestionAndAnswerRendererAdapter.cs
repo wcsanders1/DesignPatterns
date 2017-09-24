@@ -5,7 +5,7 @@ using System.IO;
 
 namespace Adapter.Renderers
 {
-    class QuestionAndAnswerRendererAdapter : IQuestionAndAnswerRendererAdapter
+    public class QuestionAndAnswerRendererAdapter : IQuestionAndAnswerRendererAdapter
     {
         private DataRenderer dataRenderer;
 
@@ -39,7 +39,7 @@ namespace Adapter.Renderers
                 {
                     var row = dataTable.NewRow();
                     row[0] = qa.Question;
-                    row[1] = qa.Answer;
+                    row[1] = qa.AnswerGiven;
                     dataTable.Rows.Add(row);
                 }
                 dataSet.Tables.Add(dataTable);
@@ -48,7 +48,7 @@ namespace Adapter.Renderers
                 return dataTable.Rows.Count;
             }
 
-#region NotImplemented
+            #region Not Implemented
             public IDbCommand DeleteCommand { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
             public IDbCommand InsertCommand { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
             public IDbCommand SelectCommand { get => throw new System.NotImplementedException(); set => throw new System.NotImplementedException(); }
@@ -72,7 +72,7 @@ namespace Adapter.Renderers
             {
                 throw new System.NotImplementedException();
             }
-#endregion
+            #endregion
         }
     }
 }
