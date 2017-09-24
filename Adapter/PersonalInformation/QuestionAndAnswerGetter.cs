@@ -48,8 +48,8 @@ namespace Adapter.PersonalInformation
 
                 if (answer != null)
                 {
-                    var answerGiven = infoGetter.LowerCase ? $"{infoGetter.AnswerPrefix} {answer.ToLower()}" :
-                        $"{infoGetter.AnswerPrefix} {answer}";
+                    var answerGiven = infoGetter.LowerCase ? $"{infoGetter.AnswerPrefix} {answer.ToLower()}." :
+                        $"{infoGetter.AnswerPrefix} {answer}.";
                     var answerGivenShortForm = infoGetter.PossibleAnswers[index];
 
                     return (answerGiven, answerGivenShortForm);

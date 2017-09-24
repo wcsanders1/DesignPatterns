@@ -3,6 +3,8 @@ using CommonClientLib;
 using System.Collections.Generic;
 using Adapter.PersonalInformation;
 using Adapter.Renderers;
+using System.IO;
+using Newtonsoft.Json;
 
 namespace Adapter
 {
@@ -11,6 +13,7 @@ namespace Adapter
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private static TextParser TextParser                         = new TextParser();
         private static TypeParser TypeParser                         = new TypeParser(TextParser);
+        private const string ConfigurableInformationGettersPath      = "PersonalInformation/ConfigurableQuestionsAndAnswers.json";
 
         static void Main(string[] args)
         {
@@ -18,7 +21,22 @@ namespace Adapter
             Console.WriteLine("                  WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
             Console.WriteLine("**********************************************************************************************************\n");
 
-            var infoGetters = DefaultInfoGetters.GetDefaultInfoGetters();
+            List<InfoGetter> infoGetters;
+            try
+            {
+                using (var reader = new StreamReader(ConfigurableInformationGettersPath))
+                {
+                    var json = reader.ReadToEnd();
+                    infoGetters = JsonConvert.DeserializeObject<List<InfoGetter>>(json);
+                }
+            }
+            catch (Exception)
+            {
+                Console.WriteLine($"Unable to retrieve questions and answers from '{ConfigurableInformationGettersPath}'.");
+                Console.WriteLine("Using default questions and answers instead.\n");
+                infoGetters = DefaultInfoGetters.GetDefaultInfoGetters();
+            }
+            
             var questionsAndAnswers = QuestionAndAnswerGetter.GetQuestionsAndAnswers(infoGetters);
 
             if (questionsAndAnswers == null)
