@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26730.15
+VisualStudioVersion = 15.0.26730.16
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactory", "SimpleFactory\SimpleFactory.csproj", "{F1E0D86C-940B-4310-B5A0-F1471A81AD4B}"
 EndProject
@@ -17,7 +17,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactoryTests", "Simpl
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonClientLib", "CommonClientLib\CommonClientLib.csproj", "{55C34CF0-2A76-41CA-B10B-F62AD3B224B9}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Adapter", "Adapter\Adapter.csproj", "{C5E80F77-12C6-428E-9274-6FB94A031160}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Adapter", "Adapter\Adapter.csproj", "{C5E80F77-12C6-428E-9274-6FB94A031160}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bridge", "Bridge\Bridge.csproj", "{369F3C6C-AF2D-4B9E-984A-3668C478F2CF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -53,6 +55,10 @@ Global
 		{C5E80F77-12C6-428E-9274-6FB94A031160}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C5E80F77-12C6-428E-9274-6FB94A031160}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C5E80F77-12C6-428E-9274-6FB94A031160}.Release|Any CPU.Build.0 = Release|Any CPU
+		{369F3C6C-AF2D-4B9E-984A-3668C478F2CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{369F3C6C-AF2D-4B9E-984A-3668C478F2CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{369F3C6C-AF2D-4B9E-984A-3668C478F2CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{369F3C6C-AF2D-4B9E-984A-3668C478F2CF}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
