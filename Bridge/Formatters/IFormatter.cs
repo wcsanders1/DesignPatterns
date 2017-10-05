@@ -2,6 +2,6 @@
 {
     public interface IFormatter
     {
-        string Format(decimal key, decimal value);
+        string GetString(string original, string converted, string value);
     }
 }
