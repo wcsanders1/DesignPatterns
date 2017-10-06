@@ -23,7 +23,7 @@ namespace Builder
             {
                 Console.WriteLine("Enter the number of the character that you want to build.\n");
 
-                var (characterBuilders, characterNames) = TypParser.GetTypeDictionaryAndNameList<AbstractCharacterBuilder>();
+                var (characterBuilders, characterNames) = TypParser.GetInstantiatedTypeDictionaryAndNameList<AbstractCharacterBuilder>();
                 TxtParser.PrintStringList(characterNames);
 
                 var choiceString = Console.ReadLine();

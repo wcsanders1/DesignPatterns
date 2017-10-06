@@ -19,7 +19,7 @@ namespace Singleton
         static void Main(string[] args)
         {
             var keepLooping                   = true;
-            var (topicDictionary, topicNames) = TypParser.GetTypeDictionaryAndNameList<IArguable>();
+            var (topicDictionary, topicNames) = TypParser.GetInstantiatedTypeDictionaryAndNameList<IArguable>();
             var topicContainer                = Container.GetContainer(topicDictionary);
 
             Console.WriteLine("**********************************************************************************************************");
