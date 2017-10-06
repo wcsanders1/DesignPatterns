@@ -40,6 +40,23 @@ namespace CommonClientLib
             return (typeDict, typeNames);
         }
 
+        public bool TryGetType<T>(string strChoice, Dictionary<int, T> types, out T type) where T : class
+        {
+            if (!int.TryParse(strChoice, out var intChoice))
+            {
+                type = null;
+                return false;
+            }
+
+            if (!types.TryGetValue(intChoice, out type))
+            {
+                type = null;
+                return false;
+            }
+
+            return true;
+        }
+
         private List<T> GetTypeList<T>() where T : class
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()

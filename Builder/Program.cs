@@ -28,13 +28,7 @@ namespace Builder
 
                 var choiceString = Console.ReadLine();
 
-                if (!Int32.TryParse(choiceString, out var choice))
-                {
-                    Console.WriteLine(invalidChoiceMessage);
-                    continue;
-                }
-
-                if (!characterBuilders.TryGetValue(choice, out var builder))
+                if (!TypParser.TryGetType(choiceString, characterBuilders, out var builder))
                 {
                     Console.WriteLine(invalidChoiceMessage);
                     continue;
