@@ -2,9 +2,9 @@
 {
     public class SimpleStringFormatter : IFormatter
     {
-        public string GetString(string original, string converted, string value)
+        public string GetString(string originalValue, string valueName, string converted, string value)
         {
-            return $"{original} to {converted} is {value}";
+            return $"{originalValue} {valueName} to {converted} is {value}";
         }
     }
 }

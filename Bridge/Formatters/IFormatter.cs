@@ -2,6 +2,6 @@
 {
     public interface IFormatter
     {
-        string GetString(string original, string converted, string value);
+        string GetString(string originalValue, string valueName, string converted, string value);
     }
 }

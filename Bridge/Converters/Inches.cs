@@ -7,6 +7,7 @@ namespace Bridge.Converters
     {
         const string ORIGINAL_TYPE = "Inches";
 
+        private decimal OriginalValue { get; set; }
         private decimal Feet { get; set; }
         private decimal Meters { get; set; }
         private decimal Miles { get; set; }
@@ -20,9 +21,10 @@ namespace Bridge.Converters
 
         public override void Convert(decimal amount)
         {
-            Feet = amount * 12;
+            OriginalValue = amount;
+            Feet = amount / 12M;
             Meters = amount * .0254M;
-            Miles = amount / 63360;
+            Miles = amount / 63360M;
             Kilometers = "whatever you feel like";
 
             Print();
@@ -30,10 +32,10 @@ namespace Bridge.Converters
 
         private void Print()
         {
-            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Feet), Feet.ToString("#.######")));
-            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Meters), Meters.ToString("#.######")));
-            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Miles), Miles.ToString("#.######")));
-            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Kilometers), Kilometers));
+            Console.WriteLine(Formatter.GetString(OriginalValue.ToString(), ORIGINAL_TYPE, nameof(Feet), Feet.ToString("#.######")));
+            Console.WriteLine(Formatter.GetString(OriginalValue.ToString(), ORIGINAL_TYPE, nameof(Meters), Meters.ToString("#.######")));
+            Console.WriteLine(Formatter.GetString(OriginalValue.ToString(), ORIGINAL_TYPE, nameof(Miles), Miles.ToString("#.######")));
+            Console.WriteLine(Formatter.GetString(OriginalValue.ToString(), ORIGINAL_TYPE, nameof(Kilometers), Kilometers));
             Console.WriteLine();
         }
     }
