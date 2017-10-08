@@ -6,19 +6,18 @@ namespace Builder
 {
     class Program
     {
+        private static TextPrinter TxtPrinter                        = new TextPrinter();
         private static TextParser TxtParser                          = new TextParser();
         private static TypeParser TypParser                          = new TypeParser(TxtParser);
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+        private const string INVALID_CHOICE_MESSAGE                  = 
+            "\nThat isn't a number of one of the characters, which is what you were asked to provide, so let's try this again.\n";
 
         static void Main()
         {
-            var keepLooping                   = true;
-            const string invalidChoiceMessage = "\nThat isn't a number of one of the characters, which is what you were asked to provide, so let's try this again.\n";
+            TxtPrinter.PrintAppTitle("WELCOME TO THE CHARACTER BUILDER PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
 
-            Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("                  WELCOME TO THE CHARACTER BUILDER PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
-            Console.WriteLine("**********************************************************************************************************\n");
-
+            var keepLooping = true;
             while (keepLooping)
             {
                 Console.WriteLine("Enter the number of the character that you want to build.\n");
@@ -30,7 +29,7 @@ namespace Builder
 
                 if (!TypParser.TryGetType(choiceString, characterBuilders, out var builder))
                 {
-                    Console.WriteLine(invalidChoiceMessage);
+                    Console.WriteLine(INVALID_CHOICE_MESSAGE);
                     continue;
                 }
 

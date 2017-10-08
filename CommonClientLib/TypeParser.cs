@@ -43,7 +43,7 @@ namespace CommonClientLib
         }
 
         /// <summary>
-        /// Gets the type associated with the asociated key.
+        /// Gets the type associated with the key.
         /// </summary>
         /// <typeparam name="T">Type sought.</typeparam>
         /// <param name="strChoice">Key sought.</param>

@@ -10,14 +10,13 @@ namespace Adapter
 {
     class Program
     {
+        private static TextPrinter TxtPrinter                        = new TextPrinter();
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private const string ConfigurableInformationGettersPath      = "PersonalInformation/ConfigurableQuestionsAndAnswers.json";
 
         static void Main(string[] args)
         {
-            Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("                  WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
-            Console.WriteLine("**********************************************************************************************************\n");
+            TxtPrinter.PrintAppTitle("WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
 
             var keepLooping = true;
             while (keepLooping)

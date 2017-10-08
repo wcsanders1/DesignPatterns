@@ -6,19 +6,18 @@ namespace Prototype
 {
     class Program
     {
+        private static TextPrinter TxtPrinter = new TextPrinter();
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
+        const string INVALID_CHOICE_MESSAGE = "\nThat's not a valid choice, so I guess we'll try this again.\n";
 
         static void Main()
         {
             var urls                          = GetUrls();
             var explorers                     = GetExplorers(urls);
             var keepLooping                   = true;
-            const string invalidChoiceMessage = "\nThat's not a valid choice, so I guess we'll try this again.\n";
-
-            Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("                  WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
-            Console.WriteLine("**********************************************************************************************************\n");
-
+            
+            TxtPrinter.PrintAppTitle("WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
+            
             while (keepLooping)
             {
                 Console.WriteLine("Enter the number of one of the classic websites below to get information about that site!");
@@ -31,20 +30,20 @@ namespace Prototype
                 Console.WriteLine();
 
                 var choiceString = Console.ReadLine();
-                if (!Int32.TryParse(choiceString, out var choice))
+                if (!int.TryParse(choiceString, out var choice))
                 {
-                    Console.WriteLine($"{invalidChoiceMessage}");
+                    Console.WriteLine($"{INVALID_CHOICE_MESSAGE}");
                     continue;
                 }
 
                 WebPageExplorer explorer;
                 try
                 {
-                    explorer = explorers[choice];
+                    explorer = explorers[--choice];
                 }
                 catch
                 {
-                    Console.WriteLine(invalidChoiceMessage);
+                    Console.WriteLine(INVALID_CHOICE_MESSAGE);
                     continue;
                 }
                 

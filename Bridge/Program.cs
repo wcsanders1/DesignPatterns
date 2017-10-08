@@ -7,19 +7,17 @@ namespace Bridge
 {
     class Program
     {
-        private static TextParser TxtParser = new TextParser();
-        private static TypeParser TypParser = new TypeParser(TxtParser);
+        private static TextPrinter TxtPrinter                        = new TextPrinter();
+        private static TextParser TxtParser                          = new TextParser();
+        private static TypeParser TypParser                          = new TypeParser(TxtParser);
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
-        private const string INVALID_CHOICE_MESSAGE = "You entered an invalid choice. I'm not mad; just disappointed. Let's try again I guess.\n";
+        private const string INVALID_CHOICE_MESSAGE                  = "You entered an invalid choice. I'm not mad; just disappointed. Let's try again I guess.\n";
 
         static void Main(string[] args)
         {
+            TxtPrinter.PrintAppTitle("WELCOME TO THE BRIDGE PROGRAM -- WHICH IS A BORING PROGRAM THAT SORT OF DOES CONVERSIONS");
+
             var keepLooping = true;
-
-            Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("    WELCOME TO THE BRIDGE PROGRAM -- WHICH IS A BORING PROGRAM THAT SORT OF DOES CONVERSIONS");
-            Console.WriteLine("**********************************************************************************************************\n");
-
             while (keepLooping)
             {
                 var (converters, converterNames) = TypParser.GetTypeDictionaryAndNameList<AbstractConverter>();

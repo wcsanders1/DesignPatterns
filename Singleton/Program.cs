@@ -8,10 +8,11 @@ namespace Singleton
 {
     class Program
     {
-        private static TextParser TxtParser = new TextParser();
-        private static TypeParser TypParser = new TypeParser(TxtParser);
-        private static Arguer Arguer        = new Arguer(new Random());
-        private static Container Container  = new Container(new ContainerBuilder());
+        private static TextPrinter TxtPrinter = new TextPrinter();
+        private static TextParser TxtParser   = new TextParser();
+        private static TypeParser TypParser   = new TypeParser(TxtParser);
+        private static Arguer Arguer          = new Arguer(new Random());
+        private static Container Container    = new Container(new ContainerBuilder());
         private static ForOrAgainst CurrentPosition;
 
         private static string InvalidChoiceMessage = "\nThat isn't one of the available topics. So, let's try this again, eh?";
@@ -22,9 +23,7 @@ namespace Singleton
             var (topicDictionary, topicNames) = TypParser.GetInstantiatedTypeDictionaryAndNameList<IArguable>();
             var topicContainer                = Container.GetContainer(topicDictionary);
 
-            Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("    WELCOME TO THE ARGUMENT PROGRAM -- WHICH IS A PROGRAM THAT'S KIND OF FUN, AT LEAST AT FIRST MAYBE.");
-            Console.WriteLine("**********************************************************************************************************\n");
+            TxtPrinter.PrintAppTitle("WELCOME TO THE ARGUMENT PROGRAM -- WHICH IS A PROGRAM THAT'S KIND OF FUN, AT LEAST AT FIRST MAYBE.");
 
             while (keepLooping)
             {

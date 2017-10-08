@@ -1,12 +1,12 @@
 ﻿using CommonClientLib;
 using System;
 using System.Diagnostics;
-using System.Text.RegularExpressions;
 
 namespace SimpleFactory
 {
     public class Program
     {
+        private static TextPrinter TxtPrinter                        = new TextPrinter();
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private static TextParser TxtParser                          = new TextParser();
 
@@ -16,10 +16,8 @@ namespace SimpleFactory
             var keepLooping                 = true;
             var stopWatch                   = new Stopwatch();
 
-            Console.WriteLine("**********************************************************************************************************");
-            Console.WriteLine("                  WELCOME TO THE SORT PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
-            Console.WriteLine("**********************************************************************************************************\n");
-
+            TxtPrinter.PrintAppTitle("WELCOME TO THE SORT PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
+            
             while (keepLooping)
             {
                 var array = GetArrayToSort();
