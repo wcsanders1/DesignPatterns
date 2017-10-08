@@ -3,9 +3,9 @@ using System;
 
 namespace Bridge.Converters
 {
-    public class ConvertFromInches : AbstractConverter
+    public class Inches : AbstractConverter
     {
-        const string OriginalType = "Inches";
+        const string ORIGINAL_TYPE = "Inches";
 
         private decimal Feet { get; set; }
         private decimal Meters { get; set; }
@@ -13,7 +13,7 @@ namespace Bridge.Converters
         private string Kilometers { get; set; }
         private IFormatter Formatter { get; }
 
-        public ConvertFromInches(IFormatter formatter) : base(formatter)
+        public Inches(IFormatter formatter) : base(formatter)
         {
             Formatter = formatter;
         }
@@ -30,10 +30,11 @@ namespace Bridge.Converters
 
         private void Print()
         {
-            Console.WriteLine(Formatter.GetString(OriginalType, nameof(Feet), Feet.ToString("#.######")));
-            Console.WriteLine(Formatter.GetString(OriginalType, nameof(Meters), Meters.ToString("#.######")));
-            Console.WriteLine(Formatter.GetString(OriginalType, nameof(Miles), Miles.ToString("#.######")));
-            Console.WriteLine(Formatter.GetString(OriginalType, nameof(Kilometers), Kilometers));
+            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Feet), Feet.ToString("#.######")));
+            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Meters), Meters.ToString("#.######")));
+            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Miles), Miles.ToString("#.######")));
+            Console.WriteLine(Formatter.GetString(ORIGINAL_TYPE, nameof(Kilometers), Kilometers));
+            Console.WriteLine();
         }
     }
 }

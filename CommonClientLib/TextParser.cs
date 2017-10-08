@@ -42,5 +42,13 @@ namespace CommonClientLib
             });
             Console.WriteLine();
         }
+
+        public string GetTextFromConsole()
+        {
+            var val = Console.ReadLine();
+            Console.WriteLine();
+
+            return val;
+        }
     }
 }
