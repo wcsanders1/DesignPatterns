@@ -1,6 +1,6 @@
 ﻿namespace Bridge.Formatters
 {
-    public class SimpleStringFormatter : IFormatter
+    public class SimpleFormatter : IFormatter
     {
         public string GetString(string originalValue, string valueName, string converted, string value)
         {
