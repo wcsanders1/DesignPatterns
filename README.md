@@ -23,4 +23,8 @@ Did you come here for an argument? Good. Choose from a variety of topics on whic
 
 ### Adapter
 
-After making your way through some questions about yourself, the program will render a report regarding your answers. The report can render either as a simple list of the questions and the answers you provided, or it can show you your incorrect answers along with a total of your score. The adapter pattern is used to allow render methods of various signatures to use the functionality that another render method provides.
+After making your way through some questions about yourself, the program will render a report regarding your answers. The report can render either as a simple list of the questions and the answers you provided, or it can show you your incorrect answers along with a total of your score. The adapter pattern is allows render methods of various signatures to use the functionality that another render method provides.
+
+### Bridge
+
+Convert measurements from one type to another and print the output in either a simple or fancy style. The bridge pattern allows the conversion output to be formatted in various ways; i.e., any formatter that implements the `IFormatter` interface can be passed to any conversion class, which will format the output using the formatter.
