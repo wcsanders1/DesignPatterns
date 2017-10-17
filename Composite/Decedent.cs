@@ -4,10 +4,21 @@ namespace Composite
 {
     public class Decedent
     {
-        public decimal EstateValue { get; set; }
-        public List<Descendant> Descendants { get; set; }
+        private decimal EstateValue { get; }
+        private List<Descendant> Descendants { get; }
 
-        public void DistributeEstate(List<Descendant> descendants, decimal remainingShare)
+        public Decedent(decimal estateValue, List<Descendant> descendants)
+        {
+            EstateValue = estateValue;
+            Descendants = descendants;
+        }
+
+        public void DistributeEstate()
+        {
+            DistributeEstate(Descendants, EstateValue);
+        }
+
+        private void DistributeEstate(List<Descendant> descendants, decimal remainingShare)
         {
             var share = remainingShare / descendants.Count;
             descendants.ForEach(descendant =>
