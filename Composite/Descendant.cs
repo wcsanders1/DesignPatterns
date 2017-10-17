@@ -6,6 +6,7 @@ namespace Composite
     {
         public string Name { get; set; }
         public decimal Inheritance { get; set; }
+        public bool Deceased { get; set; }
         public List<Descendant> Descendants { get; set; }
     }
 }
