@@ -2,6 +2,7 @@ using Composite;
 using System.Linq;
 using System.Collections.Generic;
 using Xunit;
+using CommonClientLib;
 
 namespace CompositeTests
 {
@@ -215,7 +216,6 @@ namespace CompositeTests
                 .Where(d => d.Name == TEST_DESCENDANT_THREE_NAME)
                 .Select(d => d.Inheritance)
                 .FirstOrDefault();
-
 
             Assert.Equal(testDescendantOneInheritance, EXPECTED_INHERITANCE_TEST_DESCENDANT_ONE);
             Assert.Equal(testDescendantTwoInheritance, EXPECTED_INHERITANCE_TEST_DESCENDANT_TWO);
