@@ -31,8 +31,8 @@ namespace CommonClientLib
                 {
                     if (property.PropertyType == typeof(List<T>))
                     {
-                        var moreDescendants = (List<T>)property.GetValue(obj);
-                        GetAllNestedTypes(moreDescendants, collectedObjects);
+                        var moreObjects= (List<T>)property.GetValue(obj);
+                        GetAllNestedTypes(moreObjects, collectedObjects);
                     }
                 }
             }
