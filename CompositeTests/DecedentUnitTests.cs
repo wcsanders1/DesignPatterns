@@ -93,15 +93,14 @@ namespace CompositeTests
 
             sut.DistributeEstate();
 
-            var testDescendantOneInheritance = testDescendants
+            var allDescendants = testDescendants.GetAllNestedTypes();
+
+            var testDescendantOneInheritance = allDescendants
                 .Where(d => d.Name == TEST_DESCENDANT_ONE_NAME)
                 .Select(d => d.Inheritance)
                 .FirstOrDefault();
 
-            var testDescendantTwoInheritance = testDescendants
-                .Where(d => d.Deceased)
-                .Select(d => d.Descendants)
-                .FirstOrDefault()
+            var testDescendantTwoInheritance = allDescendants
                 .Where(d => d.Name == TEST_DESCENDANT_TWO_NAME)
                 .Select(d => d.Inheritance)
                 .FirstOrDefault();
@@ -193,26 +192,19 @@ namespace CompositeTests
 
             sut.DistributeEstate();
 
-            var testDescendantOneInheritance = testDescendants
+            var allDescendants = testDescendants.GetAllNestedTypes();
+
+            var testDescendantOneInheritance = allDescendants
                 .Where(d => d.Name == TEST_DESCENDANT_ONE_NAME)
                 .Select(d => d.Inheritance)
                 .FirstOrDefault();
 
-            var testDescendantTwoInheritance = testDescendants
-                .Where(d => d.Name == TEST_DESCENDANT_FOUR_NAME)
-                .Select(d => d.Descendants)
-                .FirstOrDefault()
+            var testDescendantTwoInheritance = allDescendants
                 .Where(d => d.Name == TEST_DESCENDANT_TWO_NAME)
                 .Select(d => d.Inheritance)
                 .FirstOrDefault();
 
-            var testDescendantThreeInheritance = testDescendants
-                .Where(d => d.Name == TEST_DESCENDANT_FIVE_NAME)
-                .Select(d => d.Descendants)
-                .FirstOrDefault()
-                .Where(d => d.Name == TEST_DESCENDANT_SIX_NAME)
-                .Select(d => d.Descendants)
-                .FirstOrDefault()
+            var testDescendantThreeInheritance = allDescendants
                 .Where(d => d.Name == TEST_DESCENDANT_THREE_NAME)
                 .Select(d => d.Inheritance)
                 .FirstOrDefault();

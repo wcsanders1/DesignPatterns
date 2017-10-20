@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 
 namespace CommonClientLib
 {
     public static class ListExtensionMethods
     {
-        public static List<T> GetAllNestedTypes<T>(this List<T> objects) where T : class
+        public static IEnumerable<T> GetAllNestedTypes<T>(this IEnumerable<T> objects) where T : class
         {
             if (objects == null || objects.Count() <= 0)
             {
@@ -16,12 +15,26 @@ namespace CommonClientLib
             return GetAllNestedTypes(objects, new List<T>());
         }
 
-        private static List<T> GetAllNestedTypes<T>(List<T> objectsToSearch, List<T> collectedObjects)
+        private static IEnumerable<T> GetAllNestedTypes<T>(IEnumerable<T> objectsToSearch, List<T> collectedObjects)
         {
+            if (objectsToSearch == null)
+            {
+                return null;
+            }
+
             foreach (var obj in objectsToSearch)
             {
+                collectedObjects.Add(obj);
 
-                
+                var objType = obj.GetType();
+                foreach (var property in objType.GetProperties())
+                {
+                    if (property.PropertyType == typeof(List<T>))
+                    {
+                        var moreDescendants = (List<T>)property.GetValue(obj);
+                        GetAllNestedTypes(moreDescendants, collectedObjects);
+                    }
+                }
             }
 
             return collectedObjects;
