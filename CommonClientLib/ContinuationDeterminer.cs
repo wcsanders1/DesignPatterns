@@ -11,7 +11,7 @@ namespace CommonClientLib
             return GetChoice();
         }
 
-        public bool GoAgainWithInvalidChoiceMessage(string message = "That choice is invalid.")
+        public bool GoAgainWithInvalidInputMessage(string message = "That input is invalid.")
         {
             Console.WriteLine($"{message} Enter 0 to quit or anything else to try again.");
 

@@ -82,12 +82,12 @@ namespace Adapter.PersonalInformation
             if (!Int32.TryParse(Console.ReadLine(), out tempChoice))
             {
                 choice = null;
-                return ContinuationDeterminer.GoAgainWithInvalidChoiceMessage();
+                return ContinuationDeterminer.GoAgainWithInvalidInputMessage();
             }
 
             if (!possibleAnswers.TryGetValue(tempChoice, out choice))
             {
-                return ContinuationDeterminer.GoAgainWithInvalidChoiceMessage("That isn't one of the choices.");
+                return ContinuationDeterminer.GoAgainWithInvalidInputMessage("That isn't one of the choices.");
             }
             Console.WriteLine();
 

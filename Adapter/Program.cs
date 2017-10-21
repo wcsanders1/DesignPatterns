@@ -77,7 +77,7 @@ namespace Adapter
 
                 if (!Int32.TryParse(Console.ReadLine(), out var choice))
                 {
-                    if (!ContinuationDeterminer.GoAgainWithInvalidChoiceMessage())
+                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
                     {
                         return 0;
                     }
@@ -86,7 +86,7 @@ namespace Adapter
 
                 if (!Enum.IsDefined(typeof(Renderer), choice))
                 {
-                    if (!ContinuationDeterminer.GoAgainWithInvalidChoiceMessage())
+                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
                     {
                         return 0;
                     }
