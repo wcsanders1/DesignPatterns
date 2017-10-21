@@ -24,6 +24,8 @@ namespace Composite
                     Environment.Exit(0);
                 }
 
+
+
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);

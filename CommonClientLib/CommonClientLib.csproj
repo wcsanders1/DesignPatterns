@@ -49,6 +49,7 @@
     <Compile Include="TextParser.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TextPrinter.cs" />
+    <Compile Include="Tree.cs" />
     <Compile Include="TypeParser.cs" />
   </ItemGroup>
   <ItemGroup>
