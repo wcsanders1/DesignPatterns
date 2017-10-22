@@ -13,6 +13,7 @@ namespace Composite
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         
         private const int NAME_LENGTH_LIMIT = 10;
+        private static readonly string NAME_LENGTH_LIMIT_MESSAGE = $"(Enter no more than {NAME_LENGTH_LIMIT} characters).";
 
         static void Main(string[] args)
         {
@@ -35,6 +36,7 @@ namespace Composite
                 tree.PrintTree();
                 Console.WriteLine();
 
+                GetDescendants(decedent.Name, tree);
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
@@ -62,7 +64,7 @@ namespace Composite
         {
             while (true)
             {
-                Console.WriteLine($"What is the decedent's name? (Enter no more than {NAME_LENGTH_LIMIT} characters.)");
+                Console.WriteLine($"What is the decedent's name? {NAME_LENGTH_LIMIT_MESSAGE}");
 
                 decedentName = TxtParser.GetTextFromConsole();
                 if (!NameIsValid(decedentName))
@@ -84,8 +86,7 @@ namespace Composite
             {
                 Console.WriteLine($"What is the value of {decedentName}'s estate? (Enter a number.)");
 
-                var estateValuelStr = TxtParser.GetTextFromConsole();
-                if (!decimal.TryParse(estateValuelStr, out estateValue))
+                if (!decimal.TryParse(TxtParser.GetTextFromConsole(), out estateValue))
                 {
                     if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
                     {
@@ -98,13 +99,14 @@ namespace Composite
             }
         }
 
-        private static void GetDescendants(Decedent decedent, Tree<String> tree)
+        private static void GetDescendants(string decedentName, Tree<String> tree)
         {
+            // Get number of descendants
             int numDescendants;
             while (true)
             {
-                Console.WriteLine($"How many descendants does {decedent.Name} have?");
-                if (!int.TryParse(Console.ReadLine(), out numDescendants))
+                Console.WriteLine($"How many descendants does {decedentName} have?");
+                if (!int.TryParse(TxtParser.GetTextFromConsole(), out numDescendants))
                 {
                     if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
                     {
@@ -115,27 +117,34 @@ namespace Composite
                 break;
             }
 
+            var descendants = new List<Descendant>();
+
+            // Get info of descendants
             for (int i = 1; i <= numDescendants; i++)
             {
-                var lastDigit = i >= 10 ? i / 10 : i;
-                string suffix;
-                switch (lastDigit)
+                var suffix = TxtParser.GetOrdinalSuffix(i);
+                string descendantName;
+                while (true)
                 {
-                    case 1:
-                        suffix = "st";
-                        break;
-                    case 2:
-                        suffix = "nd";
-                        break;
-                    case 3: suffix = "rd";
-                        break;
-                    default:
-                        suffix = "th";
-                        break;
+                    Console.WriteLine($"What is {decedentName}'s {i}{suffix} descendant's name? {NAME_LENGTH_LIMIT_MESSAGE}");
+
+                    descendantName = TxtParser.GetTextFromConsole();
+                    if (!NameIsValid(decedentName))
+                    {
+                        if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
+                        {
+                            Environment.Exit(0);
+                        }
+                        continue;
+                    }
+                    break;
                 }
 
-                Console.WriteLine($"What is {decedent.Name}'s {i}{suffix} descendant's name?");
-                
+                var descendant = new Descendant()
+                {
+                    Name = descendantName,
+                    Deceased = false
+                };
             }
         }
 

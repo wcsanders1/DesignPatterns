@@ -50,5 +50,21 @@ namespace CommonClientLib
 
             return val;
         }
+
+        public string GetOrdinalSuffix(int digit)
+        {
+            var lastDigit = digit >= 10 ? digit / 10 : digit;
+            switch (lastDigit)
+            {
+                case 1:
+                    return "st";
+                case 2:
+                    return "nd";
+                case 3:
+                    return "rd";
+                default:
+                    return "th";
+            }
+        }
     }
 }
