@@ -3,10 +3,13 @@ using System.Collections.Generic;
 
 namespace CommonClientLib
 {
-    public class Tree<T> where T : struct
+    public class Tree<T>
     {
-        private T Key { get; set; }
-        private string[] Info { get; set; }
+        private static int NumNodes { get; set; } = 1;
+
+        public T Key { get; }
+        public string[] Info { get; }
+
         private List<Tree<T>> Children { get; set; } = new List<Tree<T>>();
         private Tree<T> Parent { get; set; }
 
@@ -22,15 +25,24 @@ namespace CommonClientLib
         }
 
         /// <summary>
-        /// Add child node to tree.
+        /// Adds child node to tree if key not in tree; otherwise, returns false.
         /// </summary>
-        /// <param name="key">Unique identified for the child node.</param>
+        /// <param name="key">Unique identifier for the child node.</param>
         /// <param name="info">List of information specific to the child node.</param>
-        public void AddNode(T key, params string[] info)
+        /// <returns><code>true</code> if node added</returns>
+        public bool TryAddNode(T key, params string[] info)
         {
+            if (NodeExists(key))
+            {
+                return false;
+            }
+
             var newNode = new Tree<T>(key, info);
             newNode.Parent = this;
             Children.Add(newNode);
+            NumNodes++;
+
+            return true;
         }
 
         /// <summary>
@@ -67,10 +79,19 @@ namespace CommonClientLib
                     getRoot(node.Parent);
                 }
 
-                return node.Parent;
+                return this;
             };
 
             return getRoot(this);
+        }
+
+        /// <summary>
+        /// Returns the numbers of nodes in the tree.
+        /// </summary>
+        /// <returns>Number of nodes in the tree</returns>
+        public int GetNumberOfNodes()
+        {
+            return NumNodes;
         }
 
         private Tree<T> RetrieveNode(T key)
