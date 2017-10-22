@@ -11,7 +11,8 @@ namespace Composite
         private static TextParser TxtParser = new TextParser();
         private static TypeParser TypParser = new TypeParser(TxtParser);
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
-        
+        private static QuestionAsker QuestionAsker = new QuestionAsker();
+
         private const int NAME_LENGTH_LIMIT = 10;
         private static readonly string NAME_LENGTH_LIMIT_MESSAGE = $"(Enter no more than {NAME_LENGTH_LIMIT} characters).";
 
@@ -36,7 +37,8 @@ namespace Composite
                 tree.PrintTree();
                 Console.WriteLine();
 
-                GetDescendants(decedent.Name, tree);
+                decedent.Descendants = GetDescendants(decedent.Name, tree);
+                decedent.DistributeEstate();
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
@@ -99,58 +101,71 @@ namespace Composite
             }
         }
 
-        private static void GetDescendants(string decedentName, Tree<String> tree)
+        private static List<Descendant> GetDescendants(string decedentName, Tree<String> tree)
         {
-            // Get number of descendants
-            int numDescendants;
-            while (true)
-            {
-                Console.WriteLine($"How many descendants does {decedentName} have?");
-                if (!int.TryParse(TxtParser.GetTextFromConsole(), out numDescendants))
-                {
-                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
-                    {
-                        Environment.Exit(0);
-                    }
-                }
-
-                break;
-            }
-
             var descendants = new List<Descendant>();
-
-            // Get info of descendants
+            int numDescendants = GetNumberOfDescendants(decedentName);
+            
             for (int i = 1; i <= numDescendants; i++)
             {
-                var suffix = TxtParser.GetOrdinalSuffix(i);
-                string descendantName;
-                while (true)
+                string descendantName = GetDescendantName(decedentName, i);               
+                var isDeceased = QuestionAsker.IsTrueOrFalse($"Is {descendantName} deceased?");
+                List<Descendant> descendantsOfDescendant = new List<Descendant>();
+                if (isDeceased)
                 {
-                    Console.WriteLine($"What is {decedentName}'s {i}{suffix} descendant's name? {NAME_LENGTH_LIMIT_MESSAGE}");
-
-                    descendantName = TxtParser.GetTextFromConsole();
-                    if (!NameIsValid(decedentName))
-                    {
-                        if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
-                        {
-                            Environment.Exit(0);
-                        }
-                        continue;
-                    }
-                    break;
+                    descendantsOfDescendant = GetDescendants(descendantName, tree);
                 }
 
                 var descendant = new Descendant()
                 {
                     Name = descendantName,
-                    Deceased = false
+                    Deceased = isDeceased,
+                    Descendants = descendantsOfDescendant.Count <= 0 ? null : descendantsOfDescendant
                 };
+
+                descendants.Add(descendant);
+            }
+
+            return descendants;
+        }
+
+        private static int GetNumberOfDescendants(string decedentName)
+        {
+            while (true)
+            {
+                Console.WriteLine($"How many descendants does {decedentName} have?");
+                if (!int.TryParse(TxtParser.GetTextFromConsole(), out var numDescendants))
+                {
+                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
+                    {
+                        Environment.Exit(0);
+                    }
+                    continue;
+                }
+
+                return numDescendants;
             }
         }
 
-        private static void GetChildrenOfDescendants(List<Descendant> descendants, Tree<String> tree)
+        private static string GetDescendantName(string decedentName, int i)
         {
+            var suffix = TxtParser.GetOrdinalSuffix(i);
+            string descendantName;
+            while (true)
+            {
+                Console.WriteLine($"What is {decedentName}'s {i}{suffix} descendant's name? {NAME_LENGTH_LIMIT_MESSAGE}");
 
+                descendantName = TxtParser.GetTextFromConsole();
+                if (!NameIsValid(descendantName))
+                {
+                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
+                    {
+                        Environment.Exit(0);
+                    }
+                    continue;
+                }
+                return descendantName;
+            }
         }
 
         private static bool NameIsValid(string name)

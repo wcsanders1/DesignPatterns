@@ -12,11 +12,12 @@ namespace CommonClientLib
         public bool IsTrueOrFalse(string question)
         {
             Console.WriteLine();
-            Console.WriteLine($"{question} Enter 1 for true or 2 for false.");
 
             while (true)
             {
+                Console.WriteLine($"{question} Enter 1 for true or 2 for false.");
                 var answer = Console.ReadLine();
+                Console.WriteLine();
                 if (answer == "1")
                 {
                     return true;
@@ -27,7 +28,7 @@ namespace CommonClientLib
                 }
                 else
                 {
-                    Console.WriteLine("That input isn't valid. Let's try again.");
+                    Console.WriteLine("That input isn't valid. Let's try again.\n");
                 }
             }
         }
