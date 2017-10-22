@@ -5,7 +5,14 @@ namespace CommonClientLib
 {
     public class Tree<T>
     {
+        /// <summary>
+        /// Unique key of a node
+        /// </summary>
         public T Key { get; }
+
+        /// <summary>
+        /// Array of strings that can be printed with each node
+        /// </summary>
         public string[] Info { get; }
 
         private List<Tree<T>> Children { get; set; } = new List<Tree<T>>();
@@ -80,6 +87,26 @@ namespace CommonClientLib
             };
 
             return getRoot(this);
+        }
+
+        /// <summary>
+        /// Prints the tree to the console.
+        /// </summary>
+        public void PrintTree()
+        {
+            Console.WriteLine();
+            PrintRoot();
+        }
+
+        private void PrintRoot()
+        {
+            var root = GetRoot();
+            var rootKey = root.Key.ToString();
+            var prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.Write(new string(' ', (Console.WindowWidth - rootKey.Length) / 2));
+            Console.WriteLine(rootKey);
+            Console.ForegroundColor = prevColor;
         }
 
         private Tree<T> RetrieveNode(T key)
