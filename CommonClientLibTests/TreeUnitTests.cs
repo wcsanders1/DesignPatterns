@@ -1,4 +1,3 @@
-using System;
 using Xunit;
 using CommonClientLib;
 
@@ -40,7 +39,7 @@ namespace CommonClientLibTests
         }
 
         [Fact]
-        public void GetNode_ReturnsNull_WhenKeyNotExist()
+        public void GetNode_ReturnsNull_WhenKeyDoesNotExist()
         {
             const int TEST_KEY = 2;
             var sut = new Tree<int>(1);
@@ -77,6 +76,64 @@ namespace CommonClientLibTests
             Assert.Equal(TEST_KEY, result.Key);
         }
 
+
+        [Fact]
+        public void GetNode_ReturnsNodeByIntKey_WhenNodeExists3()
+        {
+            var sut = new Tree<int>(1);
+            sut.TryAddNode(2);
+            sut.TryAddNode(3);
+
+            var node3 = sut.GetNode(3);
+            node3.TryAddNode(15);
+            node3.TryAddNode(16);
+
+            var node16 = sut.GetNode(16);
+            node16.TryAddNode(20);
+
+            var node20 = node16.GetNode(20);
+
+            Assert.Equal(3, node3.Key);
+            Assert.Equal(16, node16.Key);
+            Assert.Equal(20, node20.Key);
+        }
+
+        [Fact]
+        public void GetNode_ReturnsNodeByIntKey_WhenNodeExists4()
+        {
+            var sut = new Tree<int>(1);
+            sut.TryAddNode(2);
+            sut.TryAddNode(3);
+
+            var node3 = sut.GetNode(3);
+            node3.TryAddNode(15);
+            node3.TryAddNode(16);
+
+            var node16 = sut.GetNode(16);
+            node16.TryAddNode(20);
+
+            var node20 = node16.GetNode(20);
+            node20.TryAddNode(21);
+            node20.TryAddNode(22);
+            node20.TryAddNode(23);
+
+            node3.TryAddNode(50);
+
+            var node23 = node16.GetNode(23);
+            node23.TryAddNode(100);
+
+            var node50 = node20.GetNode(50);
+            var node100 = sut.GetNode(100);
+
+            Assert.Equal(1, sut.Key);
+            Assert.Equal(3, node3.Key);
+            Assert.Equal(16, node16.Key);
+            Assert.Equal(20, node20.Key);
+            Assert.Equal(23, node23.Key);
+            Assert.Equal(50, node50.Key);
+            Assert.Equal(100, node100.Key);
+        }
+
         [Fact]
         public void GetNode_ReturnsNodeByStringKey_WhenNodeExists1()
         {
@@ -90,25 +147,6 @@ namespace CommonClientLibTests
 
             Assert.NotNull(result);
             Assert.Equal(TEST_KEY, result.Key);
-        }
-
-        [Fact]
-        public void GetNumberOfNodes_ReturnsCorrectNumberOfNodes_WhenCalled()
-        {
-            var sut = new Tree<int>(1);
-            sut.TryAddNode(2);
-            sut.TryAddNode(3);
-
-            var node3 = sut.GetNode(3);
-            node3.TryAddNode(15);
-            node3.TryAddNode(16);
-
-            var node16 = sut.GetNode(16);
-            node16.TryAddNode(20);
-
-            var numNodes = sut.GetNumberOfNodes();
-
-            Assert.Equal(6, numNodes);
         }
     }
 }

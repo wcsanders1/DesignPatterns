@@ -5,8 +5,6 @@ namespace CommonClientLib
 {
     public class Tree<T>
     {
-        private static int NumNodes { get; set; } = 1;
-
         public T Key { get; }
         public string[] Info { get; }
 
@@ -40,7 +38,6 @@ namespace CommonClientLib
             var newNode = new Tree<T>(key, info);
             newNode.Parent = this;
             Children.Add(newNode);
-            NumNodes++;
 
             return true;
         }
@@ -74,24 +71,15 @@ namespace CommonClientLib
             Func<Tree<T>, Tree<T>> getRoot = null;
             getRoot = node => 
             {
-                if (node.Parent != null)
+                if (node.Parent == null)
                 {
-                    getRoot(node.Parent);
+                    return node;
                 }
 
-                return this;
+                return getRoot(node.Parent);
             };
 
             return getRoot(this);
-        }
-
-        /// <summary>
-        /// Returns the numbers of nodes in the tree.
-        /// </summary>
-        /// <returns>Number of nodes in the tree</returns>
-        public int GetNumberOfNodes()
-        {
-            return NumNodes;
         }
 
         private Tree<T> RetrieveNode(T key)
@@ -108,9 +96,10 @@ namespace CommonClientLib
                 {
                     foreach (var child in node.Children)
                     {
-                        if (retrieveNode(child) != null)
+                        var soughtChild = retrieveNode(child);
+                        if (soughtChild != null)
                         {
-                            return child;
+                            return soughtChild;
                         }
                     }
                 }
