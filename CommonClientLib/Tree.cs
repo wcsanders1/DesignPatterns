@@ -106,7 +106,20 @@ namespace CommonClientLib
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.Write(new string(' ', (Console.WindowWidth - rootKey.Length) / 2));
             Console.WriteLine(rootKey);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+
+            foreach (var item in root.Info)
+            {
+                Console.Write(new string(' ', (Console.WindowWidth - item.Length) / 2));
+                Console.WriteLine(item);
+            }
+
             Console.ForegroundColor = prevColor;
+        }
+
+        private void PrintNode(Tree<T> node, int numChild)
+        {
+
         }
 
         private Tree<T> RetrieveNode(T key)

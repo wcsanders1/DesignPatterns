@@ -35,7 +35,10 @@ namespace CompositeTests
 
             const decimal EXPECTED_INHERITANCE_TEST_DESCENDANT_ONE = TEST_ESTATE_VALUE / 3;
 
-            var sut = new Decedent(TEST_ESTATE_VALUE, testDescendants);
+            var sut = new Decedent("testName", TEST_ESTATE_VALUE)
+            {
+                Descendants = testDescendants
+            };
 
             sut.DistributeEstate();
 
@@ -89,7 +92,10 @@ namespace CompositeTests
             const decimal EXPECTED_INHERITANCE_TEST_DESCENDANT_TWO =
                 EXPECTED_INHERITANCE_TEST_DESCENDANT_ONE / 2;
 
-            var sut = new Decedent(TEST_ESTATE_VALUE, testDescendants);
+            var sut = new Decedent("testName", TEST_ESTATE_VALUE)
+            {
+                Descendants = testDescendants
+            };
 
             sut.DistributeEstate();
 
@@ -188,7 +194,10 @@ namespace CompositeTests
             const decimal EXPECTED_INHERITANCE_TEST_DESCENDANT_THREE =
                 ((TEST_ESTATE_VALUE / 3) / 3) / 2;
 
-            var sut = new Decedent(TEST_ESTATE_VALUE, testDescendants);
+            var sut = new Decedent("testName", TEST_ESTATE_VALUE)
+            {
+                Descendants = testDescendants
+            };
 
             sut.DistributeEstate();
 

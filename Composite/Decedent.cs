@@ -4,13 +4,15 @@ namespace Composite
 {
     public class Decedent
     {
-        private decimal EstateValue { get; }
-        private List<Descendant> Descendants { get; }
+        public string Name { get; }
 
-        public Decedent(decimal estateValue, List<Descendant> descendants)
+        private decimal EstateValue { get; }
+        public List<Descendant> Descendants { get; set; } = new List<Descendant>();
+
+        public Decedent(string name, decimal estateValue)
         {
+            Name = name;
             EstateValue = estateValue;
-            Descendants = descendants;
         }
 
         public void DistributeEstate()

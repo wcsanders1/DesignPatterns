@@ -1,5 +1,7 @@
 ﻿using CommonClientLib;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 
 namespace Composite
 {
@@ -24,6 +26,14 @@ namespace Composite
                     Environment.Exit(0);
                 }
 
+                var decedent = new Decedent(decedentName, estateValue);
+                var tree = new Tree<string>(decedentName, new string[] 
+                {
+                    $"Estate value: ${estateValue.ToString("#.00", CultureInfo.InvariantCulture)}"
+                });
+
+                tree.PrintTree();
+                Console.WriteLine();
 
 
                 if (!ContinuationDeterminer.GoAgain())
@@ -40,7 +50,7 @@ namespace Composite
                 return (null, 0);
             }
 
-            if (!TryGetEstateValue(out var estateValue))
+            if (!TryGetEstateValue(decedentName, out var estateValue))
             {
                 return (null, 0);
             }
@@ -68,11 +78,11 @@ namespace Composite
             }
         }
 
-        private static bool TryGetEstateValue(out decimal estateValue)
+        private static bool TryGetEstateValue(string decedentName, out decimal estateValue)
         {
             while (true)
             {
-                Console.WriteLine($"What is the value of the decedent's estate? (Enter a number.)");
+                Console.WriteLine($"What is the value of {decedentName}'s estate? (Enter a number.)");
 
                 var estateValuelStr = TxtParser.GetTextFromConsole();
                 if (!decimal.TryParse(estateValuelStr, out estateValue))
@@ -86,6 +96,52 @@ namespace Composite
 
                 return true;
             }
+        }
+
+        private static void GetDescendants(Decedent decedent, Tree<String> tree)
+        {
+            int numDescendants;
+            while (true)
+            {
+                Console.WriteLine($"How many descendants does {decedent.Name} have?");
+                if (!int.TryParse(Console.ReadLine(), out numDescendants))
+                {
+                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage())
+                    {
+                        Environment.Exit(0);
+                    }
+                }
+
+                break;
+            }
+
+            for (int i = 1; i <= numDescendants; i++)
+            {
+                var lastDigit = i >= 10 ? i / 10 : i;
+                string suffix;
+                switch (lastDigit)
+                {
+                    case 1:
+                        suffix = "st";
+                        break;
+                    case 2:
+                        suffix = "nd";
+                        break;
+                    case 3: suffix = "rd";
+                        break;
+                    default:
+                        suffix = "th";
+                        break;
+                }
+
+                Console.WriteLine($"What is {decedent.Name}'s {i}{suffix} descendant's name?");
+                
+            }
+        }
+
+        private static void GetChildrenOfDescendants(List<Descendant> descendants, Tree<String> tree)
+        {
+
         }
 
         private static bool NameIsValid(string name)
