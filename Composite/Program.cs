@@ -108,7 +108,9 @@ namespace Composite
             
             for (int i = 1; i <= numDescendants; i++)
             {
-                string descendantName = GetDescendantName(decedentName, i);               
+                string descendantName = TryAddDescendantToTree(decedentName, i, tree);
+                tree.PrintTree();
+
                 var isDeceased = QuestionAsker.IsTrueOrFalse($"Is {descendantName} deceased?");
                 List<Descendant> descendantsOfDescendant = new List<Descendant>();
                 if (isDeceased)
@@ -127,6 +129,24 @@ namespace Composite
             }
 
             return descendants;
+        }
+
+        private static string TryAddDescendantToTree(string decedentName, int i, Tree<string> tree)
+        {
+            while (true)
+            {
+                var descendantName = GetDescendantName(decedentName, i);
+                if (!tree.TryAddNode(descendantName))
+                {
+                    if (!ContinuationDeterminer.GoAgainWithInvalidInputMessage("That name already exists and, therefore, is invalid."))
+                    {
+                        Environment.Exit(0);
+                    }
+                    continue;
+                }
+
+                return descendantName;
+            }
         }
 
         private static int GetNumberOfDescendants(string decedentName)

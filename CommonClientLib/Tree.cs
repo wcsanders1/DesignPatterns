@@ -5,6 +5,8 @@ namespace CommonClientLib
 {
     public class Tree<T>
     {
+        private const int PRINT_BUFFER = 10;
+
         /// <summary>
         /// Unique key of a node
         /// </summary>
@@ -96,6 +98,12 @@ namespace CommonClientLib
         {
             Console.WriteLine();
             PrintRoot();
+
+            var root = GetRoot();
+            if (root.Children != null && root.Children.Count > 1)
+            {
+                PrintChildNodes(PRINT_BUFFER, Console.WindowWidth - PRINT_BUFFER, root.Children);
+            }
         }
 
         private void PrintRoot()
@@ -116,6 +124,28 @@ namespace CommonClientLib
 
             Console.ForegroundColor = prevColor;
         }
+
+        private void PrintChildNodes(int startPos, int endpos, List<Tree<T>> nodes)
+        {
+            var prevColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.Cyan;
+            PrintBranch(startPos, endpos);
+            Console.ForegroundColor = prevColor;
+        }
+
+        private void PrintBranch(int startPos, int endPos)
+        {
+            var centerPosition = (((endPos - startPos) / 2) + PRINT_BUFFER);
+            var lineLength = centerPosition - PRINT_BUFFER - 1;
+            Console.Write(new string(' ', centerPosition - 1));
+            Console.WriteLine("|");
+            Console.Write(new string(' ', startPos));
+            Console.Write(new string('_', lineLength));
+            Console.Write('|');
+            Console.Write(new string('_', lineLength));
+        }
+
+        
 
         private void PrintNode(Tree<T> node, int numChild)
         {
