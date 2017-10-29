@@ -5,6 +5,8 @@ namespace CommonClientLib
 {
     public class Tree<T>
     {
+        private static int CursorTop;
+
         private const int PRINT_BUFFER = 10;
 
         private readonly int LineLength = Console.WindowWidth / 2;
@@ -141,16 +143,21 @@ namespace CommonClientLib
         /// <summary>
         /// Prints the tree to the console.
         /// </summary>
-        public void PrintTree(Tree<T> node, int yPosition)
+        public void PrintTree(Tree<T> node, int yPosition, int call = 0)
         {
             PrintNode(node, yPosition);
             foreach (var child in node.Children)
             {
-                PrintTree(child, yPosition);
+                PrintTree(child, yPosition, call + 1);
+            }
+
+            if (call == 0)
+            {
+                Console.CursorTop = CursorTop;
             }
         }
 
-        private int PrintNode(Tree<T> node, int yPosition)
+        private void PrintNode(Tree<T> node, int yPosition)
         {
             var prevColor = Console.ForegroundColor;
             var key = node.Key.ToString();
@@ -169,7 +176,10 @@ namespace CommonClientLib
 
             Console.ForegroundColor = prevColor;
 
-            return Console.CursorTop;
+            if (Console.CursorTop > CursorTop)
+            {
+                CursorTop = Console.CursorTop;
+            }
         }
 
         private void SetPositions(Tree<T> node)
@@ -198,7 +208,7 @@ namespace CommonClientLib
 
             var siblings = node.Parent.Children;
             var currentPosition = parentPosition - (LineLength / 2);
-            var shareOfLine = LineLength / (siblings.Count - 1);
+            var shareOfLine = (LineLength) / (siblings.Count - 1);
             foreach (var sibling in siblings)
             {
                 sibling.XPosition = currentPosition;
