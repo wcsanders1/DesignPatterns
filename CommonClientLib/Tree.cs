@@ -7,9 +7,9 @@ namespace CommonClientLib
     {
         private static int CursorTop;
 
-        private const int PRINT_BUFFER = 40;
+        private const int PRINT_BUFFER = 50;
 
-        private readonly int LineLength = Console.WindowWidth + (PRINT_BUFFER * 2);
+        private readonly int LineLength = 250;
         
         /// <summary>
         /// Unique key of a node
