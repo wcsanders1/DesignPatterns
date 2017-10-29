@@ -34,7 +34,7 @@ namespace Composite
                     $"Estate value: ${estateValue.ToString("#.00", CultureInfo.InvariantCulture)}"
                 });
 
-                tree.PrintTree();
+                tree.PrintTree(tree.GetRoot(), Console.CursorTop);
                 Console.WriteLine();
 
                 decedent.Descendants = GetDescendants(decedent.Name, tree);
@@ -109,13 +109,14 @@ namespace Composite
             for (int i = 1; i <= numDescendants; i++)
             {
                 string descendantName = TryAddDescendantToTree(decedentName, i, tree);
-                tree.PrintTree();
+                tree.PrintTree(tree.GetRoot(), Console.CursorTop);
 
                 var isDeceased = QuestionAsker.IsTrueOrFalse($"Is {descendantName} deceased?");
                 List<Descendant> descendantsOfDescendant = new List<Descendant>();
                 if (isDeceased)
                 {
-                    descendantsOfDescendant = GetDescendants(descendantName, tree);
+                    var curNode = tree.GetNode(descendantName);
+                    descendantsOfDescendant = GetDescendants(descendantName, curNode);
                 }
 
                 var descendant = new Descendant()

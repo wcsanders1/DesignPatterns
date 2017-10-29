@@ -7,6 +7,8 @@ namespace CommonClientLib
     {
         private const int PRINT_BUFFER = 10;
 
+        private readonly int LineLength = Console.WindowWidth / 2;
+        
         /// <summary>
         /// Unique key of a node
         /// </summary>
@@ -19,6 +21,8 @@ namespace CommonClientLib
 
         private List<Tree<T>> Children { get; set; } = new List<Tree<T>>();
         private Tree<T> Parent { get; set; }
+        private int XPosition { get; set; }
+        private int YPosition { get; set; }
 
         /// <summary>
         /// Creates a new tree, with this node being the root.
@@ -29,6 +33,11 @@ namespace CommonClientLib
         {
             Key = key;
             Info = info;
+
+            // Thses X and Y positions are default. The actual positions are set each time another
+            // node is added to the tree.
+            XPosition = Console.WindowWidth;
+            YPosition = 0;
         }
 
         /// <summary>
@@ -47,6 +56,7 @@ namespace CommonClientLib
             var newNode = new Tree<T>(key, info);
             newNode.Parent = this;
             Children.Add(newNode);
+            SetPositions(newNode);
 
             return true;
         }
@@ -92,37 +102,136 @@ namespace CommonClientLib
         }
 
         /// <summary>
+        /// Returns the number of siblings of the node
+        /// </summary>
+        /// <param name="node">Node</param>
+        /// <returns>Number of siblings</returns>
+        public int GetNumberOfSiblings(Tree<T> node)
+        {
+            if (node.Parent == null)
+            {
+                return 0;
+            }
+
+            // Subtract 1 so the current node isn't counted as a sibling of itself
+            return node.Parent.Children.Count - 1;
+        }
+
+        /// <summary>
+        /// Returns the siblings of a node. If the node has no siblings, then it returns a <code>List<T></code> containing
+        /// only the node passed into the method.
+        /// </summary>
+        /// <param name="node">Node whose siblings are returned</param>
+        /// <returns>Collection of siblings</returns>
+        public List<Tree<T>> GetSiblings(Tree<T> node)
+        {
+            var siblings = new List<Tree<T>>();
+            if (node.Parent == null)
+            {
+                siblings.Add(node);
+
+                return siblings;
+            }
+
+            siblings.AddRange(node.Parent.Children);
+
+            return siblings;
+        }
+
+        /// <summary>
         /// Prints the tree to the console.
         /// </summary>
-        public void PrintTree()
+        public void PrintTree(Tree<T> node, int yPosition)
         {
-            Console.WriteLine();
-            PrintRoot();
-
-            var root = GetRoot();
-            if (root.Children != null && root.Children.Count > 1)
+            PrintNode(node, yPosition);
+            foreach (var child in node.Children)
             {
-                PrintChildNodes(PRINT_BUFFER, Console.WindowWidth - PRINT_BUFFER, root.Children);
+                PrintTree(child, yPosition);
             }
         }
 
-        private void PrintRoot()
+        private int PrintNode(Tree<T> node, int yPosition)
         {
-            var root = GetRoot();
-            var rootKey = root.Key.ToString();
             var prevColor = Console.ForegroundColor;
+            var key = node.Key.ToString();
+            
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write(new string(' ', (Console.WindowWidth - rootKey.Length) / 2));
-            Console.WriteLine(rootKey);
+            Console.CursorTop = yPosition + node.YPosition;
+            Console.CursorLeft = (node.XPosition - key.Length) / 2;
+            Console.WriteLine(key);
             Console.ForegroundColor = ConsoleColor.DarkYellow;
 
-            foreach (var item in root.Info)
+            foreach (var item in node.Info)
             {
-                Console.Write(new string(' ', (Console.WindowWidth - item.Length) / 2));
+                Console.CursorLeft = (node.XPosition - item.Length) / 2;
                 Console.WriteLine(item);
             }
 
             Console.ForegroundColor = prevColor;
+
+            return Console.CursorTop;
+        }
+
+        private void SetPositions(Tree<T> node)
+        {
+            SetXPosition(node);
+            SetYPosition(node);
+        }
+
+
+        private void SetXPosition(Tree<T> node)
+        {
+            if (node.Parent == null)
+            {
+                node.XPosition = Console.WindowWidth;
+
+                return;
+            }
+
+            var parentPosition = node.Parent.XPosition;
+            if (GetNumberOfSiblings(node) == 0)
+            {
+                node.XPosition = parentPosition;
+
+                return;
+            }
+
+            var siblings = node.Parent.Children;
+            var currentPosition = parentPosition - (LineLength / 2);
+            var shareOfLine = LineLength / (siblings.Count - 1);
+            foreach (var sibling in siblings)
+            {
+                sibling.XPosition = currentPosition;
+                
+                if (sibling.Children.Count > 0)
+                {
+                    foreach (var child in sibling.Children)
+                    {
+                        SetXPosition(child);
+                    }
+                }
+
+                currentPosition += shareOfLine;
+            }
+        }
+
+        private void SetYPosition(Tree<T> node)
+        {
+            if (node.Parent == null)
+            {
+                node.YPosition = 0;
+
+                return;
+            }
+
+            node.YPosition = node.Parent.YPosition + node.Parent.Info.Length + 2;
+            if (node.Children.Count > 0)
+            {
+                foreach (var child in node.Children)
+                {
+                    SetYPosition(child);
+                }
+            }
         }
 
         private void PrintChildNodes(int startPos, int endpos, List<Tree<T>> nodes)
@@ -137,19 +246,19 @@ namespace CommonClientLib
         {
             var centerPosition = (((endPos - startPos) / 2) + PRINT_BUFFER);
             var lineLength = centerPosition - PRINT_BUFFER - 1;
-            Console.Write(new string(' ', centerPosition - 1));
-            Console.WriteLine("|");
+
+            PrintDownBranch(centerPosition);
+
             Console.Write(new string(' ', startPos));
             Console.Write(new string('_', lineLength));
             Console.Write('|');
             Console.Write(new string('_', lineLength));
         }
 
-        
-
-        private void PrintNode(Tree<T> node, int numChild)
+        private void PrintDownBranch(int position)
         {
-
+            Console.Write(new string(' ', position - 1));
+            Console.WriteLine("|");
         }
 
         private Tree<T> RetrieveNode(T key)
