@@ -7,9 +7,9 @@ namespace CommonClientLib
     {
         private static int CursorTop;
 
-        private const int PRINT_BUFFER = 10;
+        private const int PRINT_BUFFER = 40;
 
-        private readonly int LineLength = Console.WindowWidth / 2;
+        private readonly int LineLength = Console.WindowWidth + (PRINT_BUFFER * 2);
         
         /// <summary>
         /// Unique key of a node
@@ -20,7 +20,8 @@ namespace CommonClientLib
         /// Array of strings that can be printed with each node
         /// </summary>
         public string[] Info { get; }
-
+        
+        private int Level { get; set; }
         private List<Tree<T>> Children { get; set; } = new List<Tree<T>>();
         private Tree<T> Parent { get; set; }
         private int XPosition { get; set; }
@@ -36,10 +37,11 @@ namespace CommonClientLib
             Key = key;
             Info = info;
 
-            // Thses X and Y positions are default. The actual positions are set each time another
+            // Thses X and Y positions and the level are default. The actual values are set each time another
             // node is added to the tree.
             XPosition = Console.WindowWidth;
             YPosition = 0;
+            Level = 0;
         }
 
         /// <summary>
@@ -58,6 +60,7 @@ namespace CommonClientLib
             var newNode = new Tree<T>(key, info);
             newNode.Parent = this;
             Children.Add(newNode);
+            SetLevel(newNode);
             SetPositions(newNode);
 
             return true;
@@ -207,8 +210,8 @@ namespace CommonClientLib
             }
 
             var siblings = node.Parent.Children;
-            var currentPosition = parentPosition - (LineLength / 2);
-            var shareOfLine = (LineLength) / (siblings.Count - 1);
+            var currentPosition = parentPosition - ((LineLength / 2) - (PRINT_BUFFER * node.Level));
+            var shareOfLine = (LineLength - ((PRINT_BUFFER * 2) * node.Level)) / (siblings.Count - 1);
             foreach (var sibling in siblings)
             {
                 sibling.XPosition = currentPosition;
@@ -242,6 +245,18 @@ namespace CommonClientLib
                     SetYPosition(child);
                 }
             }
+        }
+
+        private void SetLevel(Tree<T> node)
+        {
+            if (node.Parent == null)
+            {
+                node.Level = 0;
+
+                return;
+            }
+
+            node.Level = node.Parent.Level + 1;
         }
 
         private void PrintChildNodes(int startPos, int endpos, List<Tree<T>> nodes)
