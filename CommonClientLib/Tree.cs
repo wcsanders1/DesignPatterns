@@ -19,7 +19,7 @@ namespace CommonClientLib
         /// <summary>
         /// Array of strings that can be printed with each node
         /// </summary>
-        public string[] Info { get; }
+        public List<string> Info { get; } = new List<string>();
         
         private int Level { get; set; }
         private List<Tree<T>> Children { get; set; } = new List<Tree<T>>();
@@ -35,7 +35,7 @@ namespace CommonClientLib
         public Tree(T key, params string[] info)
         {
             Key = key;
-            Info = info;
+            Info.AddRange(info);
 
             // Thses X and Y positions and the level are default. The actual values are set each time another
             // node is added to the tree.
@@ -191,7 +191,6 @@ namespace CommonClientLib
             SetYPosition(node);
         }
 
-
         private void SetXPosition(Tree<T> node)
         {
             if (node.Parent == null)
@@ -223,7 +222,6 @@ namespace CommonClientLib
                         SetXPosition(child);
                     }
                 }
-
                 currentPosition += shareOfLine;
             }
         }
@@ -237,7 +235,7 @@ namespace CommonClientLib
                 return;
             }
 
-            node.YPosition = node.Parent.YPosition + node.Parent.Info.Length + 2;
+            node.YPosition = node.Parent.YPosition + node.Parent.Info.Count + 2;
             if (node.Children.Count > 0)
             {
                 foreach (var child in node.Children)
@@ -255,7 +253,6 @@ namespace CommonClientLib
 
                 return;
             }
-
             node.Level = node.Parent.Level + 1;
         }
 

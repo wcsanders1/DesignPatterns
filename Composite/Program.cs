@@ -31,7 +31,7 @@ namespace Composite
                 var decedent = new Decedent(decedentName, estateValue);
                 var tree = new Tree<string>(decedentName, new string[] 
                 {
-                    $"Estate value: ${estateValue.ToString("#.00", CultureInfo.InvariantCulture)}"
+                    $"Estate value: ${estateValue.ToString("#", CultureInfo.InvariantCulture)}"
                 });
 
                 tree.PrintTree(tree.GetRoot(), Console.CursorTop);
@@ -39,11 +39,31 @@ namespace Composite
 
                 decedent.Descendants = GetDescendants(decedent.Name, tree);
                 decedent.DistributeEstate();
+                MapDistributionToTree(decedent.Descendants, tree);
+                tree.PrintTree(tree.GetRoot(), Console.CursorTop);
+                Console.WriteLine();
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
                 }
+            }
+        }
+
+        private static void MapDistributionToTree(List<Descendant> descendants, Tree<string> tree)
+        {
+            if (descendants == null || descendants.Count == 0)
+            {
+                return;
+            }
+
+            foreach (var descendant in descendants)
+            {
+                if (descendant.Inheritance > 0)
+                {
+                    tree.GetNode(descendant.Name).Info.Add($"${descendant.Inheritance.ToString("#")}");
+                }
+                MapDistributionToTree(descendant.Descendants, tree);
             }
         }
 
