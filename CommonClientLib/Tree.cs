@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CommonClientLib
 {
@@ -149,6 +150,12 @@ namespace CommonClientLib
         public void PrintTree(Tree<T> node, int yPosition, int call = 0)
         {
             PrintNode(node, yPosition);
+
+            if (node.Parent != null)
+            {
+                PrintBranch(node.Parent, node);
+            }
+
             foreach (var child in node.Children)
             {
                 PrintTree(child, yPosition, call + 1);
@@ -158,6 +165,44 @@ namespace CommonClientLib
             {
                 Console.CursorTop = CursorTop;
             }
+        }
+
+        private void PrintBranch(Tree<T> parent, Tree<T> child)
+        {
+            var prevYPosition = Console.CursorTop;
+
+            Console.CursorTop -= (child.YPosition - parent.YPosition) - parent.Info.Count;
+            Console.CursorLeft = parent.XPosition / 2;
+            Console.WriteLine("|");
+
+            if (parent.Children.Count > 1)
+            {
+                var positions = parent.Children.OrderBy(c => c.XPosition).Select(c => c.XPosition / 2).ToList();
+                var parentPosition = parent.XPosition;
+
+                Console.CursorLeft = positions[0];
+                PrintDownBranch();
+
+                for (int i = 1; i < positions.Count - 1; i++)
+                {
+                    if (positions[i] < parentPosition && positions[i + 1] > parentPosition)
+                    {
+                        Console.Write(new string('_', parentPosition - positions[i]));
+                        Console.Write("|");
+                        continue;
+                    }
+
+                    Console.Write(new string('_', positions[i + 1] - Console.CursorLeft));
+                    PrintDownBranch();
+                }
+            }
+        }
+
+        private void PrintDownBranch()
+        {
+            Console.CursorTop++;
+            Console.Write("|");
+            Console.CursorTop--;
         }
 
         private void PrintNode(Tree<T> node, int yPosition)
@@ -254,33 +299,6 @@ namespace CommonClientLib
                 return;
             }
             node.Level = node.Parent.Level + 1;
-        }
-
-        private void PrintChildNodes(int startPos, int endpos, List<Tree<T>> nodes)
-        {
-            var prevColor = Console.ForegroundColor;
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            PrintBranch(startPos, endpos);
-            Console.ForegroundColor = prevColor;
-        }
-
-        private void PrintBranch(int startPos, int endPos)
-        {
-            var centerPosition = (((endPos - startPos) / 2) + PRINT_BUFFER);
-            var lineLength = centerPosition - PRINT_BUFFER - 1;
-
-            PrintDownBranch(centerPosition);
-
-            Console.Write(new string(' ', startPos));
-            Console.Write(new string('_', lineLength));
-            Console.Write('|');
-            Console.Write(new string('_', lineLength));
-        }
-
-        private void PrintDownBranch(int position)
-        {
-            Console.Write(new string(' ', position - 1));
-            Console.WriteLine("|");
         }
 
         private Tree<T> RetrieveNode(T key)
