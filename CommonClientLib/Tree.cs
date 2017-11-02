@@ -165,51 +165,15 @@ namespace CommonClientLib
             {
                 Console.CursorTop = CursorTop;
             }
-        }
 
-        private void PrintBranch(Tree<T> parent, Tree<T> child)
-        {
-            var prevYPosition = Console.CursorTop;
-
-            Console.CursorTop -= (child.YPosition - parent.YPosition) - parent.Info.Count;
-            Console.CursorLeft = parent.XPosition / 2;
-            Console.WriteLine("|");
-
-            if (parent.Children.Count > 1)
-            {
-                var positions = parent.Children.OrderBy(c => c.XPosition).Select(c => c.XPosition / 2).ToList();
-                var parentPosition = parent.XPosition;
-
-                Console.CursorLeft = positions[0];
-                PrintDownBranch();
-
-                for (int i = 1; i < positions.Count - 1; i++)
-                {
-                    if (positions[i] < parentPosition && positions[i + 1] > parentPosition)
-                    {
-                        Console.Write(new string('_', parentPosition - positions[i]));
-                        Console.Write("|");
-                        continue;
-                    }
-
-                    Console.Write(new string('_', positions[i + 1] - Console.CursorLeft));
-                    PrintDownBranch();
-                }
-            }
-        }
-
-        private void PrintDownBranch()
-        {
-            Console.CursorTop++;
-            Console.Write("|");
-            Console.CursorTop--;
+            Console.WriteLine();
         }
 
         private void PrintNode(Tree<T> node, int yPosition)
         {
             var prevColor = Console.ForegroundColor;
             var key = node.Key.ToString();
-            
+
             Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.CursorTop = yPosition + node.YPosition;
             Console.CursorLeft = (node.XPosition - key.Length) / 2;
@@ -227,6 +191,39 @@ namespace CommonClientLib
             if (Console.CursorTop > CursorTop)
             {
                 CursorTop = Console.CursorTop;
+            }
+        }
+
+        private void PrintBranch(Tree<T> parent, Tree<T> child)
+        {
+            Console.CursorTop -= (child.YPosition - parent.YPosition) - parent.Info.Count + child.Info.Count;
+
+            if (parent.Children.Count == 1)
+            {
+                Console.CursorLeft = parent.XPosition / 2;
+                Console.WriteLine("|");
+                Console.CursorLeft = parent.XPosition / 2;
+                Console.WriteLine("|");
+
+                return;
+            }
+            
+            var positions = parent.Children.OrderBy(c => c.XPosition).Select(c => c.XPosition / 2).ToList();
+            var parentPosition = parent.XPosition / 2;
+            
+            var halfDistanceFirst = parentPosition - positions[0];
+            var halfDistanceSecond = positions[positions.Count - 1] - parentPosition;
+            Console.CursorLeft = positions[0];
+            Console.Write(new string('_', halfDistanceFirst));
+            Console.Write("|");
+            Console.WriteLine(new string('_', halfDistanceSecond));
+
+            Console.CursorLeft = positions[0];
+
+            for (int i = 0; i < positions.Count; i++)
+            {
+                Console.CursorLeft = positions[i];
+                Console.Write("|");
             }
         }
 
@@ -280,7 +277,7 @@ namespace CommonClientLib
                 return;
             }
 
-            node.YPosition = node.Parent.YPosition + node.Parent.Info.Count + 2;
+            node.YPosition = node.Parent.YPosition + node.Parent.Info.Count + 3;
             if (node.Children.Count > 0)
             {
                 foreach (var child in node.Children)
