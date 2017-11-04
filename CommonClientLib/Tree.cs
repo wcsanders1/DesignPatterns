@@ -9,6 +9,7 @@ namespace CommonClientLib
         private static int CursorTop;
 
         private const int PRINT_BUFFER = 50;
+        private const int MAX_AMOUNT_TO_PRINT = 3;
 
         private readonly int LineLength = 250;
         
@@ -145,9 +146,81 @@ namespace CommonClientLib
         }
 
         /// <summary>
-        /// Prints the tree to the console.
+        /// Returns the greatest amount of children that the node or any
+        /// of its subnodes has.
         /// </summary>
-        public void PrintTree(Tree<T> node, int yPosition, int call = 0)
+        /// <param name="tree">Top node from which to search for the greatest number of children</param>
+        /// <returns>Greatest amount of children</returns>
+        public int GetGreatestNumberOfChildren(Tree<T> tree)
+        {
+            int getGreatestNumberOfChildren(Tree<T> subTree, int numberOfChildren = 0)
+            {
+                if (subTree.Children.Count > numberOfChildren)
+                {
+                    numberOfChildren = subTree.Children.Count;
+                }
+
+                foreach (var child in subTree.Children)
+                {
+                    var childChildren = getGreatestNumberOfChildren(child, numberOfChildren);
+                    if (childChildren > numberOfChildren)
+                    {
+                        numberOfChildren = childChildren;
+                    }
+                }
+
+                return numberOfChildren;
+            }
+
+            return getGreatestNumberOfChildren(tree);
+        }
+
+        //TODO: This
+        public int GetGreatestNumberOfBranches(Tree<T> node)
+        {
+            int getGreatestNumberOfBranches(Tree<T> subNode, int greatestNumBranches = 0)
+            {
+                return 0;
+            }
+
+            return 0;
+        }
+
+        /// <summary>
+        /// Prints a graphical tree to the console if the number of children of
+        /// any node doesn't exceed the specified range: <see cref="MAX_AMOUNT_TO_PRINT"/>; otherwise, prints text only.
+        /// </summary>
+        /// <param name="node">The parent node from which to print</param>
+        public void PrintTree(Tree<T> node)
+        {
+            if (node.GetGreatestNumberOfChildren(node) > MAX_AMOUNT_TO_PRINT)
+            {
+                PrintText(node);
+            }
+            else
+            {
+                PrintGraphicalTree(node, Console.CursorTop);
+            }
+        }
+        
+        private void PrintText(Tree<T> node, int spacesToIndent = 0)
+        {
+            Console.CursorLeft = spacesToIndent;
+            Console.WriteLine(node.Key);
+
+            foreach (var item in node.Info)
+            {
+                Console.CursorLeft = spacesToIndent + 2;
+                Console.WriteLine(item);
+            }
+
+            foreach (var child in node.Children)
+            {
+                PrintText(child, spacesToIndent + 2);
+            }
+        }
+
+        private void PrintGraphicalTree(Tree<T> node, int yPosition, int call = 0)
         {
             PrintNode(node, yPosition);
 
@@ -158,7 +231,7 @@ namespace CommonClientLib
 
             foreach (var child in node.Children)
             {
-                PrintTree(child, yPosition, call + 1);
+                PrintGraphicalTree(child, yPosition, call + 1);
             }
 
             if (call == 0)

@@ -16,7 +16,7 @@ namespace SimpleFactory
             var keepLooping                 = true;
             var stopWatch                   = new Stopwatch();
 
-            TxtPrinter.PrintAppTitle("WELCOME TO THE SORT PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
+            TxtPrinter.PrintInformation("WELCOME TO THE SORT PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
             
             while (keepLooping)
             {

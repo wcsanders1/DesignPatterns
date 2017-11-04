@@ -16,7 +16,7 @@ namespace Adapter
 
         static void Main(string[] args)
         {
-            TxtPrinter.PrintAppTitle("WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
+            TxtPrinter.PrintInformation("WELCOME TO THE ADAPTER PROGRAM -- WHICH IS SORT OF A FUNNY PROGRAM");
 
             var keepLooping = true;
             while (keepLooping)

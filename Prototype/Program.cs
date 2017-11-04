@@ -16,7 +16,7 @@ namespace Prototype
             var explorers                     = GetExplorers(urls);
             var keepLooping                   = true;
             
-            TxtPrinter.PrintAppTitle("WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
+            TxtPrinter.PrintInformation("WELCOME TO THE PROTOTYPE PROGRAM -- WHICH IS KIND OF A BORING PROGRAM");
             
             while (keepLooping)
             {

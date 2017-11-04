@@ -23,7 +23,7 @@ namespace Singleton
             var (topicDictionary, topicNames) = TypParser.GetInstantiatedTypeDictionaryAndNameList<IArguable>();
             var topicContainer                = Container.GetContainer(topicDictionary);
 
-            TxtPrinter.PrintAppTitle("WELCOME TO THE ARGUMENT PROGRAM -- WHICH IS A PROGRAM THAT'S KIND OF FUN, AT LEAST AT FIRST MAYBE.");
+            TxtPrinter.PrintInformation("WELCOME TO THE ARGUMENT PROGRAM -- WHICH IS A PROGRAM THAT'S KIND OF FUN, AT LEAST AT FIRST MAYBE.");
 
             while (keepLooping)
             {

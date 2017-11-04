@@ -15,7 +15,7 @@ namespace Builder
 
         static void Main()
         {
-            TxtPrinter.PrintAppTitle("WELCOME TO THE CHARACTER BUILDER PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
+            TxtPrinter.PrintInformation("WELCOME TO THE CHARACTER BUILDER PROGRAM -- WHICH IS A PRETTY NEAT PROGRAM!");
 
             var keepLooping = true;
             while (keepLooping)

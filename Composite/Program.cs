@@ -18,7 +18,10 @@ namespace Composite
 
         static void Main(string[] args)
         {
-            TxtPrinter.PrintAppTitle("WELCOME TO THE COMPOSITE PROGRAM -- WHICH IS A SOMEWHAT INTERESTING PROGRAM");
+            TxtPrinter.PrintInformation("WELCOME TO THE COMPOSITE PROGRAM -- WHICH IS A SOMEWHAT INTERESTING PROGRAM");
+            TxtPrinter.PrintInformation("This program calculates the share of a decedent's estate per stirpes.", '-', ConsoleColor.Magenta);
+            TxtPrinter.PrintInformation("NOTE: If the decedent or any descendant has more than three descendants, the results will " +
+                "be printed as a series of strings rather than as a graphical tree.", '-', ConsoleColor.DarkYellow);
 
             while (true)
             {
@@ -34,13 +37,13 @@ namespace Composite
                     $"Estate value: ${estateValue.ToString("#", CultureInfo.InvariantCulture)}"
                 });
 
-                tree.PrintTree(tree.GetRoot(), Console.CursorTop);
+                tree.PrintTree(tree.GetRoot());
                 Console.WriteLine();
 
                 decedent.Descendants = GetDescendants(decedent.Name, tree);
                 decedent.DistributeEstate();
                 MapDistributionToTree(decedent.Descendants, tree);
-                tree.PrintTree(tree.GetRoot(), Console.CursorTop);
+                tree.PrintTree(tree.GetRoot());
                 Console.WriteLine();
 
                 if (!ContinuationDeterminer.GoAgain())
@@ -129,7 +132,7 @@ namespace Composite
             for (int i = 1; i <= numDescendants; i++)
             {
                 string descendantName = TryAddDescendantToTree(decedentName, i, tree);
-                tree.PrintTree(tree.GetRoot(), Console.CursorTop);
+                tree.PrintTree(tree.GetRoot());
 
                 var isDeceased = QuestionAsker.IsTrueOrFalse($"Is {descendantName} deceased?");
                 List<Descendant> descendantsOfDescendant = new List<Descendant>();

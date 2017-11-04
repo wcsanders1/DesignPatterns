@@ -15,7 +15,7 @@ namespace Bridge
 
         static void Main(string[] args)
         {
-            TxtPrinter.PrintAppTitle("WELCOME TO THE BRIDGE PROGRAM -- WHICH IS A BORING PROGRAM THAT SORT OF DOES CONVERSIONS");
+            TxtPrinter.PrintInformation("WELCOME TO THE BRIDGE PROGRAM -- WHICH IS A BORING PROGRAM THAT SORT OF DOES CONVERSIONS");
 
             var keepLooping = true;
             while (keepLooping)

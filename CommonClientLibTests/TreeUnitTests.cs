@@ -148,5 +148,24 @@ namespace CommonClientLibTests
             Assert.NotNull(result);
             Assert.Equal(TEST_KEY, result.Key);
         }
+
+        [Fact]
+        public void GetGreatestNumberOfChildren_ReturnsGreatestNumberOfChildren_WhenProvidedTreeWithChildren()
+        {
+            var sut = new Tree<string>("a");
+            sut.TryAddNode("b");
+            sut.TryAddNode("c");
+            var cNode = sut.GetNode("c");
+            cNode.TryAddNode("d");
+            cNode.TryAddNode("e");
+            var bNode = sut.GetNode("b");
+            bNode.TryAddNode("z");
+            cNode.TryAddNode("f");
+
+            var expected = 3;
+            var result = sut.GetGreatestNumberOfChildren(sut);
+
+            Assert.Equal(expected, result);
+        }
     }
 }
