@@ -226,8 +226,12 @@ namespace CommonClientLib
         
         private void PrintText(Tree<T> node, int spacesToIndent = 0)
         {
+
+            var curTextColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
             Console.CursorLeft = spacesToIndent;
             Console.WriteLine(node.Key);
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
 
             foreach (var item in node.Info)
             {
@@ -239,6 +243,8 @@ namespace CommonClientLib
             {
                 PrintText(child, spacesToIndent + 2);
             }
+
+            Console.ForegroundColor = curTextColor;
         }
 
         private void PrintGraphicalTree(Tree<T> node, int yPosition, int call = 0)

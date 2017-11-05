@@ -28,3 +28,7 @@ After making your way through some questions about yourself, the program will re
 ### Bridge
 
 Convert measurements from one type to another and print the output in either a simple or fancy style. The bridge pattern allows the conversion output to be formatted in various ways; i.e., any formatter that implements the `IFormatter` interface can be passed to any conversion class, which will format the output using the formatter.
+
+### Composite
+
+Determine the distribution of a decedent's estate according to the *per stirpes* distribution scheme. The composite pattern allows the decedent to contain a collection of descendants, and each descendant to collection of their own descendants. In addition, the information will print to the console in a neat tree-like fashion.
