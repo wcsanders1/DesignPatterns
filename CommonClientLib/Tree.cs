@@ -175,15 +175,35 @@ namespace CommonClientLib
             return getGreatestNumberOfChildren(tree);
         }
 
-        //TODO: This
-        public int GetGreatestNumberOfBranches(Tree<T> node)
+        /// <summary>
+        /// Returns the amount of the greatest descending branches of a tree.
+        /// </summary>
+        /// <param name="node">Tree from which to find greatest number of descending branches</param>
+        /// <returns>Number of greatest descending branches</returns>
+        public int GetGreatestNumberOfDescendingBranches(Tree<T> node)
         {
-            int getGreatestNumberOfBranches(Tree<T> subNode, int greatestNumBranches = 0)
+            int getGreatestNumberOfDescendingBranches(Tree<T> subNode, int numBranchesDown = 0)
             {
-                return 0;
+                numBranchesDown++;
+                var greatestNumDescendingBranches = 0;
+                if (subNode.Children.Count == 0)
+                {
+                    return numBranchesDown;
+                }
+
+                foreach (var child in subNode.Children)
+                {
+                    var childBranches = getGreatestNumberOfDescendingBranches(child, numBranchesDown);
+                    if (childBranches > greatestNumDescendingBranches)
+                    {
+                        greatestNumDescendingBranches = childBranches;
+                    }
+                }
+                
+                return greatestNumDescendingBranches;
             }
 
-            return 0;
+            return getGreatestNumberOfDescendingBranches(node);
         }
 
         /// <summary>
@@ -193,7 +213,8 @@ namespace CommonClientLib
         /// <param name="node">The parent node from which to print</param>
         public void PrintTree(Tree<T> node)
         {
-            if (node.GetGreatestNumberOfChildren(node) > MAX_AMOUNT_TO_PRINT)
+            if (node.GetGreatestNumberOfChildren(node) > MAX_AMOUNT_TO_PRINT ||
+                node.GetGreatestNumberOfDescendingBranches(node) > MAX_AMOUNT_TO_PRINT)
             {
                 PrintText(node);
             }

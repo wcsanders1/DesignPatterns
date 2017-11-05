@@ -167,5 +167,47 @@ namespace CommonClientLibTests
 
             Assert.Equal(expected, result);
         }
+
+        [Fact]
+        public void GetGreatestNumberOfDescendingBranches_ReturnsGreatestNumberOfDescendingBranches_WhenProvidedTree()
+        {
+            var sut = new Tree<string>("a");
+            sut.TryAddNode("b");
+            sut.TryAddNode("c");
+            sut.TryAddNode("d");
+            var cNode = sut.GetNode("c");
+            cNode.TryAddNode("z");
+            cNode.TryAddNode("y");
+            var yNode = cNode.GetNode("y");
+            yNode.TryAddNode("m");
+
+            var expected = 4;
+            var result = sut.GetGreatestNumberOfDescendingBranches(sut);
+
+            Assert.Equal(expected, result);
+        }
+
+        [Fact]
+        public void GetGreatestNumberOfDescendingBranches_ReturnsGreatestNumberOfDescendingBranches_WhenProvidedTree2()
+        {
+            var sut = new Tree<string>("a");
+            sut.TryAddNode("b");
+            sut.TryAddNode("c");
+            sut.TryAddNode("d");
+            var cNode = sut.GetNode("c");
+            cNode.TryAddNode("z");
+            cNode.TryAddNode("y");
+            var yNode = cNode.GetNode("y");
+            yNode.TryAddNode("m");
+            var mNode = yNode.GetNode("m");
+            mNode.TryAddNode("n");
+            var nNode = mNode.GetNode("n");
+            nNode.TryAddNode("o");
+
+            var expected = 6;
+            var result = sut.GetGreatestNumberOfDescendingBranches(sut);
+
+            Assert.Equal(expected, result);
+        }
     }
 }
