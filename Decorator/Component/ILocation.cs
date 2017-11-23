@@ -2,7 +2,7 @@
 {
     public interface ILocation
     {
-        string GetDescription();
-        int GetPopulation();
+        void PrintName();
+        void PrintLocation();
     }
 }

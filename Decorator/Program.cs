@@ -37,6 +37,8 @@ namespace Decorator
                     Environment.Exit(1);
                 }
 
+
+
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
