@@ -6,7 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="LocationInfo.json" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\CommonClientLib\CommonClientLib.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Decorators\" />
   </ItemGroup>
 
 </Project>

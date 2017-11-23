@@ -1,0 +1,71 @@
+﻿{
+  "towns": [
+    {
+      "name": "Tartu",
+      "country": "Estonia",
+      "population": 96000
+    },
+    {
+      "name": "Bangui",
+      "country": "Central African Republic",
+      "population": 734350
+    },
+    {
+      "name": "Lins",
+      "country": "Brazil",
+      "population": 76000
+    }
+  ],
+  "countries": [
+    {
+      "name": "Estonia",
+      "continent": "Europe",
+      "anthem": "Mu isamaa, mu õnn ja rõõm"
+    },
+    {
+      "name": "Central African Republic",
+      "continent": "Africa",
+      "anthem": "La Renaissance"
+    },
+    {
+      "name": "Brazil",
+      "continent": "South America",
+      "anthem": "Hino Nacional Brasileiro"
+    }
+  ],
+  "continents": [
+    {
+      "name": "Europe",
+      "countryAmount": 50,
+      "size": "3.931 million mi²"
+    },
+    {
+      "name": "Africa",
+      "countryAmount": 54,
+      "size": "11.73 million mi²"
+    },
+    {
+      "name": "South America",
+      "countryAmount": 13,
+      "size": "6.888 million mi²"
+    }
+  ],
+  "planet": {
+    "name": "Earth",
+    "weight": "5.972 x 10^24 kg",
+    "age": "4.54 billion years"
+  },
+  "galaxy": {
+    "name": "Milky Way",
+    "starNumber": "400 billion",
+    "size": "100,000 light years"
+  },
+  "universe": {
+    "size": "infinite",
+    "location": "mind"
+  },
+  "mind": {
+    "size": "infinite",
+    "nature": "consciousness"
+  }
+}

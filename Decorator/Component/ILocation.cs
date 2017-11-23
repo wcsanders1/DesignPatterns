@@ -1,4 +1,4 @@
-﻿namespace Decorator
+﻿namespace Decorator.Component
 {
     public interface ILocation
     {
