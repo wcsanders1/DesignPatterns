@@ -2,7 +2,8 @@
 {
     public interface ILocation
     {
-        void PrintName();
-        void PrintLocation();
+        string Name {get;}
+        string Location { get; }
+        void PrintInfo();
     }
 }

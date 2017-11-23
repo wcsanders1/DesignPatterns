@@ -4,23 +4,22 @@ namespace Decorator.Component
 {
     public class Town : ILocation
     {
-        private string Name { get; }
-        private string Location { get; }
+        public string Name { get; }
+        public string Location { get; }
 
-        public Town(string name, string location)
+        private int Population { get; }
+
+        public Town(string name, string location, int population)
         {
             Name = name;
             Location = location;
+            Population = population;
         }
 
-        public void PrintLocation()
-        {
-            Console.WriteLine($"{Name} is located in {Location}");
-        }
-
-        public void PrintName()
+        public void PrintInfo()
         {
             Console.WriteLine($"The name of this town is {Name}.");
+            Console.WriteLine($"{Name} has a population of {Population}");
         }
     }
 }

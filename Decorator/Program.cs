@@ -2,6 +2,9 @@
 using System;
 using System.IO;
 using Newtonsoft.Json.Linq;
+using System.Collections.Generic;
+using System.Linq;
+using Decorator.Component;
 
 namespace Decorator
 {
@@ -21,7 +24,7 @@ namespace Decorator
 
             while(true)
             {
-                JObject locationInfo;
+                JObject locationInfo = null;
                 try
                 {
                     using (var reader = new StreamReader(InfoFile))
@@ -37,13 +40,36 @@ namespace Decorator
                     Environment.Exit(1);
                 }
 
-
+                var town = GetTown(locationInfo);
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
                 }
             }
+        }
+
+        static Town GetTown(JObject data)
+        {
+            if (!data.TryGetValue("towns", out var rawTowns))
+            {
+                Console.WriteLine($"Unable to parse {InfoFile}.");
+                Environment.Exit(1);
+            }
+
+            var towns = new List<Town>();
+            foreach (var town in rawTowns)
+            {
+                var name = town.Value<string>("name");
+                var location = town.Value<string>("location");
+                var population = town.Value<int>("population");
+                towns.Add(new Town(name, location, population));
+            }
+
+            var choice = QuestionAsker.GetChoiceFromList("What town are you in?", 
+                towns.Select(t => t.Name).ToList());
+            
+            return towns[choice];
         }
     }
 }
