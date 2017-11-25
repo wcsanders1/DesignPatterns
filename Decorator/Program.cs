@@ -69,8 +69,6 @@ namespace Decorator
                 {
                     Environment.Exit(0);
                 }
-
-
             }
         }
 
@@ -115,14 +113,23 @@ namespace Decorator
                 var name = element.Value<string>("name");
                 if (name == component.Location)
                 {
+                    var location = element.Value<string>("location");
                     switch (decorator)
                     {
                         case "countries":
                             return new Country(
                                 component,
                                 name,
-                                element.Value<string>("location"),
+                                location,
                                 element.Value<string>("anthem"));
+                        case "continents":
+                            return new Continent(
+                                component,
+                                name,
+                                location,
+                                element.Value<int>("countryAmount"),
+                                element.Value<string>("size")
+                                );
                         default:
                             return null;
                     }
