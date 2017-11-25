@@ -135,6 +135,13 @@ namespace Decorator
                                 location,
                                 element.Value<string>("weight"),
                                 element.Value<string>("age"));
+                        case "galaxies":
+                            return new Galaxy(
+                                component,
+                                name,
+                                location,
+                                element.Value<string>("starNumber"),
+                                element.Value<string>("size"));
                         default:
                             return null;
                     }
