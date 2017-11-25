@@ -5,6 +5,7 @@ using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using System.Linq;
 using Decorator.Component;
+using Decorator.Decorators;
 
 namespace Decorator
 {
@@ -46,17 +47,14 @@ namespace Decorator
                 {
                     Environment.Exit(0);
                 }
+
+
             }
         }
 
-        static Town GetTown(JObject data)
+        private static Town GetTown(JObject data)
         {
-            if (!data.TryGetValue("towns", out var rawTowns))
-            {
-                Console.WriteLine($"Unable to parse {InfoFile}.");
-                Environment.Exit(1);
-            }
-
+            var rawTowns = GetJToken(data, "towns");
             var towns = new List<Town>();
             foreach (var town in rawTowns)
             {
@@ -70,6 +68,24 @@ namespace Decorator
                 towns.Select(t => t.Name).ToList());
             
             return towns[choice];
+        }
+
+        private static Country GetCountry(JObject data, string townName)
+        {
+            var rawCountries = GetJToken(data, "countries");
+
+            return null;
+        }
+
+        private static JToken GetJToken(JObject data, string property)
+        {
+            if (!data.TryGetValue(property, out var token))
+            {
+                Console.WriteLine($"Unable to parse {InfoFile}.");
+                Environment.Exit(1);
+            }
+
+            return token;
         }
     }
 }
