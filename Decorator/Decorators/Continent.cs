@@ -19,7 +19,7 @@ namespace Decorator.Decorators
         {
             base.PrintInfo();
             Console.WriteLine($"{Component.Name} is in the continent of {Name}, " +
-                $"which has {CountryAmount} countries in it, and has a size of {Size}.");
+                $"which has {CountryAmount} countries in it and has a size of {Size}.");
         }
     }
 }

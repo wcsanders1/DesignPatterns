@@ -34,6 +34,7 @@ namespace Decorator
 
             while(true)
             {
+                Start:
                 JObject locationInfo = null;
                 try
                 {
@@ -57,13 +58,22 @@ namespace Decorator
                 {
                     if (!KeepGoing())
                     {
-                        continue;
+                        goto Start;
                     }
 
                     town = Decorate(locationInfo, town, decorator);
                     town.PrintInfo();
                 }
-                
+
+                if (KeepGoing())
+                {
+                    var mind = GetJToken(locationInfo, "mind");
+                    var mindSize = mind.Value<string>("size");
+                    var mindNature = mind.Value<string>("nature");
+                    TxtPrinter.PrintInformation($"The {town.Name} universe is in mind, " +
+                        $"which has a size of {mindSize}, and whose nature is {mindNature}. OK?", consoleColor: ConsoleColor.DarkMagenta);
+                }
+
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
@@ -142,10 +152,15 @@ namespace Decorator
                                 location,
                                 element.Value<string>("starNumber"),
                                 element.Value<string>("size"));
+                        case "universes":
+                            return new Universe(
+                                component,
+                                name,
+                                location,
+                                element.Value<string>("size"));
                         default:
                             return null;
                     }
-                    
                 }
             }
 

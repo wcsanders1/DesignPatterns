@@ -64,7 +64,7 @@
   "galaxies": [
     {
       "name": "Milky Way",
-      "location": "universe",
+      "location": "nameless",
       "starNumber": "400 billion",
       "size": "100,000 light years"
     }

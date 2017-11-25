@@ -51,10 +51,10 @@ namespace CommonClientLib
             {
                 Console.WriteLine($"{question}\n");
 
-                var index = 1;
+                var index = 0;
                 foreach (var choice in choices)
                 {
-                    Console.WriteLine($"{index++}. {choice}");
+                    Console.WriteLine($"{++index}. {choice}");
                 }
 
                 Console.WriteLine();
