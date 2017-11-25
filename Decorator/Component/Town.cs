@@ -1,4 +1,5 @@
 ﻿using System;
+using CommonClientLib;
 
 namespace Decorator.Component
 {
@@ -18,8 +19,8 @@ namespace Decorator.Component
 
         public void PrintInfo()
         {
-            Console.WriteLine($"The name of this town is {Name}.");
-            Console.WriteLine($"{Name} has a population of {Population}");
+            Console.WriteLine($"\nThe name of this town is {Name}.");
+            Console.WriteLine($"{Name} has a population of {Population.ToStringWithComma()}.");
         }
     }
 }

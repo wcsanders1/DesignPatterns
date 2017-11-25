@@ -19,6 +19,16 @@ namespace Decorator
 
         private const string InfoFile = "LocationInfo.json";
 
+        private static readonly List<string> Decorators = new List<string>
+        {
+            "countries",
+            "continents",
+            "planet",
+            "galaxy",
+            "universe",
+            "mind"
+        };
+
         static void Main(string[] args)
         {
             TxtPrinter.PrintInformation("WELCOME TO THE DECORATOR PROGRAM -- WHICH IS SORT OF COOL, I GUESS");
@@ -42,7 +52,19 @@ namespace Decorator
                 }
 
                 var town = GetTown(locationInfo);
+                town.PrintInfo();
+                
+                foreach (var decorator in Decorators)
+                {
+                    if (!KeepGoing(town.Name))
+                    {
+                        continue;
+                    }
 
+                    town = Decorate(locationInfo, town, decorator);
+                    town.PrintInfo();
+                }
+                
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
@@ -52,7 +74,22 @@ namespace Decorator
             }
         }
 
-        private static Town GetTown(JObject data)
+        private static bool KeepGoing(string name)
+        {
+            if (!ContinuationDeterminer.GoAgain($"\nWould you like to know where {name} is?"))
+            {
+                if (!ContinuationDeterminer.GoAgain())
+                {
+                    Environment.Exit(0);
+                }
+
+                return false;
+            }
+
+            return true;
+        }
+
+        private static ILocation GetTown(JObject data)
         {
             var rawTowns = GetJToken(data, "towns");
             var towns = new List<Town>();
@@ -70,9 +107,28 @@ namespace Decorator
             return towns[choice];
         }
 
-        private static Country GetCountry(JObject data, string townName)
+        private static ILocation Decorate(JObject data, ILocation component, string decorator)
         {
-            var rawCountries = GetJToken(data, "countries");
+            var rawData = GetJToken(data, decorator);
+            foreach (var element in rawData)
+            {
+                var name = element.Value<string>("name");
+                if (name == component.Location)
+                {
+                    switch (decorator)
+                    {
+                        case "countries":
+                            return new Country(
+                                component,
+                                name,
+                                element.Value<string>("location"),
+                                element.Value<string>("anthem"));
+                        default:
+                            return null;
+                    }
+                    
+                }
+            }
 
             return null;
         }

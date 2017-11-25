@@ -16,8 +16,8 @@ namespace Decorator.Decorators
         public override void PrintInfo()
         {
             base.PrintInfo();
-            Console.WriteLine($"{Component.Name} is in the country {Name}, " +
-                $"whose national anthem is {Anthem}");
+            Console.WriteLine($"{Component.Name} is in the country of {Name}, " +
+                $"whose national anthem is {Anthem}.");
         }
     }
 }

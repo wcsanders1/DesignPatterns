@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ContinuationDeterminer.cs" />
+    <Compile Include="IntExtensionMethods.cs" />
     <Compile Include="ListExtensionMethods.cs" />
     <Compile Include="QuestionAsker.cs" />
     <Compile Include="TextParser.cs" />
