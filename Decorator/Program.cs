@@ -23,10 +23,9 @@ namespace Decorator
         {
             "countries",
             "continents",
-            "planet",
-            "galaxy",
-            "universe",
-            "mind"
+            "planets",
+            "galaxies",
+            "universes"
         };
 
         static void Main(string[] args)
@@ -56,7 +55,7 @@ namespace Decorator
                 
                 foreach (var decorator in Decorators)
                 {
-                    if (!KeepGoing(town.Name))
+                    if (!KeepGoing())
                     {
                         continue;
                     }
@@ -72,9 +71,9 @@ namespace Decorator
             }
         }
 
-        private static bool KeepGoing(string name)
+        private static bool KeepGoing()
         {
-            if (!ContinuationDeterminer.GoAgain($"\nWould you like to know where {name} is?"))
+            if (!ContinuationDeterminer.GoAgain($"\nWould you like to have a broader perspective on things?"))
             {
                 if (!ContinuationDeterminer.GoAgain())
                 {
@@ -128,8 +127,14 @@ namespace Decorator
                                 name,
                                 location,
                                 element.Value<int>("countryAmount"),
-                                element.Value<string>("size")
-                                );
+                                element.Value<string>("size"));
+                        case "planets":
+                            return new Planet(
+                                component,
+                                name,
+                                location,
+                                element.Value<string>("weight"),
+                                element.Value<string>("age"));
                         default:
                             return null;
                     }

@@ -7,7 +7,7 @@
     },
     {
       "name": "Bangui",
-      "location": "Central African Republic",
+      "location": "The Central African Republic",
       "population": 734350
     },
     {
@@ -23,7 +23,7 @@
       "anthem": "Mu isamaa, mu õnn ja rõõm"
     },
     {
-      "name": "the Central African Republic",
+      "name": "The Central African Republic",
       "location": "Africa",
       "anthem": "La Renaissance"
     },
@@ -53,22 +53,29 @@
       "size": "6.888 million mi²"
     }
   ],
-  "planet": {
-    "name": "Earth",
-    "location": "Milky Way",
-    "weight": "5.972 x 10^24 kg",
-    "age": "4.54 billion years"
-  },
-  "galaxy": {
-    "name": "Milky Way",
-    "location": "universe",
-    "starNumber": "400 billion",
-    "size": "100,000 light years"
-  },
-  "universe": {
-    "location": "mind",
-    "size": "infinite"
-  },
+  "planets": [
+    {
+      "name": "Earth",
+      "location": "Milky Way",
+      "weight": "5.972 x 10^24 kg",
+      "age": "4.54 billion years"
+    }
+  ],
+  "galaxies": [
+    {
+      "name": "Milky Way",
+      "location": "universe",
+      "starNumber": "400 billion",
+      "size": "100,000 light years"
+    }
+  ],
+  "universes": [
+    {
+      "name": "nameless",
+      "location": "mind",
+      "size": "infinite"
+    }
+  ],
   "mind": {
     "size": "infinite",
     "nature": "consciousness"
