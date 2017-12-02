@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2009
+VisualStudioVersion = 15.0.27004.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactory", "SimpleFactory\SimpleFactory.csproj", "{F1E0D86C-940B-4310-B5A0-F1471A81AD4B}"
 EndProject
@@ -27,7 +27,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CompositeTests", "Composite
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CommonClientLibTests", "CommonClientLibTests\CommonClientLibTests.csproj", "{4AC35269-F049-4B30-9B54-0D64B5A1B95A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Decorator", "Decorator\Decorator.csproj", "{399B06BD-611A-4093-B712-0AF8EBB346DB}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decorator", "Decorator\Decorator.csproj", "{399B06BD-611A-4093-B712-0AF8EBB346DB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Facade", "Facade\Facade.csproj", "{4C404CCE-9391-4450-B51B-B3113F9CDF51}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -83,6 +85,10 @@ Global
 		{399B06BD-611A-4093-B712-0AF8EBB346DB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{399B06BD-611A-4093-B712-0AF8EBB346DB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{399B06BD-611A-4093-B712-0AF8EBB346DB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C404CCE-9391-4450-B51B-B3113F9CDF51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C404CCE-9391-4450-B51B-B3113F9CDF51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C404CCE-9391-4450-B51B-B3113F9CDF51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C404CCE-9391-4450-B51B-B3113F9CDF51}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
