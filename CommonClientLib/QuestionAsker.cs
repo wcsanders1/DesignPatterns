@@ -5,7 +5,7 @@ namespace CommonClientLib
 {
     public class QuestionAsker
     {
-        private const string InvalidInputMessage = "That input isn't valid. Let's try again.\n";
+        private const string InvalidInputMessage = "That input isn't valid. Please enter a number only. Let's try again.\n";
 
         /// <summary>
         /// Asks user whether the answer to a question is true or false.
@@ -42,7 +42,7 @@ namespace CommonClientLib
         /// </summary>
         /// <param name="question">The question asked to the user</param>
         /// <param name="choices">List of choices</param>
-        /// <returns>The element of the list of choices that the user chose</returns>
+        /// <returns>The index of the element of the list of choices that the user chose</returns>
         public int GetChoiceFromList(string question, List<string> choices)
         {
             Console.WriteLine();
