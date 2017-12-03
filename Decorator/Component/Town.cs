@@ -1,5 +1,5 @@
 ﻿using System;
-using CommonClientLib;
+using CommonClientLib.ExtensionMethods;
 
 namespace Decorator.Component
 {

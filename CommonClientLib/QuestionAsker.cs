@@ -5,7 +5,7 @@ namespace CommonClientLib
 {
     public class QuestionAsker
     {
-        private const string InvalidInputMessage = "That input isn't valid. Please enter a number only. Let's try again.\n";
+        private const string InvalidInputMessage = "That input isn't valid. Let's try again.\n";
 
         /// <summary>
         /// Asks user whether the answer to a question is true or false.

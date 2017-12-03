@@ -1,6 +1,6 @@
 ﻿using System.Globalization;
 
-namespace CommonClientLib
+namespace CommonClientLib.ExtensionMethods
 {
     public static class IntExtensionMethods
     {

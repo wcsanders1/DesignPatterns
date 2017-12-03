@@ -6,7 +6,7 @@ using CommonClientLib;
 namespace Facade
 {
     public class TextToXml
-    {
+    {        
         private enum NameOrValue
         {
             Name,
@@ -23,8 +23,8 @@ namespace Facade
         public XDocument GetXDocument()
         {
             var rootName = GetNameOrValue("root", NameOrValue.Name);
-            var rootElement = new XElement(rootName);
-            var xmlTree = BuildXmlTree(rootElement);
+            var element = new XElement(rootName);
+            var xmlTree = BuildXmlTree(element);
 
             return new XDocument(xmlTree);
         }
@@ -44,7 +44,7 @@ namespace Facade
                 case "Yes":
                     var newName = GetNameOrValue($"child of the {element.Name}", NameOrValue.Name);
                     var newElement = new XElement(newName);
-                    element.Add(newElement);
+                    element.AddAndPrint(newElement);
                     BuildXmlTree(newElement);
 
                     while (true)
@@ -58,14 +58,13 @@ namespace Facade
                         
                         var anotherName = GetNameOrValue($"child of the {element.Name}", NameOrValue.Name);
                         var anotherNewElement = new XElement(anotherName);
-                        element.Add(anotherNewElement);
-                        BuildXmlTree(anotherNewElement); 
+                        element.AddAndPrint(anotherNewElement);
+                        BuildXmlTree(anotherNewElement);
                     }
-
                     break;
                 case "No":
                     var value = GetNameOrValue(element.Name.LocalName, NameOrValue.Value);
-                    element.Add(value);
+                    element.AddAndPrint(value);
                     break;
                 default:
                     return null;
@@ -78,14 +77,15 @@ namespace Facade
         {
             while (true)
             {
-                Console.WriteLine($"What is the {nameOrValue.ToString().ToLower()} of the {name} xml element?");
+                Console.WriteLine($"What is the {nameOrValue.ToString().ToLower()} of the {name} xml element?\n");
 
                 var newName = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(newName))
                 {
-                    Console.WriteLine($"Nope. The name must be fewer than {MaxNameLength} characters, with no spaces.");
+                    Console.WriteLine($"Nope. The name must be fewer than {MaxNameLength} characters, with no spaces.\n");
                     continue;
                 }
+                Console.WriteLine();
 
                 return newName;
             }

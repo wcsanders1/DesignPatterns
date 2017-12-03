@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 
-namespace CommonClientLib
+namespace CommonClientLib.ExtensionMethods
 {
-    public static class ListExtensionMethods
+    public static class IEnumerableExtensionMethods
     {
         public static IEnumerable<T> GetAllNestedTypes<T>(this IEnumerable<T> objects) where T : class
         {
