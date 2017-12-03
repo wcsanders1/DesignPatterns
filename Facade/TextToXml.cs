@@ -6,23 +6,17 @@ using CommonClientLib;
 namespace Facade
 {
     public class TextToXml
-    {        
-        private enum NameOrValue
-        {
-            Name,
-            Value
-        }
-
+    {
         private QuestionAsker Asker = new QuestionAsker();
-        private const int MaxNameLength = 20;
+        private FacadeCommonLib FacadeLib = new FacadeCommonLib();
 
         /// <summary>
         /// Gets an XML tree based on information the user provides
         /// </summary>
         /// <returns><code>XDocument</code> based on user input</returns>
-        public XDocument GetXDocument()
+        public XDocument GetXmlFromText()
         {
-            var rootName = GetNameOrValue("root", NameOrValue.Name);
+            var rootName = FacadeLib.GetNameOrValue("root", NameOrValue.Name, XmlOrJson.Xml);
             var element = new XElement(rootName);
             var xmlTree = BuildXmlTree(element);
 
@@ -42,7 +36,7 @@ namespace Facade
             switch (firstChoice)
             {
                 case "Yes":
-                    var newName = GetNameOrValue($"child of the {element.Name}", NameOrValue.Name);
+                    var newName = FacadeLib.GetNameOrValue($"child of the {element.Name}", NameOrValue.Name, XmlOrJson.Xml);
                     var newElement = new XElement(newName);
                     element.AddAndPrint(newElement);
                     BuildXmlTree(newElement);
@@ -56,14 +50,14 @@ namespace Facade
                             break;
                         }
                         
-                        var anotherName = GetNameOrValue($"child of the {element.Name}", NameOrValue.Name);
+                        var anotherName = FacadeLib.GetNameOrValue($"child of the {element.Name}", NameOrValue.Name, XmlOrJson.Xml);
                         var anotherNewElement = new XElement(anotherName);
                         element.AddAndPrint(anotherNewElement);
                         BuildXmlTree(anotherNewElement);
                     }
                     break;
                 case "No":
-                    var value = GetNameOrValue(element.Name.LocalName, NameOrValue.Value);
+                    var value = FacadeLib.GetNameOrValue(element.Name.LocalName, NameOrValue.Value, XmlOrJson.Xml);
                     element.AddAndPrint(value);
                     break;
                 default:
@@ -71,24 +65,6 @@ namespace Facade
             }
 
             return element;
-        }
-
-        private string GetNameOrValue(string name, NameOrValue nameOrValue)
-        {
-            while (true)
-            {
-                Console.WriteLine($"What is the {nameOrValue.ToString().ToLower()} of the {name} xml element?\n");
-
-                var newName = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(newName))
-                {
-                    Console.WriteLine($"Nope. The name must be fewer than {MaxNameLength} characters, with no spaces.\n");
-                    continue;
-                }
-                Console.WriteLine();
-
-                return newName;
-            }
         }
     }
 }

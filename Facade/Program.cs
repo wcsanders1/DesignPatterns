@@ -8,7 +8,7 @@ namespace Facade
 
         static void Main(string[] args)
         {
-            var xDoxument = TextToXml.GetXDocument();
+            var xDoxument = TextToXml.GetXmlFromText();
             Console.WriteLine(xDoxument);
 
             Console.ReadLine();
