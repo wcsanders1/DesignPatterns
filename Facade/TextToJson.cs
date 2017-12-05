@@ -20,9 +20,9 @@ namespace Facade
             return jObj;
         }
 
-        private void BuildJson(JObject jObj)
+        private void BuildJson<T>(T obj) where T : JToken
         {
-            var firstQuestion = $"Is the value of the {jObj} a key-value pair, an object, or an array?";
+            var firstQuestion = $"Is the value of the {typeof(T).Name.Substring(1).ToLower()} a key-value pair, an object, or an array?";
             var choices = new List<string>
             {
                 "Key-value pair",
