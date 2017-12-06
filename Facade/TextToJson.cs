@@ -15,29 +15,46 @@ namespace Facade
         /// <returns><code>JObject</code> based on user input</returns>
         public JObject GetJsonFromText()
         {
-            var jObj = new JObject();
+            var obj = new JObject();
+            BuildJson(obj);
 
-            return jObj;
+            return obj;
         }
 
-        private void BuildJson<T>(T obj) where T : JToken
+        private void BuildJson(JObject obj)
         {
-            var firstQuestion = $"Is the value of the {typeof(T).Name.Substring(1).ToLower()} a key-value pair, an object, or an array?";
+            var firstQuestion = "Is the value of this object an object or a property?";
             var choices = new List<string>
             {
-                "Key-value pair",
                 "Object",
-                "Array"
+                "Property"
             };
 
             var firstChoice = choices[Asker.GetChoiceFromList(firstQuestion, choices)];
             switch (firstChoice)
             {
-                case "Key-value pair":
-                    break;
                 case "Object":
                     break;
-                case "Array":
+                case "Property":
+                    while (true)
+                    {
+                        var name = FacadeLib.GetNameOrValue("object", NameOrValue.Name, XmlOrJson.Json);
+                        var value = FacadeLib.GetNameOrValue("object", NameOrValue.Value, XmlOrJson.Json);
+                        obj.Add(new JProperty(name, value));
+
+                        var secondQuestion = "Would you like to add another property to this object?";
+                        var moreChoices = new List<string>
+                        {
+                            "Yes",
+                            "No"
+                        };
+
+                        var secondChoice = moreChoices[Asker.GetChoiceFromList(secondQuestion, moreChoices)];
+                        if (secondChoice == "No")
+                        {
+                            break;
+                        }
+                    }
                     break;
                 default:
                     break;
