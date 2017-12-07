@@ -17,7 +17,7 @@ namespace Facade
                     entry = "xml element";
                     break;
                 case XmlOrJson.Json:
-                    entry = "json entry";
+                    entry = "json element";
                     break;
                 default:
                     entry = "";

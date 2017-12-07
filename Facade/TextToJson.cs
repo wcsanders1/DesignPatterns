@@ -23,42 +23,38 @@ namespace Facade
 
         private void BuildJson(JObject obj)
         {
-            var firstQuestion = "Is the value of this object an object or a property?";
-            var choices = new List<string>
+            while(true)
             {
-                "Object",
-                "Property"
-            };
+                var name = FacadeLib.GetNameOrValue("property", NameOrValue.Name, XmlOrJson.Json);
+                var newProp = new JProperty(name);
+                obj.Add(newProp);
+                var question = $"Is the value of the {name} property another object?";
+                var choices = new List<string>
+                {
+                    "Yes",
+                    "No"
+                };
 
-            var firstChoice = choices[Asker.GetChoiceFromList(firstQuestion, choices)];
-            switch (firstChoice)
-            {
-                case "Object":
-                    break;
-                case "Property":
-                    while (true)
+                var choice = choices[Asker.GetChoiceFromList(question, choices)];
+                if (choice == "Yes")
+                {
+                    var newObj = new JObject();
+                    obj[name] = newObj;
+                    BuildJson(newObj);
+                }
+                if (choice == "No")
+                {
+                    var value = FacadeLib.GetNameOrValue($" {name} property", NameOrValue.Value, XmlOrJson.Json);
+                    obj[name] = value;
+                    var secondQuesion = $"Would you like to add another property to the {obj} object?";
+                    var secondChoice = choices[Asker.GetChoiceFromList(secondQuesion, choices)];
+                    if (secondChoice == "No")
                     {
-                        var name = FacadeLib.GetNameOrValue("object", NameOrValue.Name, XmlOrJson.Json);
-                        var value = FacadeLib.GetNameOrValue("object", NameOrValue.Value, XmlOrJson.Json);
-                        obj.Add(new JProperty(name, value));
-
-                        var secondQuestion = "Would you like to add another property to this object?";
-                        var moreChoices = new List<string>
-                        {
-                            "Yes",
-                            "No"
-                        };
-
-                        var secondChoice = moreChoices[Asker.GetChoiceFromList(secondQuestion, moreChoices)];
-                        if (secondChoice == "No")
-                        {
-                            break;
-                        }
+                        break;
                     }
-                    break;
-                default:
-                    break;
+                }
             }
+            
         }
     }
 }
