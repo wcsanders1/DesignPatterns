@@ -25,7 +25,7 @@ namespace Facade
         {
             while(true)
             {
-                var name = FacadeLib.GetNameOrValue("property", NameOrValue.Name, XmlOrJson.Json);
+                var name = FacadeLib.GetNameOrValue("new", NameOrValue.Name, XmlOrJson.Json);
                 var newProp = new JProperty(name);
                 obj.Add(newProp);
                 var question = $"Is the value of the {name} property another object?";
@@ -44,7 +44,7 @@ namespace Facade
                 }
                 if (choice == "No")
                 {
-                    var value = FacadeLib.GetNameOrValue($" {name} property", NameOrValue.Value, XmlOrJson.Json);
+                    var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
                     obj[name] = value;
                     var secondQuesion = $"Would you like to add another property to the {obj} object?";
                     var secondChoice = choices[Asker.GetChoiceFromList(secondQuesion, choices)];

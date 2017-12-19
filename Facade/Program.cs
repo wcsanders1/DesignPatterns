@@ -12,7 +12,7 @@ namespace Facade
             var jObj = TextToJson.GetJsonFromText();
             //var xDoxument = TextToXml.GetXmlFromText();
             //Console.WriteLine(xDoxument);
-            
+
             Console.ReadLine();
         }
     }
