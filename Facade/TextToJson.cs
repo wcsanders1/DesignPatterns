@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json.Linq;
 using CommonClientLib;
 using System.Collections.Generic;
+using CommonClientLib.ExtensionMethods;
 
 namespace Facade
 {
@@ -27,7 +28,7 @@ namespace Facade
             {
                 var name = FacadeLib.GetNameOrValue("new", NameOrValue.Name, XmlOrJson.Json);
                 var newProp = new JProperty(name);
-                obj.Add(newProp);
+                obj.AddAndPrint(newProp);
                 var question = $"Is the value of the {name} property another object?";
                 var choices = new List<string>
                 {
@@ -46,7 +47,7 @@ namespace Facade
                 {
                     var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
                     obj[name] = value;
-                    var secondQuesion = $"Would you like to add another property to the {obj} object?";
+                    var secondQuesion = $"Would you like to add another property to the {name} object?";
                     var secondChoice = choices[Asker.GetChoiceFromList(secondQuesion, choices)];
                     if (secondChoice == "No")
                     {
