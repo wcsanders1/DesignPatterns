@@ -21,7 +21,7 @@ namespace CommonClientLib.ExtensionMethods
                 return;
             }
 
-            Console.WriteLine($"{jToken.Root}");
+            Console.WriteLine(jToken.Root);
         }
     }
 }

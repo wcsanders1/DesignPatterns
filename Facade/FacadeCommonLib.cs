@@ -15,7 +15,7 @@ namespace Facade
                     entry = "xml element";
                     break;
                 case XmlOrJson.Json:
-                    entry = "json element";
+                    entry = "json object";
                     break;
                 default:
                     entry = "";
@@ -24,7 +24,7 @@ namespace Facade
 
             while (true)
             {
-                Console.WriteLine($"What is the {nameOrValue.ToString().ToLower()} of the {name} {entry}?\n");
+                Console.WriteLine($"\nWhat is the {nameOrValue.ToString().ToLower()} of the {name} {entry}?\n");
 
                 var newName = Console.ReadLine();
                 if (string.IsNullOrWhiteSpace(newName))

@@ -10,6 +10,7 @@ namespace Facade
         static void Main(string[] args)
         {
             var jObj = TextToJson.GetJsonFromText();
+            Console.WriteLine(jObj);
             //var xDoxument = TextToXml.GetXmlFromText();
             //Console.WriteLine(xDoxument);
 

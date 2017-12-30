@@ -2,6 +2,7 @@
 using CommonClientLib;
 using System.Collections.Generic;
 using CommonClientLib.ExtensionMethods;
+using System;
 
 namespace Facade
 {
@@ -47,7 +48,12 @@ namespace Facade
                 {
                     var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
                     obj[name] = value;
-                    var secondQuesion = $"Would you like to add another property to the {name} object?";
+                    Console.WriteLine(obj.Root);
+
+                    var parent = (JProperty)obj.Parent;
+                    var parentName = parent.Name;
+
+                    var secondQuesion = $"Would you like to add another property to the {parentName} object?";
                     var secondChoice = choices[Asker.GetChoiceFromList(secondQuesion, choices)];
                     if (secondChoice == "No")
                     {
