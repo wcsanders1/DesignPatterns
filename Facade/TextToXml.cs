@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 using CommonClientLib;
 
 namespace Facade
@@ -25,13 +24,8 @@ namespace Facade
         private XElement BuildXmlTree(XElement element)
         {
             var firstQuestion = $"Is the value of the {element.Name.LocalName} element another xml element?";
-            var choices = new List<string>
-            {
-                "Yes",
-                "No"
-            };
-
-            var firstChoice = choices[Asker.GetChoiceFromList(firstQuestion, choices)];
+            
+            var firstChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(firstQuestion, FacadeLib.YesOrNo)];
             switch (firstChoice)
             {
                 case "Yes":
@@ -43,7 +37,7 @@ namespace Facade
                     while (true)
                     {
                         var secondQuestion = $"Do you want to add another xml element to the {element.Name.LocalName} xml element?";
-                        var secondChoice = choices[Asker.GetChoiceFromList(secondQuestion, choices)];
+                        var secondChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(secondQuestion, FacadeLib.YesOrNo)];
                         if (secondChoice == "No")
                         {
                             break;

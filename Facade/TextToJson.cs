@@ -1,6 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
 using CommonClientLib;
-using System.Collections.Generic;
 using CommonClientLib.ExtensionMethods;
 using System;
 
@@ -18,47 +17,48 @@ namespace Facade
         public JObject GetJsonFromText()
         {
             var obj = new JObject();
-            BuildJson(obj);
+            BuildJson(obj, "root");
 
             return obj;
         }
 
-        private void BuildJson(JObject obj)
+        private void BuildJson(JObject obj, string objName)
         {
-            while(true)
+            while (true)
             {
-                var name = FacadeLib.GetNameOrValue("new", NameOrValue.Name, XmlOrJson.Json);
-                var newProp = new JProperty(name);
-                obj.AddAndPrint(newProp);
-                var question = $"Is the value of the {name} property another object?";
-                var choices = new List<string>
-                {
-                    "Yes",
-                    "No"
-                };
+                var addPropQuestion = $"Would you like to add a property to the {objName} object?";
+                var addPropChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(addPropQuestion, FacadeLib.YesOrNo)];
 
-                var choice = choices[Asker.GetChoiceFromList(question, choices)];
-                if (choice == "Yes")
+                switch (addPropChoice)
                 {
-                    var newObj = new JObject();
-                    obj[name] = newObj;
-                    BuildJson(newObj);
-                }
-                if (choice == "No")
-                {
-                    var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
-                    obj[name] = value;
-                    Console.WriteLine(obj.Root);
-                    
-                    var secondQuesion = $"Would you like to add another property to the {obj.GetParentName()} object?";
-                    var secondChoice = choices[Asker.GetChoiceFromList(secondQuesion, choices)];
-                    if (secondChoice == "No")
-                    {
+                    case "No":
+                        return;
+                    case "Yes":
+                        var name = FacadeLib.GetNameOrValue("new", NameOrValue.Name, XmlOrJson.Json);
+                        var newProp = new JProperty(name);
+
+                        obj.AddAndPrint(newProp);
+
+                        var addObjQuestion = $"Is the value of the {name} property another object?";
+                        var addObjChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(addObjQuestion, FacadeLib.YesOrNo)];
+
+                        if (addObjChoice == "Yes")
+                        {
+                            var newObj = new JObject();
+                            obj[name] = newObj;
+                            BuildJson(newObj, name);
+                        }
+                        else
+                        {
+                            var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
+                            obj[name] = value;
+                            Console.WriteLine(obj.Root);
+                        }
                         break;
-                    }
+                    default:
+                        break;
                 }
-            }
-            
+            }            
         }
     }
 }

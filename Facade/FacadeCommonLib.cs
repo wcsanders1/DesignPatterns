@@ -1,10 +1,18 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Facade
 {
     public class FacadeCommonLib
     {
         private const int MaxNameLength = 20;
+
+        public readonly List<string> YesOrNo = new List<string>
+        {
+            "Yes",
+            "No"
+        };
+
 
         public string GetNameOrValue(string name, NameOrValue nameOrValue, XmlOrJson xmlOrJson)
         {
@@ -15,7 +23,7 @@ namespace Facade
                     entry = "xml element";
                     break;
                 case XmlOrJson.Json:
-                    entry = "json object";
+                    entry = "json property";
                     break;
                 default:
                     entry = "";
