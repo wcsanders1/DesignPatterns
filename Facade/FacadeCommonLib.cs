@@ -35,7 +35,7 @@ namespace Facade
                 Console.WriteLine($"\nWhat is the {nameOrValue.ToString().ToLower()} of the {name} {entry}?\n");
 
                 var newName = Console.ReadLine();
-                if (string.IsNullOrWhiteSpace(newName))
+                if (string.IsNullOrWhiteSpace(newName) || newName.Contains(" "))
                 {
                     Console.WriteLine($"Nope. The name must be fewer than {MaxNameLength} characters, with no spaces.\n");
                     continue;

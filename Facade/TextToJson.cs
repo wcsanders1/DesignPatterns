@@ -26,12 +26,13 @@ namespace Facade
         {
             while (true)
             {
-                var addPropQuestion = $"Would you like to add a property to the {objName} object?";
+                var addPropQuestion = $"Do you want to add a property to the {objName} object?";
                 var addPropChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(addPropQuestion, FacadeLib.YesOrNo)];
 
                 switch (addPropChoice)
                 {
                     case "No":
+                        Console.WriteLine(obj.Root);
                         return;
                     case "Yes":
                         var name = FacadeLib.GetNameOrValue("new", NameOrValue.Name, XmlOrJson.Json);
@@ -46,11 +47,12 @@ namespace Facade
                         {
                             var newObj = new JObject();
                             obj[name] = newObj;
+                            Console.WriteLine(obj.Root);
                             BuildJson(newObj, name);
                         }
                         else
                         {
-                            var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
+                            var value = FacadeLib.GetNameOrValue(name, NameOrValue.Value, XmlOrJson.Json);
                             obj[name] = value;
                             Console.WriteLine(obj.Root);
                         }

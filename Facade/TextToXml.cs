@@ -23,10 +23,10 @@ namespace Facade
 
         private XElement BuildXmlTree(XElement element)
         {
-            var firstQuestion = $"Is the value of the {element.Name.LocalName} element another xml element?";
-            
-            var firstChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(firstQuestion, FacadeLib.YesOrNo)];
-            switch (firstChoice)
+            var anotherElementQuestion = $"Is the value of the {element.Name.LocalName} element another xml element?";            
+            var anotherElementChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(anotherElementQuestion, FacadeLib.YesOrNo)];
+
+            switch (anotherElementChoice)
             {
                 case "Yes":
                     var newName = FacadeLib.GetNameOrValue($"child of the {element.Name}", NameOrValue.Name, XmlOrJson.Xml);
@@ -36,9 +36,9 @@ namespace Facade
 
                     while (true)
                     {
-                        var secondQuestion = $"Do you want to add another xml element to the {element.Name.LocalName} xml element?";
-                        var secondChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(secondQuestion, FacadeLib.YesOrNo)];
-                        if (secondChoice == "No")
+                        var addElementQuestion = $"Do you want to add another xml element to the {element.Name.LocalName} xml element?";
+                        var addElementChoice = FacadeLib.YesOrNo[Asker.GetChoiceFromList(addElementQuestion, FacadeLib.YesOrNo)];
+                        if (addElementChoice == "No")
                         {
                             break;
                         }
