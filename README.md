@@ -38,3 +38,7 @@ Determine the distribution of a decedent's estate according to the *per stirpes*
 ### Decorator
 
 Tell the program what town you're in, and you'll receive information about that town. If you want a broader perspective on things, the **decorator pattern** will wrap the town object in a decorator object that provides further information about the town. And if you want an even broader perspetive, you can keep wrapping the town in decorators until your perspective is all-encompassing...
+
+### Facade
+
+Construct xml or json, and the program will print it to the console, convert it, then print the converted data to the console. In other words, if the user chooses to create xml, the program will take the user through the process of creating xml, print the xml to the console, convert the xml to json, then print the json to the console. The **facade pattern** simplifies the functionality in the xml and json libraries.
