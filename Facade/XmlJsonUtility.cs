@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using System;
 using System.Xml.Linq;
 
 namespace Facade
@@ -22,15 +23,36 @@ namespace Facade
         public XDocument ConvertJsonToXml(JObject jObject)
         {
             var xmlString = JsonConvert.DeserializeXmlNode(jObject.ToString()).OuterXml;
+            XDocument xDocument;
 
-            return XDocument.Parse(xmlString);
+            try
+            {
+                xDocument = XDocument.Parse(xmlString);
+            }
+            catch (Exception ex)
+            {
+                xDocument = new XDocument(new XElement("exception", ex.Message));
+            }
+
+            return xDocument;
         }
 
         public JObject ConvertXmlToJson(XDocument xml)
         {
-            var json = JsonConvert.SerializeXNode(xml, Formatting.Indented, true);
+            var json = JsonConvert.SerializeXNode(xml, Formatting.Indented, false);
+            JObject jObject;
 
-            return JObject.Parse(json);
+            try
+            {
+                jObject = JObject.Parse(json);
+            }
+            catch (Exception ex)
+            {
+
+                jObject = new JObject(new JProperty("exception", ex.Message));
+            }
+
+            return jObject;
         }
     }
 }
