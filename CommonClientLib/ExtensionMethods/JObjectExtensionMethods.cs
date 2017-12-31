@@ -10,9 +10,9 @@ namespace CommonClientLib.ExtensionMethods
         /// </summary>
         /// <param name="property">The <code>JProperty</code> to be added</param>
         /// <param name="print">Custom print function</param>
-        public static void AddAndPrint(this JObject jToken, JProperty property, Action print = null)
+        public static void AddAndPrint(this JObject jObject, JProperty property, Action print = null)
         {
-            jToken.Add(property);
+            jObject.Add(property);
 
             if (print != null)
             {
@@ -21,7 +21,18 @@ namespace CommonClientLib.ExtensionMethods
                 return;
             }
 
-            Console.WriteLine(jToken.Root);
+            Console.WriteLine(jObject.Root);
+        }
+
+        /// <summary>
+        /// Gets the name of the parent.
+        /// </summary>
+        /// <returns>Name of parent</returns>
+        public static string GetParentName(this JObject jObject)
+        {
+            var parent = (JProperty)jObject.Parent;
+
+            return parent?.Name ?? "root";
         }
     }
 }

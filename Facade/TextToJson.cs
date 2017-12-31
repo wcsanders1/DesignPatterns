@@ -49,11 +49,8 @@ namespace Facade
                     var value = FacadeLib.GetNameOrValue($"{name}", NameOrValue.Value, XmlOrJson.Json);
                     obj[name] = value;
                     Console.WriteLine(obj.Root);
-
-                    var parent = (JProperty)obj.Parent;
-                    var parentName = parent.Name;
-
-                    var secondQuesion = $"Would you like to add another property to the {parentName} object?";
+                    
+                    var secondQuesion = $"Would you like to add another property to the {obj.GetParentName()} object?";
                     var secondChoice = choices[Asker.GetChoiceFromList(secondQuesion, choices)];
                     if (secondChoice == "No")
                     {
