@@ -12,7 +12,7 @@ namespace Flyweight
             Characters = new Dictionary<char, ICharacter>();
         }
 
-        public Character SetCharacter(char asciiCharacter, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
+        public ICharacter SetCharacter(char asciiCharacter, ConsoleColor foregroundColor, ConsoleColor backgroundColor)
         {
             var newChar = new Character(asciiCharacter, foregroundColor, backgroundColor);
             Characters.Add(asciiCharacter, newChar);

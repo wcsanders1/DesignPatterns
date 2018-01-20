@@ -7,6 +7,7 @@ namespace Flyweight
     class Program
     {
         private static TextPrinter TxtPrinter = new TextPrinter();
+        private static TextParser TxtParser = new TextParser();
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private static QuestionAsker Asker = new QuestionAsker();
         private static readonly List<string> YesOrNo = new List<string>
@@ -21,6 +22,7 @@ namespace Flyweight
 
             while (true)
             {
+                var characterFactory = CreateCharacters();
                 var stringToManipulate = GetString();
 
                 if (!ContinuationDeterminer.GoAgain())
@@ -30,16 +32,16 @@ namespace Flyweight
             }
         }
 
-        public static string GetString()
+        private static string GetString()
         {
             Console.WriteLine("Go ahead and type some stuff, maybe a story or something, whatever... Press Enter when you're finished.\n");
             return Console.ReadLine();
         }
 
-        public CharacterFactory CreateCharacters()
+        private static CharacterFactory CreateCharacters()
         {
             var factory = new CharacterFactory();
-            var choice = YesOrNo[Asker.GetChoiceFromList("Are there any characters in what you just wrote for which you want to provide custom coloring?",
+            var choice = YesOrNo[Asker.GetChoiceFromList("Are there any characters for which you want custom coloring?",
                 YesOrNo)];
 
             switch (choice)
@@ -47,16 +49,79 @@ namespace Flyweight
                 case "No":
                     return factory;
                 case "Yes":
-                    return null;
+                    makeCustomCharacters();   
+                    break;
                 default:
                     return null;
             }
+
+            return factory;
             
+            void makeCustomCharacters()
+            {
+                while (true)
+                {
+                    var character = GetCharacter();
+                    var foregroundColor = GetColor($"What do you want the foreground color of {character} to be?");
+                    var backgroundColor = GetColor($"What do you want the background color of {character} to be?");
+
+                    factory.SetCharacter(character, foregroundColor, backgroundColor);
+
+                    var makeAnotherCharacter = YesOrNo[Asker.GetChoiceFromList("Are there any other characters for which you want custom coloring?",
+                        YesOrNo)];
+
+                    switch (makeAnotherCharacter)
+                    {
+                        case "Yes":
+                            continue;
+                        default:
+                            return;
+                    }
+                }
+            }
+        }
+        
+        private static char GetCharacter()
+        {
+            Console.WriteLine("\nWhat character would you like to provide custom coloring for?\n");
+
+            while (true)
+            {
+                if (!char.TryParse(Console.ReadLine(), out var character))
+                {
+                    Console.WriteLine("That's not a valid character. Try again.");
+                }
+
+                return character;
+            }
         }
 
-        //public static (char, ConsoleColor, ConsoleColor) GetCharacterColors()
-        //{
+        private static ConsoleColor GetColor(string question = null)
+        {
+            if (question != null)
+            {
+                Console.WriteLine(question);
+            }
 
-        //}
+            Console.WriteLine("\nChoose a color from the following selection: \n");
+            TxtParser.PrintEnum<ConsoleColor>();
+
+            while (true)
+            {
+                if (!Int32.TryParse(Console.ReadLine(), out int colorChosen))
+                {
+                    Console.WriteLine("That input isn't valid. Enter the number of the color you want.");
+                    continue;
+                }
+
+                if (!Enum.IsDefined(typeof(ConsoleColor), colorChosen))
+                {
+                    Console.WriteLine("That isn't a valid option. Choose a color from the list.");
+                    continue;
+                }
+
+                return (ConsoleColor)colorChosen;
+            }
+        }
     }
 }
