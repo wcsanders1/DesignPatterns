@@ -18,12 +18,18 @@ namespace Flyweight
 
         static void Main(string[] args)
         {
-            TxtPrinter.PrintInformation("WELCOME TO THE FLYWEIGHT PROGRAM -- WHICH HAS SOME INTERESTING ASPECTS");
+            TxtPrinter.PrintInformation("WELCOME TO THE FLYWEIGHT PROGRAM -- WHICH SORT OF HAS SOME INTERESTING ASPECTS");
 
             while (true)
             {
                 var characterFactory = CreateCharacters();
                 var stringToManipulate = GetString();
+
+                foreach (var character in stringToManipulate)
+                {
+                    var qualifiedCharacter = characterFactory.GetCharacter(character);
+                    qualifiedCharacter.Render(Console.CursorTop + 1);
+                }
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
@@ -34,7 +40,7 @@ namespace Flyweight
 
         private static string GetString()
         {
-            Console.WriteLine("Go ahead and type some stuff, maybe a story or something, whatever... Press Enter when you're finished.\n");
+            Console.WriteLine("\nGo ahead and type some stuff, maybe a story or something, whatever... Press Enter when you're finished.\n");
             return Console.ReadLine();
         }
 
@@ -62,8 +68,8 @@ namespace Flyweight
                 while (true)
                 {
                     var character = GetCharacter();
-                    var foregroundColor = GetColor($"What do you want the foreground color of {character} to be?");
-                    var backgroundColor = GetColor($"What do you want the background color of {character} to be?");
+                    var foregroundColor = GetColor($"\nWhat do you want the foreground color of {character} to be?");
+                    var backgroundColor = GetColor($"\nWhat do you want the background color of {character} to be?");
 
                     factory.SetCharacter(character, foregroundColor, backgroundColor);
 
@@ -89,7 +95,8 @@ namespace Flyweight
             {
                 if (!char.TryParse(Console.ReadLine(), out var character))
                 {
-                    Console.WriteLine("That's not a valid character. Try again.");
+                    Console.WriteLine("\nThat's not a valid character. Try again.\n");
+                    continue;
                 }
 
                 return character;
@@ -103,7 +110,7 @@ namespace Flyweight
                 Console.WriteLine(question);
             }
 
-            Console.WriteLine("\nChoose a color from the following selection: \n");
+            Console.WriteLine("Choose a color from the following selection: \n");
             TxtParser.PrintEnum<ConsoleColor>();
 
             while (true)

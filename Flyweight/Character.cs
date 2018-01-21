@@ -15,9 +15,13 @@ namespace Flyweight
             BackgroundColor = backgroundColor;
         }
 
-        public void Render(int YPosition)
+        public void Render(int yPosition)
         {
-            throw new NotImplementedException();
+            Console.BackgroundColor = BackgroundColor;
+            Console.ForegroundColor = ForegroundColor;
+            Console.CursorTop = yPosition;
+            Console.Write(ASCIICharacter);
+            Console.ResetColor();
         }
     }
 }
