@@ -42,3 +42,7 @@ Tell the program what town you're in, and you'll receive information about that 
 ### Facade
 
 Construct xml or json, and the program will print it to the console, convert it, then print the converted data to the console. In other words, if the user chooses to create xml, the program will take the user through the process of creating xml, print the xml to the console, convert the xml to json, then print the json to the console. The **facade pattern** simplifies the functionality in the xml and json libraries.
+
+### Flyweight
+
+Provide foreground and background colors for characters if you want. Then, type a string that you want printed to the console. Any characters in the string for which you provided custom colors will be printed with the colors you chose. (Also, the string will be printed in a descending-stair fashion, which is pretty neat!) The **flyweight** pattern allows classes representing characters with custom colors to be shared. The character's colors are part of the *internal state* of the class, and the character's y-position is its *external state*.
