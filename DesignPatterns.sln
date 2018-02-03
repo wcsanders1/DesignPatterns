@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2020
+VisualStudioVersion = 15.0.27130.2027
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SimpleFactory", "SimpleFactory\SimpleFactory.csproj", "{F1E0D86C-940B-4310-B5A0-F1471A81AD4B}"
 EndProject
@@ -31,7 +31,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Decorator", "Decorator\Deco
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Facade", "Facade\Facade.csproj", "{4C404CCE-9391-4450-B51B-B3113F9CDF51}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Flyweight", "Flyweight\Flyweight.csproj", "{B6284CB2-6D53-4953-ACDF-008DB98BE601}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Flyweight", "Flyweight\Flyweight.csproj", "{B6284CB2-6D53-4953-ACDF-008DB98BE601}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Proxy", "Proxy\Proxy.csproj", "{32CD50BC-1599-4582-847A-CEB1FE13D0EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -95,6 +97,10 @@ Global
 		{B6284CB2-6D53-4953-ACDF-008DB98BE601}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B6284CB2-6D53-4953-ACDF-008DB98BE601}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B6284CB2-6D53-4953-ACDF-008DB98BE601}.Release|Any CPU.Build.0 = Release|Any CPU
+		{32CD50BC-1599-4582-847A-CEB1FE13D0EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32CD50BC-1599-4582-847A-CEB1FE13D0EB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32CD50BC-1599-4582-847A-CEB1FE13D0EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32CD50BC-1599-4582-847A-CEB1FE13D0EB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
