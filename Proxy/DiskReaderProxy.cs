@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
 
 namespace Proxy
 {
     public class DiskReaderProxy : IDiskReader
     {
-        
-
         public long NumFilesRead
         {
             get
@@ -36,7 +35,8 @@ namespace Proxy
         }
 
         private IDiskReader DiskReader { get; set; }
-        
+        private bool IsGettingFiles { get; set; }
+
         public DiskReaderProxy()
             : this(new DiskReader()) { }
 
@@ -52,52 +52,63 @@ namespace Proxy
 
         public List<string> GetFiles(string path, string extension)
         {
-            var isGettingFiles = true;
-            long _numBytesRead = 0;
-            long _numFilesRead = 0;
+            var cleanedExtension = extension; //CleanExtension(extension);
 
-            var printScanInfo = Task.Run(printBytesScanned);
-
-            var files = DiskReader.GetFiles(path, extension);
-
-            isGettingFiles = false;
-            printScanInfo.Wait();
-
-            async Task printBytesScanned()
+            if (string.IsNullOrEmpty(cleanedExtension))
             {
-                var msgBytes = "bytes scanned: ";
-                var msgFiles = "files scanned: ";
-
-                Console.WriteLine();
-                Console.WriteLine(msgBytes);
-                Console.WriteLine(msgFiles);
-                Console.CursorTop = Console.CursorTop - 2;
-                Console.CursorVisible = false;
-
-                while (isGettingFiles)
-                {
-                    if (NumBytesRead > _numBytesRead || NumFilesRead > _numFilesRead)
-                    {
-                        _numBytesRead = NumBytesRead;
-                        _numFilesRead = NumFilesRead;
-
-                        Console.CursorLeft = msgBytes.Length;
-                        Console.Write(_numBytesRead);
-                        Console.CursorTop = Console.CursorTop + 1;
-                        Console.CursorLeft = msgFiles.Length;
-                        Console.Write(_numFilesRead);
-                        Console.CursorTop = Console.CursorTop - 1;
-                    }
-                }
-
-                Console.CursorTop = Console.CursorTop + 3;
-                Console.CursorLeft = 0;
-                Console.CursorVisible = true;
+                return null;
             }
+
+            IsGettingFiles = true;
+
+            var printScanInfo = Task.Run(() => PrintScanInfo());
+            var files = DiskReader.GetFiles(path, cleanedExtension);
+
+            IsGettingFiles = false;
+            printScanInfo.Wait();
 
             return files;
         }
 
-        
+        private string CleanExtension(string extension)
+        {
+            var dotlessExtension = extension.Replace(".", string.Empty);
+
+            return Path.GetExtension(dotlessExtension);
+        }
+
+        private void PrintScanInfo()
+        {
+            var msgBytes = "bytes scanned: ";
+            var msgFiles = "files scanned: ";
+            long numBytesRead = 0;
+            long numFilesRead = 0;
+
+            Console.WriteLine();
+            Console.WriteLine(msgBytes);
+            Console.WriteLine(msgFiles);
+            Console.CursorTop = Console.CursorTop - 2;
+            Console.CursorVisible = false;
+
+            while (IsGettingFiles)
+            {
+                if (NumBytesRead > numBytesRead || NumFilesRead > numFilesRead)
+                {
+                    numBytesRead = NumBytesRead;
+                    numFilesRead = NumFilesRead;
+
+                    Console.CursorLeft = msgBytes.Length;
+                    Console.Write(numBytesRead);
+                    Console.CursorTop = Console.CursorTop + 1;
+                    Console.CursorLeft = msgFiles.Length;
+                    Console.Write(numFilesRead);
+                    Console.CursorTop = Console.CursorTop - 1;
+                }
+            }
+
+            Console.CursorTop = Console.CursorTop + 3;
+            Console.CursorLeft = 0;
+            Console.CursorVisible = true;
+        }
     }
 }

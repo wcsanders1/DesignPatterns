@@ -17,7 +17,7 @@ namespace Proxy
 
         static void Main(string[] args)
         {
-            TxtPrinter.PrintInformation("WELCOME TO THE PROXY PROGRAM -- WHICH PERFORMS MILDLY INTERESTING TASKS");
+            TxtPrinter.PrintInformation("WELCOME TO THE PROXY PROGRAM -- WHICH DOES MILDLY INTERESTING THINGS");
 
             while (true)
             {
@@ -40,6 +40,8 @@ namespace Proxy
                     {
                         Environment.Exit(0);
                     }
+
+                    continue;
                 }
 
                 Console.WriteLine($"Found {files.Count} files with the extension {extension}.");
