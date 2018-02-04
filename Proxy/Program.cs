@@ -21,7 +21,7 @@ namespace Proxy
 
             while (true)
             {
-                var diskReader = new DiskReader();
+                var diskReader = new DiskReaderProxy();
 
                 var drives = diskReader.GetDrives();
 

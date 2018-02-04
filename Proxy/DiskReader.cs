@@ -28,23 +28,25 @@ namespace Proxy
             {
                 try
                 {
-                    var _newFiles = _extension == null
-                        ? Directory.GetFiles(_path).ToList()
-                        : Directory.GetFiles(_path, _extension).ToList();
+                    var _newFiles = Directory.GetFiles(_path).ToList().ToList();
 
                     foreach (var _file in _newFiles)
                     {
                         var _fileInfo = new FileInfo(_file);
                         NumFilesRead++;
                         NumBytesRead += _fileInfo.Length;
-                        _files.Add(_fileInfo.FullName);
+
+                        if (_extension == _fileInfo.Extension)
+                        {
+                            _files.Add(_fileInfo.FullName);
+                        }
                     }
 
                     Directory.GetDirectories(_path)
                         .ToList()
                         .ForEach(d => getFiles(d, _extension, _files));
                 }
-                catch (Exception ex)
+                catch (Exception)
                 {
                     NumDirectoriesNotSearched++;
                 }
