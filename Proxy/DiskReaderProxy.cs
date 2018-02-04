@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Proxy
@@ -36,6 +37,7 @@ namespace Proxy
 
         private IDiskReader DiskReader { get; set; }
         private bool IsGettingFiles { get; set; }
+        private DriveInfo DriveInformation { get; set; }
 
         public DiskReaderProxy()
             : this(new DiskReader()) { }
@@ -52,13 +54,20 @@ namespace Proxy
 
         public List<string> GetFiles(string path, string extension)
         {
-            var cleanedExtension = extension; //CleanExtension(extension);
-
+            var cleanedExtension = CleanExtension(extension);
             if (string.IsNullOrEmpty(cleanedExtension))
             {
                 return null;
             }
 
+            DriveInformation = DriveInfo.GetDrives()
+                .FirstOrDefault(d => d.Name == path);
+
+            if (DriveInformation == null)
+            {
+                return null;
+            }
+            
             IsGettingFiles = true;
 
             var printScanInfo = Task.Run(() => PrintScanInfo());
@@ -72,9 +81,15 @@ namespace Proxy
 
         private string CleanExtension(string extension)
         {
-            var dotlessExtension = extension.Replace(".", string.Empty);
+            if (string.IsNullOrEmpty(extension))
+            {
+                return null;
+            }
 
-            return Path.GetExtension(dotlessExtension);
+            var dotlessExtension = extension.Replace(".", string.Empty);
+            var dottedExtension = dotlessExtension.Insert(0, ".");
+
+            return Path.GetExtension(dottedExtension);
         }
 
         private void PrintScanInfo()
@@ -87,6 +102,10 @@ namespace Proxy
             Console.WriteLine();
             Console.WriteLine(msgBytes);
             Console.WriteLine(msgFiles);
+            var (statusBarXPosition, statusBarYPosition, statusBarLength) = InitiateStatusBar();
+            var totalBytesToCheck = DriveInformation?.TotalSize - DriveInformation?.TotalFreeSpace;
+            decimal portionOfStatusBarFilled = 0;
+            
             Console.CursorTop = Console.CursorTop - 2;
             Console.CursorVisible = false;
 
@@ -94,6 +113,14 @@ namespace Proxy
             {
                 if (NumBytesRead > numBytesRead || NumFilesRead > numFilesRead)
                 {
+                    decimal percentageChecked = NumBytesRead / (decimal)totalBytesToCheck;
+                    decimal percentageStatusBarFilled = portionOfStatusBarFilled / statusBarLength;
+
+                    if (percentageChecked > percentageStatusBarFilled)
+                    {
+                        UpdateStatusBar(statusBarXPosition + (int)(++portionOfStatusBarFilled), statusBarYPosition, statusBarLength, (int)portionOfStatusBarFilled);
+                    }
+
                     numBytesRead = NumBytesRead;
                     numFilesRead = NumFilesRead;
 
@@ -106,9 +133,50 @@ namespace Proxy
                 }
             }
 
-            Console.CursorTop = Console.CursorTop + 3;
+            UpdateStatusBar(statusBarXPosition + --statusBarLength, statusBarYPosition, statusBarLength, statusBarLength);
+            Console.CursorTop = Console.CursorTop + 4;
             Console.CursorLeft = 0;
             Console.CursorVisible = true;
+        }
+
+        private (int, int, int) InitiateStatusBar()
+        {
+            var statusMsg = "status: [";
+            Console.Write(statusMsg);
+
+            var statusBarXPosition = Console.CursorLeft;
+            var statusBarYPosition = Console.CursorTop;
+            var statusBarLength = Console.WindowWidth / 2;
+            
+            Console.CursorLeft = Console.CursorLeft + statusBarLength + 1;
+            Console.Write("]");
+
+            return (statusBarXPosition, statusBarYPosition, statusBarLength);
+        }
+
+        private void UpdateStatusBar(int xPosition, int yPosition, int statusBarLength, int portionOfStatusBarFilled)
+        {
+            var initialCursorYPosition = Console.CursorTop;
+            var percentage = Math.Round((portionOfStatusBarFilled / (decimal)statusBarLength), 2) * 100;
+
+            Console.CursorTop = yPosition;
+            Console.CursorLeft = xPosition;
+
+            // This is a hack to fix a problem where, if the console window is full width, the second-to-last '=' would be missing
+            if (percentage > 50)
+            {
+                Console.CursorLeft--;
+                Console.Write("==");
+            }
+            else
+            {
+                Console.Write("=");
+            }
+
+            Console.CursorLeft = Console.CursorLeft + (statusBarLength - portionOfStatusBarFilled) + 3;
+            Console.Write($"{(int)percentage}%");
+            Console.CursorLeft = 0;
+            Console.CursorTop = initialCursorYPosition;
         }
     }
 }

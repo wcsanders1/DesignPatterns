@@ -32,6 +32,18 @@ namespace Proxy
 
                 var files = diskReader.GetFiles(drives[driveChoice], extension);
 
+                if (files == null)
+                {
+                    Console.WriteLine($"There was a problem getting files for extension {extension}.");
+
+                    if (!ContinuationDeterminer.GoAgain())
+                    {
+                        Environment.Exit(0);
+                    }
+
+                    continue;
+                }
+
                 if (files.Count == 0)
                 {
                     Console.WriteLine($"Did not find any files with the extension {extension}");
@@ -54,6 +66,8 @@ namespace Proxy
                         Console.WriteLine(file);
                     }
                 }
+
+                Console.WriteLine();
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
