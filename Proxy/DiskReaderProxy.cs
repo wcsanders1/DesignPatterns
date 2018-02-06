@@ -94,15 +94,18 @@ namespace Proxy
 
         private void PrintScanInfo()
         {
-            var msgBytes = "bytes scanned: ";
-            var msgFiles = "files scanned: ";
+            var initialColor = Console.ForegroundColor;
+            var msgBytes = "Bytes scanned: ";
+            var msgFiles = "Files scanned: ";
             long numBytesRead = 0;
             long numFilesRead = 0;
 
             Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
             Console.WriteLine(msgBytes);
             Console.WriteLine(msgFiles);
-            var (statusBarXPosition, statusBarYPosition, statusBarLength) = InitiateStatusBar();
+            Console.ForegroundColor = initialColor;
+            var (statusBarXPosition, statusBarYPosition, statusBarLength) = InitializeStatusBar();
             var totalBytesToCheck = DriveInformation?.TotalSize - DriveInformation?.TotalFreeSpace;
             decimal portionOfStatusBarFilled = 0;
             
@@ -124,12 +127,14 @@ namespace Proxy
                     numBytesRead = NumBytesRead;
                     numFilesRead = NumFilesRead;
 
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
                     Console.CursorLeft = msgBytes.Length;
                     Console.Write(numBytesRead);
                     Console.CursorTop = Console.CursorTop + 1;
                     Console.CursorLeft = msgFiles.Length;
                     Console.Write(numFilesRead);
                     Console.CursorTop = Console.CursorTop - 1;
+                    Console.ForegroundColor = initialColor;
                 }
             }
 
@@ -139,9 +144,11 @@ namespace Proxy
             Console.CursorVisible = true;
         }
 
-        private (int, int, int) InitiateStatusBar()
+        private (int, int, int) InitializeStatusBar()
         {
-            var statusMsg = "status: [";
+            var initialColor = Console.ForegroundColor;
+            Console.ForegroundColor = ConsoleColor.DarkYellow;
+            var statusMsg = "Status: [";
             Console.Write(statusMsg);
 
             var statusBarXPosition = Console.CursorLeft;
@@ -150,6 +157,7 @@ namespace Proxy
             
             Console.CursorLeft = Console.CursorLeft + statusBarLength + 1;
             Console.Write("]");
+            Console.ForegroundColor = initialColor;
 
             return (statusBarXPosition, statusBarYPosition, statusBarLength);
         }
@@ -158,9 +166,11 @@ namespace Proxy
         {
             var initialCursorYPosition = Console.CursorTop;
             var percentage = Math.Round((portionOfStatusBarFilled / (decimal)statusBarLength), 2) * 100;
+            var initialColor = Console.ForegroundColor;
 
             Console.CursorTop = yPosition;
             Console.CursorLeft = xPosition;
+            Console.ForegroundColor = ConsoleColor.DarkRed;
 
             // This is a hack to fix a problem where, if the console window is full width, the second-to-last '=' would be missing
             if (percentage > 50)
@@ -177,6 +187,7 @@ namespace Proxy
             Console.Write($"{(int)percentage}%");
             Console.CursorLeft = 0;
             Console.CursorTop = initialCursorYPosition;
+            Console.ForegroundColor = initialColor;
         }
     }
 }

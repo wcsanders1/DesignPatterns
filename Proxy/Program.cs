@@ -27,7 +27,7 @@ namespace Proxy
 
                 var driveChoice = Asker.GetChoiceFromList("Choose a drive that you want to search: ", drives);
 
-                Console.WriteLine("What file extension do you want to search for?");
+                Console.WriteLine("\nWhat file extension do you want to search for?\n");
                 var extension = Console.ReadLine();
 
                 var files = diskReader.GetFiles(drives[driveChoice], extension);
@@ -46,7 +46,7 @@ namespace Proxy
 
                 if (files.Count == 0)
                 {
-                    Console.WriteLine($"Did not find any files with the extension {extension}");
+                    Console.WriteLine($"\nDid not find any files with the extension {extension}.\n");
 
                     if (!ContinuationDeterminer.GoAgain())
                     {
@@ -56,7 +56,7 @@ namespace Proxy
                     continue;
                 }
 
-                Console.WriteLine($"Found {files.Count} files with the extension {extension}.");
+                Console.WriteLine($"\nFound {files.Count} files with the extension {extension}.\n");
                 var printChoice = Asker.GetChoiceFromList("Do you want to see them?", YesOrNo);
 
                 if (YesOrNo[printChoice] == "Yes")
