@@ -31,6 +31,8 @@ namespace Flyweight
                     qualifiedCharacter.Render(Console.CursorTop + 1);
                 }
 
+                Console.WriteLine("\n\n");
+
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
