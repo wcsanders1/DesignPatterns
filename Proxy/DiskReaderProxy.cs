@@ -119,9 +119,9 @@ namespace Proxy
                     decimal percentageChecked = NumBytesRead / (decimal)totalBytesToCheck;
                     decimal percentageStatusBarFilled = portionOfStatusBarFilled / statusBarLength;
 
-                    if (percentageChecked > percentageStatusBarFilled)
+                    if (percentageChecked >= percentageStatusBarFilled)
                     {
-                        UpdateStatusBar(statusBarXPosition + (int)(++portionOfStatusBarFilled), statusBarYPosition, statusBarLength, (int)portionOfStatusBarFilled);
+                        UpdateStatusBar(statusBarXPosition + (int)(portionOfStatusBarFilled++), statusBarYPosition, statusBarLength, (int)portionOfStatusBarFilled);
                     }
 
                     numBytesRead = NumBytesRead;
@@ -138,7 +138,9 @@ namespace Proxy
                 }
             }
 
-            UpdateStatusBar(statusBarXPosition + --statusBarLength, statusBarYPosition, statusBarLength, statusBarLength);
+            // Make sure the status shows 100%, in case it didn't completely update in the loop above.
+            UpdateStatusBar(statusBarXPosition + statusBarLength, statusBarYPosition, statusBarLength, statusBarLength);
+
             Console.CursorTop = Console.CursorTop + 4;
             Console.CursorLeft = 0;
             Console.CursorVisible = true;
@@ -171,20 +173,9 @@ namespace Proxy
             Console.CursorTop = yPosition;
             Console.CursorLeft = xPosition;
             Console.ForegroundColor = ConsoleColor.DarkRed;
-
-            // This is a hack to fix a problem where, if the console window is full width, the second-to-last '=' would be missing
-            if (percentage > 50)
-            {
-                Console.CursorLeft--;
-                Console.Write("==");
-            }
-            else
-            {
-                Console.Write("=");
-            }
-
-            Console.CursorLeft = Console.CursorLeft + (statusBarLength - portionOfStatusBarFilled) + 3;
-            Console.Write($"{(int)percentage}%");
+            Console.Write("=");
+            Console.CursorLeft = Console.CursorLeft + (statusBarLength - portionOfStatusBarFilled) + 2;
+            Console.Write($"  {(int)percentage}%");
             Console.CursorLeft = 0;
             Console.CursorTop = initialCursorYPosition;
             Console.ForegroundColor = initialColor;

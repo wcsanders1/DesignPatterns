@@ -56,7 +56,11 @@ namespace Proxy
                     continue;
                 }
 
-                Console.WriteLine($"\nFound {files.Count} files with the extension {extension}.\n");
+                Console.Write($"\nFound {files.Count} files with the extension ");
+                var consoleColor = Console.ForegroundColor;
+                Console.ForegroundColor = ConsoleColor.DarkGreen;
+                Console.WriteLine($"{extension}.\n");
+                Console.ForegroundColor = consoleColor;
                 var printChoice = Asker.GetChoiceFromList("Do you want to see them?", YesOrNo);
 
                 if (YesOrNo[printChoice] == "Yes")
