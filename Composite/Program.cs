@@ -34,7 +34,7 @@ namespace Composite
                 var decedent = new Decedent(decedentName, estateValue);
                 var tree = new Tree<string>(decedentName, new string[]
                 {
-                    string.Format($"Estate value: ${estateValue:#,###}", CultureInfo.InvariantCulture)
+                    string.Format($"Estate value: {estateValue:#,###}", CultureInfo.InvariantCulture)
                 });
 
                 tree.PrintTree(tree.GetRoot());

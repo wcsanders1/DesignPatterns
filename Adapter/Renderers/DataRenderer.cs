@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.IO;
 
-namespace Adapter
+namespace Adapter.Renderers
 {
     public class DataRenderer
     {

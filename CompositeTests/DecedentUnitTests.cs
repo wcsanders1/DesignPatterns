@@ -2,7 +2,7 @@ using Composite;
 using System.Linq;
 using System.Collections.Generic;
 using Xunit;
-using CommonClientLib;
+using CommonClientLib.ExtensionMethods;
 
 namespace CompositeTests
 {

@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace CommonClientLib
 {
     public class QuestionAsker
     {
+        private const string InvalidInputMessage = "That input isn't valid. Let's try again.\n";
+
         /// <summary>
         /// Asks user whether the answer to a question is true or false.
         /// </summary>
@@ -28,8 +31,47 @@ namespace CommonClientLib
                 }
                 else
                 {
-                    Console.WriteLine("That input isn't valid. Let's try again.\n");
+                    Console.WriteLine(InvalidInputMessage);
                 }
+            }
+        }
+
+        /// <summary>
+        /// Prints a question and a list of choices to the console and 
+        /// asks the user to enter a choice from the list.
+        /// </summary>
+        /// <param name="question">The question asked to the user</param>
+        /// <param name="choices">List of choices</param>
+        /// <returns>The index of the element of the list of choices that the user chose</returns>
+        public int GetChoiceFromList(string question, List<string> choices)
+        {
+            Console.WriteLine();
+
+            while (true)
+            {
+                Console.WriteLine($"{question}\n");
+
+                var index = 0;
+                foreach (var choice in choices)
+                {
+                    Console.WriteLine($"{++index}. {choice}");
+                }
+
+                Console.WriteLine();
+                var strAnswer = Console.ReadLine();
+                if (!int.TryParse(strAnswer, out var answer))
+                {
+                    Console.WriteLine(InvalidInputMessage);
+                    continue;
+                }
+
+                if (answer < 1 || answer > index)
+                {
+                    Console.WriteLine(InvalidInputMessage);
+                    continue;
+                }
+
+                return --answer;
             }
         }
     }
