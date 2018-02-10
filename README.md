@@ -41,7 +41,7 @@ Tell the program what town you're in, and you'll receive information about that 
 
 ### Facade
 
-Construct xml or json, and the program will print it to the console, convert it, then print the converted data to the console. In other words, if the user chooses to create xml, the program will take the user through the process of creating xml, print the xml to the console, convert the xml to json, then print the json to the console. The **facade pattern** simplifies the functionality in the xml and json libraries.
+Construct xml or json, and the program will print it to the console, convert it, then print the converted data to the console. In other words, if the user chooses to create xml, the program will take the user through the process of creating xml, print the xml to the console, convert the xml to json, then print the json to the console. The **facade pattern** simplifies the interaction with the functionality in the xml and json libraries.
 
 ### Flyweight
 
