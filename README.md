@@ -49,6 +49,6 @@ Provide foreground and background colors for characters if you want. Then, type 
 
 ### Proxy
 
-Choose a drive and file extension, and the program will recursively search the drive for files with the chosen extension. The **proxy pattern** allows the client to call a proxy class rather than the class that searches the drive. The proxy class displays helpful information to the user, such as the percentage of files and bytes searched, and a status bar.
+Choose a drive and file extension, and the program will recursively search the drive for files with the chosen extension. The **proxy pattern** allows the client to call a proxy class rather than the class that actually provides search functionality. The proxy class displays helpful information to the user, such as the percentage of files and bytes searched, and a status bar.
 
 ![Proxy gif](/../screenshots/Proxy_GIF_1.gif)
