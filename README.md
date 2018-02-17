@@ -45,10 +45,16 @@ Construct xml or json, and the program will print it to the console, convert it,
 
 ### Flyweight
 
-Provide foreground and background colors for characters if you want. Then, type a string that you want printed to the console. Any characters in the string for which you provided custom colors will be printed with the colors you chose. (Also, the string will be printed in a descending-stair fashion, which is pretty neat!) The **flyweight** pattern allows classes representing characters with custom colors to be shared. The character's colors are part of the *internal state* of the class, and the character's y-position is its *external state*.
+Provide foreground and background colors for characters if you want. Then, type a string that you want printed to the console. Any characters in the string for which you provided custom colors will be printed with the colors you chose. (Also, the string will be printed in a descending-stair fashion, which is pretty neat!) The **flyweight pattern** allows classes representing characters with custom colors to be shared. The character's colors are part of the *internal state* of the class, and the character's y-position is its *external state*.
 
 ### Proxy
 
 Choose a drive and file extension, and the program will recursively search the drive for files with the chosen extension. The **proxy pattern** allows the client to call a proxy class rather than the class that actually provides search functionality. The proxy class displays helpful information to the user, such as the percentage of files and bytes searched, and a status bar.
 
 ![Proxy gif](/../screenshots/Proxy_GIF_1.gif)
+
+## Behavioral Patterns
+
+### Chain of Command
+
+The clergymen are available to answer your questions. Which member of the clergy will answer depends on the philosophical depth of the question asked. The **chain of command pattern** makes it easy for the question to be passed on to the clergyman in the next highest order in the church heirarchy if the current clergyman is unable to answer it.
