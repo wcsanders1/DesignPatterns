@@ -1,4 +1,6 @@
-﻿namespace ChainOfResponsibility
+﻿using System;
+
+namespace ChainOfResponsibility
 {
     public class QuestionHandler : IQuestionHandler
     {
@@ -10,14 +12,25 @@
             Clergyman = clergyman;
         }
 
-        public string AnswerQuestion(Question question)
+        public void AnswerQuestion(Question question)
         {
             if (!Clergyman.CanAnswer(question.PhilosophicalDepth))
             {
-                return NextQuestionHandler.AnswerQuestion(question);
+                if (NextQuestionHandler == null)
+                {
+                    Console.WriteLine($"\nThe degree of philosophical depth of this question is {question.PhilosophicalDepth.ToString()}.\n" +
+                                      $"None of the clergymen are able to answer such a question.\n" +
+                                      $"You'll have to seek the answer elsewhere.\n");
+
+                    return;
+                }
+                
+                NextQuestionHandler.AnswerQuestion(question);
+
+                return;
             }
 
-            return Clergyman.GetAnswer(question);
+            Clergyman.AnswerQuestion(question);
         }
 
         public void RegisterNext(IQuestionHandler nextQuestionHandler)

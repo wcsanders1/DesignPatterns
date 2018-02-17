@@ -5,6 +5,6 @@
         string Rank { get; }
 
         bool CanAnswer(DegreeOfPhilosophicalDepth questionDepth);
-        string GetAnswer(Question question);
+        void AnswerQuestion(Question question);
     }
 }

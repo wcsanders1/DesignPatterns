@@ -2,7 +2,7 @@
 {
     public interface IQuestionHandler
     {
-        string AnswerQuestion(Question question);
-        void RegisterNext(IQuestionHandler nextQuestionHandler)
+        void AnswerQuestion(Question question);
+        void RegisterNext(IQuestionHandler nextQuestionHandler);
     }
 }

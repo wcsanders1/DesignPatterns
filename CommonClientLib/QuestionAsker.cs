@@ -61,13 +61,13 @@ namespace CommonClientLib
                 var strAnswer = Console.ReadLine();
                 if (!int.TryParse(strAnswer, out var answer))
                 {
-                    Console.WriteLine(InvalidInputMessage);
+                    Console.WriteLine($"\n{InvalidInputMessage}");
                     continue;
                 }
 
                 if (answer < 1 || answer > index)
                 {
-                    Console.WriteLine(InvalidInputMessage);
+                    Console.WriteLine($"\n{InvalidInputMessage}");
                     continue;
                 }
 
