@@ -55,6 +55,6 @@ Choose a drive and file extension, and the program will recursively search the d
 
 ## Behavioral Patterns
 
-### Chain of Command
+### Chain of Responsibility
 
-The clergymen are available to answer your questions. Which member of the clergy will answer depends on the philosophical depth of the question asked. The **chain of command pattern** makes it easy for the question to be passed on to the clergyman in the next highest order in the church heirarchy if the current clergyman is unable to answer it.
+The clergymen are available to answer your questions. Which member of the clergy will answer depends on the philosophical depth of the question asked. The **chain of responsibility pattern** makes it easy for the question to be passed on to the clergyman in the next highest order in the church heirarchy if the current clergyman is unable to answer it.
