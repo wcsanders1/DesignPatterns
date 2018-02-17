@@ -18,7 +18,9 @@
 
         public string GetAnswer(Question question)
         {
-            return question.Answer;
+            return $"The degree of philosophical depth of this question is {question.PhilosophicalDepth.ToString()}.\n" +
+                   $"Therefore, the {Rank} can, and will, answer it.\n" +
+                   $"Here is the answer to your question:\n{question.Answer}";
         }
     }
 }
