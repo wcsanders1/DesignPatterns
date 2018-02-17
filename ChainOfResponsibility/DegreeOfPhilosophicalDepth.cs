@@ -2,9 +2,9 @@
 {
     public enum DegreeOfPhilosophicalDepth
     {
-        Low,
-        Medium,
-        High,
-        VeryDeep
+        Low = 0,
+        Medium = 1,
+        High = 2,
+        VeryDeep = 3
     }
 }
