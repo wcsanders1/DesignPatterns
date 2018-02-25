@@ -31,7 +31,7 @@ namespace CommonClientLib
         /// The order of the <c>List</c> is alphabetical and corresponds to keys of the <c>Dictionary</c>, which 
         /// makes it easy to display and print the list to the client, who can then choose a type from the dictionary
         /// by its key. Use this method rather than <see cref="GetInstantiatedTypeDictionaryAndNameList{T}"/> when
-        /// the type requires a arguments in its constructor.
+        /// the type requires arguments in its constructor.
         /// </summary>
         /// <typeparam name="T">The type returned, if the type exists in the assembly.</typeparam>
         /// <returns><c>Dictionary</c> of <c>int</c> and <c>T</c>, and a <c>List</c> of the names of each <c>T</c></returns>
