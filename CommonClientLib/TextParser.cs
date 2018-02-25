@@ -66,5 +66,10 @@ namespace CommonClientLib
                     return "th";
             }
         }
+
+        public string Pluralize(int amount)
+        {
+            return amount > 1 ? "s" : string.Empty;
+        }
     }
 }
