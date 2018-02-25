@@ -23,6 +23,10 @@ namespace Command.Commands
             {
                 Console.WriteLine($"Your order contains {existingItems} {chosenItem.Name}{TxtParser.Pluralize(existingItems)}.\n");
             }
+            else
+            {
+                order.Items.Add(chosenItem.Name, 0);
+            }
 
             order.Items[chosenItem.Name] += Asker.GetInt($"How many {chosenItem.Name}s do you want to add to your order?", 
                 int.MaxValue - existingItems);

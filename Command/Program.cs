@@ -1,4 +1,5 @@
-﻿using Command.Models;
+﻿using Command.Commands;
+using Command.Models;
 using CommonClientLib;
 using Newtonsoft.Json;
 using System;
@@ -10,6 +11,7 @@ namespace Command
     class Program
     {
         private static TextPrinter TxtPrinter = new TextPrinter();
+        private static TypeParser TypeParser = new TypeParser(new TextParser());
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private const string ConfigurableItemsPath = "Items.json";
 
@@ -36,6 +38,8 @@ namespace Command
 
                     items = DefaultItems.GetDefaultItems();
                 }
+
+                var (commandDict, commandList) = TypeParser.GetInstantiatedTypeDictionaryAndNameList<ICommand>();
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
