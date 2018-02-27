@@ -21,7 +21,7 @@ namespace Command.Commands
 
             if (order.Items.TryGetValue(chosenItem.Name, out var existingItems))
             {
-                Console.WriteLine($"Your order contains {existingItems} {chosenItem.Name}{TxtParser.Pluralize(existingItems)}.\n");
+                Console.WriteLine($"\nYour order contains {existingItems} {chosenItem.Name}{TxtParser.Pluralize(existingItems)}.\n");
             }
             else
             {
@@ -32,7 +32,7 @@ namespace Command.Commands
                 int.MaxValue - existingItems);
 
             var newAmountExistingItems = order.Items[chosenItem.Name];
-            Console.WriteLine($"Your order now contains {newAmountExistingItems} {chosenItem}{TxtParser.Pluralize(newAmountExistingItems)}.");
+            Console.WriteLine($"\nYour order now contains {newAmountExistingItems} {chosenItem.Name}{TxtParser.Pluralize(newAmountExistingItems)}.\n");
 
             return order;
         }

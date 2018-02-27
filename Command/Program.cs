@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 
 namespace Command
 {
@@ -37,13 +38,18 @@ namespace Command
                 items = DefaultItems.GetDefaultItems();
             }
 
-            var (commandDict, commandList) = TypeParser.GetInstantiatedTypeDictionaryAndNameList<ICommand>();
+            var (commandDict, _) = TypeParser.GetInstantiatedTypeDictionaryAndNameList<ICommand>();
+            var commandList = commandDict
+                .OrderBy(c => c.Key)
+                .Select(c => c.Value.Description)
+                .ToList();
 
+            var order = new Order();
             while (true)
             {
                 var commandChoice = Asker.GetChoiceFromList("What do you want to do with your order?", commandList) + 1;
-
-                Console.WriteLine($"You chose the {commandDict[commandChoice].Description} command.");
+                
+                order = commandDict[commandChoice].Execute(order, items);
 
                 if (!ContinuationDeterminer.GoAgain())
                 {
