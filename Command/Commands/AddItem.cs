@@ -12,12 +12,13 @@ namespace Command.Commands
 
         private static QuestionAsker Asker = new QuestionAsker();
         private static TextParser TxtParser = new TextParser();
+        private const int LeftBuffer = 25;
 
         public Order Execute(Order order, List<Item> items)
         {
             var sortedItems = items.OrderBy(i => i.Name).ToList();
             var chosenItem = sortedItems[Asker.GetChoiceFromList("Which item do you want to add to your order?",
-                sortedItems.Select(i => i.Name).ToList())];
+                sortedItems.Select(i => $"{i.Name}: {i.Price.ToString("C").PadLeft(LeftBuffer - i.Name.Length)}").ToList())];
 
             if (order.Items.TryGetValue(chosenItem.Name, out var existingItems))
             {

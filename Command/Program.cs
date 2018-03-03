@@ -19,7 +19,7 @@ namespace Command
 
         static void Main(string[] args)
         {
-            TxtPrinter.PrintInformation("WELCOME TO THE COMMAND PROGRAM - WHICH IS YET FORMLESS");
+            TxtPrinter.PrintInformation("WELCOME TO THE COMMAND PROGRAM - WHICH IS MILDLY THOUGHT-PROVOKING");
             List<Item> items;
             try
             {
@@ -44,12 +44,20 @@ namespace Command
                 .Select(c => c.Value.Description)
                 .ToList();
 
-            var order = new Order();
             while (true)
             {
-                var commandChoice = Asker.GetChoiceFromList("What do you want to do with your order?", commandList) + 1;
-                
-                order = commandDict[commandChoice].Execute(order, items);
+                var order = new Order();
+                while (true)
+                {
+                    var commandChoice = Asker.GetChoiceFromList("What do you want to do with your order?", commandList) + 1;
+
+                    order = commandDict[commandChoice].Execute(order, items);
+                    
+                    if (!ContinuationDeterminer.GoAgain("Do you want to perform another action on your order?"))
+                    {
+                        break;
+                    }
+                }
 
                 if (!ContinuationDeterminer.GoAgain())
                 {

@@ -10,5 +10,9 @@
   {
     "name": "Red Cap",
     "price": 13.44
+  },
+  {
+    "name": "Microphone",
+    "price":  5000
   }
 ]
