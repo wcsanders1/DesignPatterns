@@ -58,3 +58,7 @@ Choose a drive and file extension, and the program will recursively search the d
 ### Chain of Responsibility
 
 The clergymen are available to answer your questions. Which member of the clergy will answer depends on the philosophical depth of the question asked. The **chain of responsibility pattern** makes it easy for the question to be passed on to the clergyman in the next highest order in the church heirarchy if the current clergyman is unable to answer it.
+
+### Command
+
+A variety of interesting items are available to order. Choose items from a list and add them to an order, and remove later if you want. The **command pattern** makes it easy to add functionality to this simple application; just add a class implementing `ICommand` and the functionality it provides will automatically be available to the user.
