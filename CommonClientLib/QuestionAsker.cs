@@ -92,13 +92,13 @@ namespace CommonClientLib
                 var strAnswer = Console.ReadLine();
                 if (!int.TryParse(strAnswer, out var intAnswer))
                 {
-                    Console.WriteLine("You must provide an integer.");
+                    Console.WriteLine("\nYou must provide an integer.\n");
                     continue;
                 }
 
                 if (intAnswer > limit || intAnswer < 0)
                 {
-                    Console.WriteLine($"You must provide an integer between 0 and {limit}.");
+                    Console.WriteLine($"\nYou must provide an integer between 0 and {limit}.\n");
                     continue;
                 }
 

@@ -5,21 +5,15 @@ using Command.Models;
 
 namespace Command.Commands
 {
-    class DisplaySummary : ICommand
+    public class DisplaySummary : AbstractCommand, ICommand
     {
         public string Description { get; } = "Show a summary of your order";
-
-        private const int LeftBuffer = 25;
-        private const string ItemField = "Item";
-        private const string QuantityField = "Quantity";
-        private const string PriceField = "Price";
-        private const string TotalField = "Total Cost";
-
+        
         public Order Execute(Order order, List<Item> items)
         {
             if (order?.Items?.Count == 0)
             {
-                Console.WriteLine("Your cart is currently empty.\n");
+                Console.WriteLine("\nYour order is currently empty.\n");
                 return order;
             }
 

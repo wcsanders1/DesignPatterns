@@ -6,13 +6,12 @@ using CommonClientLib;
 
 namespace Command.Commands
 {
-    public class AddItem : ICommand
+    public class AddItem : AbstractCommand, ICommand
     {
-        public string Description { get; } = "Add an item to the order";
+        public string Description { get; } = "Add items to your order";
 
         private static QuestionAsker Asker = new QuestionAsker();
         private static TextParser TxtParser = new TextParser();
-        private const int LeftBuffer = 25;
 
         public Order Execute(Order order, List<Item> items)
         {
