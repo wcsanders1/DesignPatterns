@@ -58,6 +58,8 @@ namespace Interpreter
                         {
                             answer -= newNum;
                         }
+
+                        currentSign = Sign.Positive;
                     }
                 }
             }
