@@ -17,53 +17,27 @@ namespace Interpreter
         {
             var currentSign = Sign.Positive;
             var answer = 0M;
-            for (int i = 0; i < expression.Length; i++)
+            while (expression.Length > 0)
             {
-                if (IsSign(expression[i]))
+                if (IsSign(expression[0]))
                 {
-                    currentSign = GetCurrentSign(expression[i]);
+                    currentSign = GetCurrentSign(expression[0]);
+                    expression = expression.Substring(1);
                     continue;
                 }
 
-                if (decimal.TryParse(expression[i].ToString(), out var num))
-                {
-                    i++;
-                    var number = new StringBuilder();
-                    number.Append(num);
-                    for (; i < expression.Length; i++)
-                    {
-                        if (!decimal.TryParse(expression[i].ToString(), out var otherNum))
-                        {
-                            break;
-                        }
-                        number.Append(otherNum);
-                    }
-
-                    var numberString = number.ToString();
-
-                    if(decimal.TryParse(numberString, out var newNum))
-                    {
-                        if (currentSign == Sign.Positive)
-                        {
-                            answer += newNum;
-                        }
-
-                        if (currentSign == Sign.Negative)
-                        {
-                            answer -= newNum;
-                        }
-
-                        currentSign = Sign.Positive;
-                    }
-                }
+                // For now, assume every character is either a sign or number
+                decimal nextNum;
+                (nextNum, expression) = GetNextNumber(expression);
+                answer = GetNewSum(answer, nextNum, currentSign);
             }
 
             return (answer, expression);
         }
 
-        private Sign GetCurrentSign(char expression)
+        private Sign GetCurrentSign(char sign)
         {
-            switch (expression)
+            switch (sign)
             {
                 case '+':
                     return Sign.Positive;
@@ -75,9 +49,52 @@ namespace Interpreter
 
         }
 
-        private bool IsSign(char expression)
+        private bool IsSign(char character)
         {
-            return expression == '+' || expression == '-';
+            return character == '+' || character == '-';
+        }
+
+        private (decimal, string) GetNextNumber(string expression)
+        {
+            var numberString = string.Empty;
+            if (decimal.TryParse(expression[0].ToString(), out var num))
+            {
+                var number = new StringBuilder();
+                number.Append(num);
+                expression = expression.Substring(1);
+                while (expression.Length > 0)
+                {
+                    if (!decimal.TryParse(expression[0].ToString(), out var otherNum))
+                    {
+                        break;
+                    }
+                    number.Append(otherNum);
+                    expression = expression.Substring(1);
+                }
+                numberString = number.ToString();
+            }
+            
+            if (!decimal.TryParse(numberString, out var newNumber))
+            {
+                return (0, expression);
+            }
+
+            return (newNumber, expression);
+        }
+
+        private decimal GetNewSum(decimal currentSum, decimal newNumber, Sign currentSign)
+        {
+            if (currentSign == Sign.Positive)
+            {
+                return currentSum += newNumber;
+            }
+
+            if (currentSign == Sign.Negative)
+            {
+                return currentSum -= newNumber;
+            }
+
+            return 0;
         }
 
         private enum Sign
