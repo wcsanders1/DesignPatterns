@@ -1,10 +1,17 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Interpreter
 {
     public class MathInterpreter
     {
+        private static readonly List<char> PrecedentialOperators = new List<char>
+        {
+            '*',
+            '/'
+        };
+
         public decimal GetAnswer(string expression)
         {
             var cleanedExpression = Regex.Replace(expression, @"\s+", "");
@@ -29,6 +36,15 @@ namespace Interpreter
                 // For now, assume every character is either a sign or number
                 decimal nextNum;
                 (nextNum, expression) = GetNextNumber(expression);
+
+                if (MustGetNextNumber(expression))
+                {
+                    decimal subsequentNextNum;
+
+                    (subsequentNextNum, expression) = Evaluate(expression);
+                    nextNum = +subsequentNextNum;
+                }
+
                 answer = GetNewSum(answer, nextNum, currentSign);
             }
 
@@ -46,7 +62,6 @@ namespace Interpreter
                 default:
                     return Sign.Positive;
             }
-
         }
 
         private bool IsSign(char character)
@@ -82,10 +97,37 @@ namespace Interpreter
             return 0;
         }
 
+        private bool MustGetNextNumber(string expression)
+        {
+            return expression.Length > 0 && PrecedentialOperators.Contains(expression[0]);
+        }
+
+        private (Operator, string) GetNextOperator(string expression)
+        {
+            Operator op;
+            if (expression[0] == '*')
+            {
+                op = Operator.Multiply;
+            }
+            else
+            {
+                op = Operator.Divide;
+            }
+
+            expression = expression.Substring(1);
+            return (op, expression);
+        }
+
         private enum Sign
         {
             Positive,
             Negative
+        }
+
+        private enum Operator
+        {
+            Multiply,
+            Divide
         }
     }
 }

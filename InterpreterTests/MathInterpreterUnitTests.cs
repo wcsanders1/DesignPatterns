@@ -148,5 +148,17 @@ namespace InterpreterTests
 
             Assert.Equal(expectedAnswer, result);
         }
+
+        //[Fact]
+        //public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationExpression()
+        //{
+        //    const string testExpression = "5 * 6";
+        //    const decimal expectedAnswer = 30;
+
+        //    var sut = new MathInterpreter();
+        //    var result = sut.GetAnswer(testExpression);
+
+        //    Assert.Equal(expectedAnswer, result);
+        //}
     }
 }
