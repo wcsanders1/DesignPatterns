@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Interpreter
@@ -56,24 +57,9 @@ namespace Interpreter
 
         private (decimal, string) GetNextNumber(string expression)
         {
-            var numberString = string.Empty;
-            if (decimal.TryParse(expression[0].ToString(), out var num))
-            {
-                var number = new StringBuilder();
-                number.Append(num);
-                expression = expression.Substring(1);
-                while (expression.Length > 0)
-                {
-                    if (!decimal.TryParse(expression[0].ToString(), out var otherNum))
-                    {
-                        break;
-                    }
-                    number.Append(otherNum);
-                    expression = expression.Substring(1);
-                }
-                numberString = number.ToString();
-            }
-            
+            var numberString = new string(expression.TakeWhile(c => char.IsDigit(c) || c == '.').ToArray());
+            expression = expression.Substring(numberString.Length);
+
             if (!decimal.TryParse(numberString, out var newNumber))
             {
                 return (0, expression);

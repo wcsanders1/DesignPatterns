@@ -125,16 +125,28 @@ namespace InterpreterTests
             Assert.Equal(expectedAnswer, result);
         }
 
-        //[Fact]
-        //public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpressionWithDecimal_4()
-        //{
-        //    const string testExpression = "4012.43 + 550992.111";
-        //    const decimal expectedAnswer = 555004.541M;
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpressionWithDecimal()
+        {
+            const string testExpression = "4012.43 + 550992.111";
+            const decimal expectedAnswer = 555004.541M;
 
-        //    var sut = new MathInterpreter();
-        //    var result = sut.GetAnswer(testExpression);
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
 
-        //    Assert.Equal(expectedAnswer, result);
-        //}
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedComplexExpressionWithDecimal()
+        {
+            const string testExpression = "4012.43 + 550992.111 - .02 + 324 - 9999999 - 10.00 - 4323 + .009 + 39393";
+            const decimal expectedAnswer = -9409610.47M;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
     }
 }
