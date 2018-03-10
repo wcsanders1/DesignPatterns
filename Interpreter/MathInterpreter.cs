@@ -19,24 +19,18 @@ namespace Interpreter
             var answer = 0M;
             for (int i = 0; i < expression.Length; i++)
             {
-                if (expression[i] == '+')
+                if (IsSign(expression[i]))
                 {
-                    currentSign = Sign.Positive;
+                    currentSign = GetCurrentSign(expression[i]);
                     continue;
                 }
-
-                if (expression[i] == '-')
-                {
-                    currentSign = Sign.Negative;
-                    continue;
-                }
-
 
                 if (decimal.TryParse(expression[i].ToString(), out var num))
                 {
+                    i++;
                     var number = new StringBuilder();
                     number.Append(num);
-                    for (; i < expression.Length; ++i)
+                    for (; i < expression.Length; i++)
                     {
                         if (!decimal.TryParse(expression[i].ToString(), out var otherNum))
                         {
@@ -65,6 +59,25 @@ namespace Interpreter
             }
 
             return (answer, expression);
+        }
+
+        private Sign GetCurrentSign(char expression)
+        {
+            switch (expression)
+            {
+                case '+':
+                    return Sign.Positive;
+                case '-':
+                    return Sign.Negative;
+                default:
+                    return Sign.Positive;
+            }
+
+        }
+
+        private bool IsSign(char expression)
+        {
+            return expression == '+' || expression == '-';
         }
 
         private enum Sign
