@@ -1,21 +1,25 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Interpreter
 {
     public class MathInterpreter
     {
-        private static readonly List<char> PrecedentialOperators = new List<char>
+        private static readonly List<char> MathOperators = new List<char>
         {
             '*',
-            '/'
+            '/',
+            '-',
+            '+'
         };
 
         public decimal GetAnswer(string expression)
         {
             var cleanedExpression = Regex.Replace(expression, @"\s+", "");
-            var (result, evaluatedExpression) = Evaluate(cleanedExpression);
+            var resolvedExpression = ResolveMultDiv(cleanedExpression);
+            var (result, evaluatedExpression) = Evaluate(resolvedExpression);
 
             return result;
         }
@@ -59,7 +63,45 @@ namespace Interpreter
 
         private string ResolveMultDiv(string expression)
         {
-            return expression;
+            var newString = new StringBuilder();
+            while (expression.Length > 0)
+            {
+                decimal firstNum;
+                decimal secondNum;
+
+                if (expression[0] == '+' || expression[0] == '-')
+                {
+                    newString.Append(expression[0]);
+                    expression = expression.Substring(1);
+                }
+
+                var result = 0M;
+                (firstNum, expression) = GetNextNumber(expression);
+                if (expression.Length == 0)
+                {
+                    newString.Append(firstNum);
+                    return newString.ToString();
+                }
+
+                var op = expression[0];
+                expression = expression.Substring(1);
+                (secondNum, expression) = GetNextNumber(expression);
+                if (op == '*' || op == '/')
+                {
+                    if (op == '*')
+                    {
+                        result = firstNum * secondNum;
+                    }
+                    if (op == '/')
+                    {
+                        result = firstNum / secondNum;
+                    }
+                    newString.Append(result);
+                    continue;
+                }
+                newString.Append($"{firstNum}{op}{secondNum}");
+            }
+            return newString.ToString();
         }
 
         private (decimal, string) Evaluate(string expression)
@@ -79,13 +121,13 @@ namespace Interpreter
                 decimal nextNum;
                 (nextNum, expression) = GetNextNumber(expression);
 
-                if (MustGetNextNumber(expression))
-                {
-                    decimal subsequentNextNum;
+                //if (MustGetNextNumber(expression))
+                //{
+                //    decimal subsequentNextNum;
 
-                    (subsequentNextNum, expression) = Evaluate(expression);
-                    nextNum = +subsequentNextNum;
-                }
+                //    (subsequentNextNum, expression) = Evaluate(expression);
+                //    nextNum = +subsequentNextNum;
+                //}
 
                 answer = GetNewSum(answer, nextNum, currentSign);
             }
@@ -139,10 +181,10 @@ namespace Interpreter
             return 0;
         }
 
-        private bool MustGetNextNumber(string expression)
-        {
-            return expression.Length > 0 && PrecedentialOperators.Contains(expression[0]);
-        }
+        //private bool MustGetNextNumber(string expression)
+        //{
+        //    return expression.Length > 0 && PrecedentialOperators.Contains(expression[0]);
+        //}
 
         private (Operator, string) GetNextOperator(string expression)
         {
