@@ -63,7 +63,9 @@ namespace Interpreter
 
         private string ResolveMultDiv(string expression)
         {
+            var numbers = new List<decimal>();
             var newString = new StringBuilder();
+            var currentSign = Sign.Positive;
             while (expression.Length > 0)
             {
                 decimal firstNum;
@@ -71,35 +73,85 @@ namespace Interpreter
 
                 if (expression[0] == '+' || expression[0] == '-')
                 {
-                    newString.Append(expression[0]);
+                    currentSign = GetCurrentSign(expression[0]);
                     expression = expression.Substring(1);
                 }
 
-                var result = 0M;
+                if (expression[0] == '*' || expression[0] == '/')
+                {
+                    if (expression[0] == '*')
+                    {
+                        expression = expression.Substring(1);
+                        (firstNum, expression) = GetNextNumber(expression);
+                        numbers[numbers.Count - 1] *= firstNum;
+                        continue;
+                    }
+
+                    if (expression[0] == '/')
+                    {
+                        expression = expression.Substring(1);
+                        (firstNum, expression) = GetNextNumber(expression);
+                        numbers[numbers.Count - 1] /= firstNum;
+                        continue;
+                    }
+                }
                 (firstNum, expression) = GetNextNumber(expression);
+                if (currentSign == Sign.Negative)
+                {
+                    firstNum *= -1;
+                    currentSign = Sign.Positive;
+                }
+
+                numbers.Add(firstNum);
                 if (expression.Length == 0)
                 {
-                    newString.Append(firstNum);
+                    foreach (var number in numbers)
+                    {
+                        if (number >= 0)
+                        {
+                            newString.Append("+");
+                        }
+
+                        newString.Append(number);
+                    }
                     return newString.ToString();
                 }
 
                 var op = expression[0];
+                if (op == '-')
+                {
+                    currentSign = Sign.Negative;
+                }
                 expression = expression.Substring(1);
                 (secondNum, expression) = GetNextNumber(expression);
                 if (op == '*' || op == '/')
                 {
                     if (op == '*')
                     {
-                        result = firstNum * secondNum;
+                        numbers[numbers.Count - 1] *= secondNum;
                     }
                     if (op == '/')
                     {
-                        result = firstNum / secondNum;
+                        numbers[numbers.Count - 1] /= secondNum;
                     }
-                    newString.Append(result);
-                    continue;
                 }
-                newString.Append($"{firstNum}{op}{secondNum}");
+                else
+                {
+                    if (currentSign == Sign.Negative)
+                    {
+                        secondNum *= -1;
+                    }
+                    numbers.Add(secondNum);
+                }
+            }
+            foreach (var number in numbers)
+            {
+                if (number >= 0)
+                {
+                    newString.Append("+");
+                }
+
+                newString.Append(number);
             }
             return newString.ToString();
         }
