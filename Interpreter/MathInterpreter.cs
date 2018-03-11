@@ -20,6 +20,48 @@ namespace Interpreter
             return result;
         }
 
+        private string SimplifyExpression(string expression)
+        {
+            var needsSimplification = false;
+            var newExpression = string.Copy(expression);
+            do
+            {
+                needsSimplification = false;
+
+                // Look for first parenthetical and resolve it
+                var startExpressionToResolve = 0;
+                var endExpressionToResolve = 0;
+                for (int i = 0; i < expression.Length; i++)
+                {
+                    if (expression[i] == '(')
+                    {
+                        startExpressionToResolve = i;
+                        needsSimplification = true;
+                    }
+
+                    if (expression[i] == ')')
+                    {
+                        endExpressionToResolve = i;
+                        needsSimplification = true;
+                        break;
+                    }
+                }
+
+            } while (needsSimplification);
+
+            return expression;
+        }
+
+        private string ResolveParens(string expression)
+        {
+            return expression;
+        }
+
+        private string ResolveMultDiv(string expression)
+        {
+            return expression;
+        }
+
         private (decimal, string) Evaluate(string expression)
         {
             var currentSign = Sign.Positive;
