@@ -162,10 +162,94 @@ namespace InterpreterTests
         }
 
         [Fact]
-        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationWIthAddition()
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationWithAdditionOne()
         {
             const string testExpression = "3 + 5 * 6";
             const decimal expectedAnswer = 33;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationWithAdditionTwo()
+        {
+            const string testExpression = "3 + 5 * 6 + 3";
+            const decimal expectedAnswer = 36;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationWithAdditionThree()
+        {
+            const string testExpression = "3 + 5 * 6 + 3 * 10";
+            const decimal expectedAnswer = 63;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationWithAdditionFour()
+        {
+            const string testExpression = "3 + 5 * 6 + 3 * 10 + 5 + 5 * 1 + 8.5 - 2";
+            const decimal expectedAnswer = 79.5M;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedDivisionExpression()
+        {
+            const string testExpression = "10 / 2";
+            const decimal expectedAnswer = 5;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedDivisionWithDecimalResult()
+        {
+            const string testExpression = "10 / 4";
+            const decimal expectedAnswer = 2.5M;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedDivisionAndSubtraction()
+        {
+            const string testExpression = "10 / 2 - 1";
+            const decimal expectedAnswer = 4;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedDivisionAndMultiplication()
+        {
+            const string testExpression = "10 / 2 * 5";
+            const decimal expectedAnswer = 25;
 
             var sut = new MathInterpreter();
             var result = sut.GetAnswer(testExpression);
