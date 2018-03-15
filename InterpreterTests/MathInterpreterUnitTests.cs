@@ -256,5 +256,17 @@ namespace InterpreterTests
 
             Assert.Equal(expectedAnswer, result);
         }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedMultiplicationWithAdditionAndParen()
+        {
+            const string testExpression = "(3 + 5) * 6";
+            const decimal expectedAnswer = 48;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
     }
 }

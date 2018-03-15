@@ -18,7 +18,8 @@ namespace Interpreter
         public decimal GetAnswer(string expression)
         {
             var cleanedExpression = Regex.Replace(expression, @"\s+", "");
-            var resolvedExpression = ResolveMultDiv(cleanedExpression);
+            var simplifiedExpression = SimplifyExpression(cleanedExpression);
+            var resolvedExpression = ResolveMultDiv(simplifiedExpression);
             var (result, evaluatedExpression) = Evaluate(resolvedExpression);
 
             return result;
@@ -33,31 +34,34 @@ namespace Interpreter
                 needsSimplification = false;
 
                 // Look for first parenthetical and resolve it
-                var startExpressionToResolve = 0;
-                var endExpressionToResolve = 0;
+                var start = 0;
+                var end = 0;
                 for (int i = 0; i < expression.Length; i++)
                 {
                     if (expression[i] == '(')
                     {
-                        startExpressionToResolve = i;
+                        start = i;
                         needsSimplification = true;
                     }
 
                     if (expression[i] == ')')
                     {
-                        endExpressionToResolve = i;
+                        end = i;
                         needsSimplification = true;
                         break;
                     }
                 }
 
+                if (needsSimplification)
+                {
+                    var subExpression = expression.Substring(start, end - start + 1);
+                    var strippedSubExpression = subExpression.Replace("(", "").Replace(")", "");
+                    var resolvedSubExpression = ResolveMultDiv(strippedSubExpression);
+                    var (solvedSubExpression, _) = Evaluate(resolvedSubExpression);
+                    expression = expression.Replace(subExpression, solvedSubExpression.ToString());
+                }
             } while (needsSimplification);
 
-            return expression;
-        }
-
-        private string ResolveParens(string expression)
-        {
             return expression;
         }
 
@@ -172,15 +176,6 @@ namespace Interpreter
                 // For now, assume every character is either a sign or number
                 decimal nextNum;
                 (nextNum, expression) = GetNextNumber(expression);
-
-                //if (MustGetNextNumber(expression))
-                //{
-                //    decimal subsequentNextNum;
-
-                //    (subsequentNextNum, expression) = Evaluate(expression);
-                //    nextNum = +subsequentNextNum;
-                //}
-
                 answer = GetNewSum(answer, nextNum, currentSign);
             }
 
@@ -232,11 +227,6 @@ namespace Interpreter
 
             return 0;
         }
-
-        //private bool MustGetNextNumber(string expression)
-        //{
-        //    return expression.Length > 0 && PrecedentialOperators.Contains(expression[0]);
-        //}
 
         private (Operator, string) GetNextOperator(string expression)
         {
