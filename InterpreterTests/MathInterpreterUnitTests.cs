@@ -414,6 +414,18 @@ namespace InterpreterTests
         }
 
         [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression8()
+        {
+            const string testExpression = "4 + 5 - 2 * (6 + 4)";
+            const decimal expectedAnswer = -11;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
         public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNestedParenthetical1()
         {
             const string testExpression = "5 * (6 + 2) - (10 * (5 - 3))";

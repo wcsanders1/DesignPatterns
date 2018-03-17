@@ -20,7 +20,7 @@ namespace Interpreter
             var cleanedExpression = Regex.Replace(expression, @"\s+", "");
             var simplifiedExpression = SimplifyExpression(cleanedExpression);
             var resolvedExpression = ResolveMultDiv(simplifiedExpression);
-            var (result, evaluatedExpression) = Evaluate(resolvedExpression);
+            var (result, unevaluatedExpression) = Evaluate(resolvedExpression);
 
             return result;
         }
