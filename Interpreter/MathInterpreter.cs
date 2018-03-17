@@ -70,40 +70,68 @@ namespace Interpreter
             var numbers = new List<decimal>();
             var newString = new StringBuilder();
             var currentSign = Sign.Positive;
+            var lastChar = Syntax.Number;
             while (expression.Length > 0)
             {
                 decimal firstNum;
                 decimal secondNum;
 
-                if (expression[0] == '+' || expression[0] == '-')
+                if (IsSign(expression[0]))
                 {
-                    currentSign = GetCurrentSign(expression[0]);
+                    currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
+                    lastChar = Syntax.Sign;
                     expression = expression.Substring(1);
+                    continue;
                 }
 
-                if (expression[0] == '*' || expression[0] == '/')
+                if (expression[0] == '*')
                 {
-                    if (expression[0] == '*')
+                    expression = expression.Substring(1);
+                    if (IsSign(expression[0]))
                     {
+                        currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
                         expression = expression.Substring(1);
-                        (firstNum, expression) = GetNextNumber(expression);
-                        numbers[numbers.Count - 1] *= firstNum;
-                        continue;
                     }
 
-                    if (expression[0] == '/')
+                    (firstNum, expression) = GetNextNumber(expression);
+
+                    if (currentSign == Sign.Negative)
                     {
-                        expression = expression.Substring(1);
-                        (firstNum, expression) = GetNextNumber(expression);
-                        numbers[numbers.Count - 1] /= firstNum;
-                        continue;
+                        firstNum *= -1;
                     }
+
+                    numbers[numbers.Count - 1] *= firstNum;
+                    lastChar = Syntax.Number;
+                    continue;
                 }
+
+                if (expression[0] == '/')
+                {
+                    expression = expression.Substring(1);
+                    if (IsSign(expression[0]))
+                    {
+                        currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
+                        expression = expression.Substring(1);
+                    }
+
+                    (firstNum, expression) = GetNextNumber(expression);
+
+                    if (currentSign == Sign.Negative)
+                    {
+                        firstNum *= -1;
+                    }
+
+                    numbers[numbers.Count - 1] /= firstNum;
+                    lastChar = Syntax.Number;
+                    continue;
+                }
+                
                 (firstNum, expression) = GetNextNumber(expression);
                 if (currentSign == Sign.Negative)
                 {
                     firstNum *= -1;
                     currentSign = Sign.Positive;
+                    lastChar = Syntax.Number;
                 }
 
                 numbers.Add(firstNum);
@@ -124,12 +152,29 @@ namespace Interpreter
                 var op = expression[0];
                 if (op == '-')
                 {
-                    currentSign = Sign.Negative;
+                    currentSign = GetCurrentSign('-', currentSign, lastChar);
+                    expression = expression.Substring(1);
+                    lastChar = Syntax.Sign;
+                    continue;
                 }
                 expression = expression.Substring(1);
+
+                if (IsSign(expression[0]))
+                {
+                    currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
+                    expression = expression.Substring(1);
+                    lastChar = Syntax.Sign;
+                }
+
                 (secondNum, expression) = GetNextNumber(expression);
+                lastChar = Syntax.Number;
                 if (op == '*' || op == '/')
                 {
+                    if (currentSign == Sign.Negative)
+                    {
+                        secondNum *= -1;
+                    }
+
                     if (op == '*')
                     {
                         numbers[numbers.Count - 1] *= secondNum;
@@ -164,31 +209,38 @@ namespace Interpreter
         {
             var currentSign = Sign.Positive;
             var answer = 0M;
+            var lastChar = Syntax.Number;
+
             while (expression.Length > 0)
             {
                 if (IsSign(expression[0]))
                 {
-                    currentSign = GetCurrentSign(expression[0]);
+                    currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
                     expression = expression.Substring(1);
+                    lastChar = Syntax.Sign;
                     continue;
                 }
 
-                // For now, assume every character is either a sign or number
                 decimal nextNum;
                 (nextNum, expression) = GetNextNumber(expression);
+                lastChar = Syntax.Number;
                 answer = GetNewSum(answer, nextNum, currentSign);
             }
 
             return (answer, expression);
         }
 
-        private Sign GetCurrentSign(char sign)
+        private Sign GetCurrentSign(char sign, Sign currentSign, Syntax lastChar)
         {
             switch (sign)
             {
                 case '+':
                     return Sign.Positive;
                 case '-':
+                    if (currentSign == Sign.Negative && lastChar != Syntax.Number)
+                    {
+                        return Sign.Positive;
+                    }
                     return Sign.Negative;
                 default:
                     return Sign.Positive;
@@ -254,6 +306,14 @@ namespace Interpreter
         {
             Multiply,
             Divide
+        }
+
+        private enum Syntax
+        {
+            Number,
+            Paren,
+            Sign,
+            Operator
         }
     }
 }

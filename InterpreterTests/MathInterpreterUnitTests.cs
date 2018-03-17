@@ -268,5 +268,113 @@ namespace InterpreterTests
 
             Assert.Equal(expectedAnswer, result);
         }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNegativeNumberFirst()
+        {
+            const string testExpression = "-6 + 4";
+            const decimal expectedAnswer = -2;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNegativeMult()
+        {
+            const string testExpression = "6 - 4 * 5";
+            const decimal expectedAnswer = -14;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNegativeMultWithParen()
+        {
+            const string testExpression = "6 - (4 * 5)";
+            const decimal expectedAnswer = -14;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedDoubleNegativeMultWithParen()
+        {
+            const string testExpression = "6 - (-4 * 5)";
+            const decimal expectedAnswer = 26;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedTripleNegativeMultWithParen()
+        {
+            const string testExpression = "-6 - (-4 * 5)";
+            const decimal expectedAnswer = 14;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression1()
+        {
+            const string testExpression = "2 * -1";
+            const decimal expectedAnswer = -2;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression2()
+        {
+            const string testExpression = "-6 - (-4 * 5) * -1";
+            const decimal expectedAnswer = -26;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression3()
+        {
+            const string testExpression = "-6 + 20 * -1";
+            const decimal expectedAnswer = -26;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression4()
+        {
+            const string testExpression = "-6 - (-4 * 5) * -1";
+            const decimal expectedAnswer = -26;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
     }
 }
