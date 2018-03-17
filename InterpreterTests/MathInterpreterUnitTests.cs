@@ -376,5 +376,77 @@ namespace InterpreterTests
 
             Assert.Equal(expectedAnswer, result);
         }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression5()
+        {
+            const string testExpression = "-(5 + 5)";
+            const decimal expectedAnswer = -10;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression6()
+        {
+            const string testExpression = "5 * 0";
+            const decimal expectedAnswer = 0;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedExpression7()
+        {
+            const string testExpression = "5 * 0";
+            const decimal expectedAnswer = 0;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNestedParenthetical1()
+        {
+            const string testExpression = "5 * (6 + 2) - (10 * (5 - 3))";
+            const decimal expectedAnswer = 20;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNestedParenthetical2()
+        {
+            const string testExpression = "5 * ((6 + 2) - (10 * (5 - 3)))";
+            const decimal expectedAnswer = -60;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
+
+        [Fact]
+        public void GetAnswer_ReturnsCorrectAnswer_WhenProvidedNestedParenthetical3()
+        {
+            const string testExpression = "5 * (-1 * ((6 + 2) - (10 * (5 - 3))))";
+            const decimal expectedAnswer = 60;
+
+            var sut = new MathInterpreter();
+            var result = sut.GetAnswer(testExpression);
+
+            Assert.Equal(expectedAnswer, result);
+        }
     }
 }
