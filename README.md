@@ -66,3 +66,5 @@ A variety of interesting items are available to order. Choose items from a list 
 ### Interpreter
 
 Enter a mathematical expression and get the correct answer, or get an error message if your expression is malformed. The **interpreter pattern** is used to take the mathematical expression, which is provided as a `string`, and convert it into a series of mathematical operations, which are then resolved.
+
+![Interpreter gif](/../screenshots/Interpreter_GIF_1.gif)
