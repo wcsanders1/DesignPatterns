@@ -1,0 +1,27 @@
+﻿[
+  {
+    "query": "Where is my car?",
+    "answer": "Your car is in the bowels of the earth.",
+    "philosophicalDepth": "low"
+  },
+  {
+    "query": "Are beasts good at keeping secrets?",
+    "answer": "Beasts are good at keeping secrets, unless you look them in the eye.",
+    "philosophicalDepth": "medium"
+  },
+  {
+    "query": "What card game would I be good at?",
+    "answer": "You would be good at nearly any card game that doesn't require eveningwear.",
+    "philosophicalDepth": "high"
+  },
+  {
+    "query": "Why doesn't God like me?",
+    "answer": "It's not that God doesn't like you. He's just shy and doesn't know you very well.",
+    "philosophicalDepth": "extreme"
+  },
+  {
+    "query": "How does light go so fast?",
+    "answer": "Light goes so fast because it's very light.",
+    "philosophicalDepth": "excessive"
+  }
+]

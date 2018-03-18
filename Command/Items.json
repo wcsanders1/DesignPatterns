@@ -1,0 +1,18 @@
+﻿[
+  {
+    "name": "Duck",
+    "price": 20.50
+  },
+  {
+    "name": "Speaker Set",
+    "price": 30
+  },
+  {
+    "name": "Red Cap",
+    "price": 13.44
+  },
+  {
+    "name": "Microphone",
+    "price":  5000
+  }
+]

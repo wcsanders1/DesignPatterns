@@ -61,17 +61,48 @@ namespace CommonClientLib
                 var strAnswer = Console.ReadLine();
                 if (!int.TryParse(strAnswer, out var answer))
                 {
-                    Console.WriteLine(InvalidInputMessage);
+                    Console.WriteLine($"\n{InvalidInputMessage}");
                     continue;
                 }
 
                 if (answer < 1 || answer > index)
                 {
-                    Console.WriteLine(InvalidInputMessage);
+                    Console.WriteLine($"\n{InvalidInputMessage}");
                     continue;
                 }
 
                 return --answer;
+            }
+        }
+
+        /// <summary>
+        /// Gets an integer value between zero and some value from the user.
+        /// </summary>
+        /// <param name="question">Question asked to the user</param>
+        /// <param name="limit">Upper bound of the integer</param>
+        /// <returns>Integer provided by the user</returns>
+        public int GetInt(string question, int limit = int.MaxValue)
+        {
+            Console.WriteLine();
+
+            while (true)
+            {
+                Console.WriteLine($"{question}\n");
+
+                var strAnswer = Console.ReadLine();
+                if (!int.TryParse(strAnswer, out var intAnswer))
+                {
+                    Console.WriteLine("\nYou must provide an integer.\n");
+                    continue;
+                }
+
+                if (intAnswer > limit || intAnswer < 0)
+                {
+                    Console.WriteLine($"\nYou must provide an integer between 0 and {limit}.\n");
+                    continue;
+                }
+
+                return intAnswer;
             }
         }
     }
