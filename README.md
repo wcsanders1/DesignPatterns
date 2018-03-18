@@ -62,3 +62,7 @@ The clergymen are available to answer your questions. Which member of the clergy
 ### Command
 
 A variety of interesting items are available to order. Choose items from a list and add them to an order, and remove later if you want. The **command pattern** makes it easy to add functionality to this simple application; just add a class implementing `ICommand` and the functionality it provides will automatically be available to the user.
+
+### Interpreter
+
+Enter a mathematical expression and get the correct answer, or get an error message if your expression is malformed. The **interpreter pattern** is used to take the mathematical expression, which is provided as a `string`, and convert it into a series of mathematical operations, which are then resolved.

@@ -33,7 +33,7 @@ namespace Interpreter
                 {
                     
                     Console.WriteLine($"\nThere was an error evaluating the expression. " +
-                        $"Error: {ex.Message}");
+                        $"Error: {ex.Message}\n");
                 }
 
                 if (!ContinuationDeterminer.GoAgain())
