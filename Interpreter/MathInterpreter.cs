@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -7,20 +8,17 @@ namespace Interpreter
 {
     public class MathInterpreter
     {
-        private static readonly List<char> MathOperators = new List<char>
-        {
-            '*',
-            '/',
-            '-',
-            '+'
-        };
-
         public decimal GetAnswer(string expression)
         {
             var cleanedExpression = Regex.Replace(expression, @"\s+", "");
             var simplifiedExpression = SimplifyExpression(cleanedExpression);
             var resolvedExpression = ResolveMultDiv(simplifiedExpression);
             var (result, unevaluatedExpression) = Evaluate(resolvedExpression);
+
+            if (unevaluatedExpression.Length > 0)
+            {
+                throw new Exception("Unable to evaluate expression.");
+            }
 
             return result;
         }
@@ -34,6 +32,7 @@ namespace Interpreter
                 needsSimplification = false;
 
                 // Look for first parenthetical and resolve it
+                // and just keep doing that until there're none left
                 var start = 0;
                 var end = 0;
                 for (int i = 0; i < expression.Length; i++)
@@ -75,7 +74,6 @@ namespace Interpreter
             {
                 decimal firstNum;
                 decimal secondNum;
-
                 if (IsSign(expression[0]))
                 {
                     currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
@@ -84,8 +82,9 @@ namespace Interpreter
                     continue;
                 }
 
-                if (expression[0] == '*')
+                if (expression[0] == '*' || expression[0] == '/')
                 {
+                    var operation = expression[0];
                     expression = expression.Substring(1);
                     if (IsSign(expression[0]))
                     {
@@ -100,28 +99,16 @@ namespace Interpreter
                         firstNum *= -1;
                     }
 
-                    numbers[numbers.Count - 1] *= firstNum;
-                    lastChar = Syntax.Number;
-                    continue;
-                }
-
-                if (expression[0] == '/')
-                {
-                    expression = expression.Substring(1);
-                    if (IsSign(expression[0]))
+                    if (operation == '*')
                     {
-                        currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
-                        expression = expression.Substring(1);
+                        numbers[numbers.Count - 1] *= firstNum;
                     }
 
-                    (firstNum, expression) = GetNextNumber(expression);
-
-                    if (currentSign == Sign.Negative)
+                    if (operation == '/')
                     {
-                        firstNum *= -1;
+                        numbers[numbers.Count - 1] /= firstNum;
                     }
 
-                    numbers[numbers.Count - 1] /= firstNum;
                     lastChar = Syntax.Number;
                     continue;
                 }
@@ -137,28 +124,18 @@ namespace Interpreter
                 numbers.Add(firstNum);
                 if (expression.Length == 0)
                 {
-                    foreach (var number in numbers)
-                    {
-                        if (number >= 0)
-                        {
-                            newString.Append("+");
-                        }
-
-                        newString.Append(number);
-                    }
-                    return newString.ToString();
+                    return CreateString(numbers);
                 }
 
-                var op = expression[0];
-                if (op == '-')
+                var otherOp = expression[0];
+                expression = expression.Substring(1);
+                if (otherOp == '-')
                 {
                     currentSign = GetCurrentSign('-', currentSign, lastChar);
-                    expression = expression.Substring(1);
                     lastChar = Syntax.Sign;
                     continue;
                 }
-                expression = expression.Substring(1);
-
+                
                 if (IsSign(expression[0]))
                 {
                     currentSign = GetCurrentSign(expression[0], currentSign, lastChar);
@@ -168,31 +145,32 @@ namespace Interpreter
 
                 (secondNum, expression) = GetNextNumber(expression);
                 lastChar = Syntax.Number;
-                if (op == '*' || op == '/')
-                {
-                    if (currentSign == Sign.Negative)
-                    {
-                        secondNum *= -1;
-                    }
 
-                    if (op == '*')
-                    {
-                        numbers[numbers.Count - 1] *= secondNum;
-                    }
-                    if (op == '/')
-                    {
-                        numbers[numbers.Count - 1] /= secondNum;
-                    }
+                if (currentSign == Sign.Negative)
+                {
+                    secondNum *= -1;
+                }
+
+                if (otherOp == '*')
+                {
+                    numbers[numbers.Count - 1] *= secondNum;
+                }
+                else if (otherOp == '/')
+                {
+                    numbers[numbers.Count - 1] /= secondNum;
                 }
                 else
                 {
-                    if (currentSign == Sign.Negative)
-                    {
-                        secondNum *= -1;
-                    }
                     numbers.Add(secondNum);
                 }
             }
+            
+            return CreateString(numbers);
+        }
+
+        private string CreateString(List<decimal> numbers)
+        {
+            var newString = new StringBuilder();
             foreach (var number in numbers)
             {
                 if (number >= 0)
@@ -267,33 +245,12 @@ namespace Interpreter
 
         private decimal GetNewSum(decimal currentSum, decimal newNumber, Sign currentSign)
         {
-            if (currentSign == Sign.Positive)
-            {
-                return currentSum += newNumber;
-            }
-
             if (currentSign == Sign.Negative)
             {
                 return currentSum -= newNumber;
             }
-
-            return 0;
-        }
-
-        private (Operator, string) GetNextOperator(string expression)
-        {
-            Operator op;
-            if (expression[0] == '*')
-            {
-                op = Operator.Multiply;
-            }
-            else
-            {
-                op = Operator.Divide;
-            }
-
-            expression = expression.Substring(1);
-            return (op, expression);
+            
+            return currentSum += newNumber;
         }
 
         private enum Sign
@@ -302,18 +259,10 @@ namespace Interpreter
             Negative
         }
 
-        private enum Operator
-        {
-            Multiply,
-            Divide
-        }
-
         private enum Syntax
         {
             Number,
-            Paren,
-            Sign,
-            Operator
+            Sign
         }
     }
 }
