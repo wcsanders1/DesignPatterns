@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 
 namespace CommonClientLib
 {
@@ -103,6 +104,29 @@ namespace CommonClientLib
                 }
 
                 return intAnswer;
+            }
+        }
+
+        /// <summary>
+        /// Gets a value of certain type.
+        /// </summary>
+        /// <typeparam name="T">Type that value needs to be.</typeparam>
+        /// <returns>A user-entered value.</returns>
+        public T GetValue<T>(string message)
+        {
+            var converter = TypeDescriptor.GetConverter(typeof(T));
+
+            while (true)
+            {
+                Console.WriteLine(message);
+                var strAnswer = Console.ReadLine();
+                if (string.IsNullOrEmpty(strAnswer))
+                {
+                    Console.WriteLine($"That input is not valid.");
+                    continue;
+                }
+
+                return (T)converter.ConvertFromString(strAnswer);
             }
         }
     }
