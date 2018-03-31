@@ -1,6 +1,5 @@
 ﻿using CommonClientLib;
 using System;
-using System.Linq;
 
 namespace Iterator
 {
@@ -22,12 +21,18 @@ namespace Iterator
                 
                 while (true)
                 {
-                    var newVal = QuestionAsker.GetValue<string>($"Enter a new value to put on the stack.\n");
+                    var newVal = QuestionAsker.GetValue<string>($"\nEnter a new value to put on the stack.\n");
                     iterableStack.Push(newVal);
-                    if (!ContinuationDeterminer.GoAgain("Do you want to put another value on the stack?"))
+                    if (!ContinuationDeterminer.GoAgain("\nDo you want to put another value on the stack?\n"))
                     {
                         break;
                     }
+                }
+
+                Console.WriteLine("\nHere are the values that you put on the stack:\n");
+                foreach (var item in iterableStack)
+                {
+                    Console.WriteLine(item);
                 }
 
                 if (!ContinuationDeterminer.GoAgain())
