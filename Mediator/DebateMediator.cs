@@ -1,8 +1,20 @@
-﻿namespace Mediator
+﻿using System;
+using System.Collections.Generic;
+
+namespace Mediator
 {
-    public interface DebateMediator
+    public class DebateMediator : IDebateMediator
     {
-        void RegisterDebater();
-        void ReceiveProposition();
+        private readonly List<AbstractDebator> Debators = new List<AbstractDebator>();
+
+        public void ReceiveProposition()
+        {
+            throw new NotImplementedException();
+        }
+
+        public void RegisterDebater(AbstractDebator debator)
+        {
+            Debators.Add(debator);
+        }
     }
 }
