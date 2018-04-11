@@ -5,14 +5,14 @@ namespace Mediator
 {
     public class DebateMediator : IDebateMediator
     {
-        private readonly List<AbstractDebator> Debators = new List<AbstractDebator>();
+        private readonly List<Debator> Debators = new List<Debator>();
 
-        public void ReceiveProposition()
+        public bool ArgumentIsSuitable(string argument)
         {
             throw new NotImplementedException();
-        }
+        }     
 
-        public void RegisterDebater(AbstractDebator debator)
+        public void RegisterDebater(Debator debator)
         {
             Debators.Add(debator);
         }
