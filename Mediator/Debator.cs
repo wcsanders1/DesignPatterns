@@ -1,12 +1,14 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Mediator
 {
-    public abstract class Debator
+    public class Debator
     {
         private readonly IDebateMediator DebateMediator;
         private readonly string Name;
         private readonly List<string> Arguments;
+        private Random rnd = new Random();
 
         public Debator(IDebateMediator debateMediator, string name, List<string> arguments)
         {
@@ -15,11 +17,15 @@ namespace Mediator
             Arguments = arguments;
         }
 
-
-
-        public string MakeArgument(string argument)
+        public string MakeArgument()
         {
-            return $"{Name}: {argument}";
+            var argument = Arguments[rnd.Next(Arguments.Count - 1)];
+            while (!DebateMediator.ArgumentIsSuitable(argument))
+            {
+                argument = Arguments[rnd.Next(Arguments.Count - 1)];
+            }
+
+            return argument;
         }
     }
 }
