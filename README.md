@@ -72,3 +72,7 @@ Enter a mathematical expression and get the correct answer, or get an error mess
 ### Iterator
 
 This is a simple program that allows the user to enter strings onto a custom stack object, which uses the **iterator pattern** to allow `foreach` to be called on the stack. When iterating the stack, the values are popped and written to the console.
+
+### Mediator
+
+Did you come here for a debate? Good, because the debators are ready for you. Enter any argument, and they'll each provide a well-reasoned response. The debate mediator, implemented with the **mediator pattern**, will ensure that each debator takes a turn and provides a unique response.
