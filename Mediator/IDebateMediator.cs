@@ -2,7 +2,7 @@
 {
     public interface IDebateMediator
     {
-        void RegisterDebater(Debator debator);
+        void RegisterDebator(Debator debator);
         bool ArgumentIsSuitable(string argument);
     }
 }

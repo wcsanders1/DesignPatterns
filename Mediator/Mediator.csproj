@@ -13,4 +13,10 @@
     <ProjectReference Include="..\CommonClientLib\CommonClientLib.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Arguments.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>

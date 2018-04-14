@@ -13,7 +13,7 @@ namespace Mediator
             return !UsedArguments.Contains(argument);
         }     
 
-        public void RegisterDebater(Debator debator)
+        public void RegisterDebator(Debator debator)
         {
             Debators.Add(debator);
         }
@@ -24,7 +24,7 @@ namespace Mediator
             {
                 var argument = debator.MakeArgument();
                 UsedArguments.Add(argument);
-                Console.WriteLine($"{debator.Name}: {argument}.");
+                Console.WriteLine($"{debator.Name}: {argument}");
             }
 
             UsedArguments.Clear();
