@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text;
 
 namespace Memento
 {
@@ -17,14 +18,36 @@ namespace Memento
             MinVal = minVal;
             MaxVal = maxVal;
             MineBoard = new MineSpace[Height, Width];
+            CreateMindBoard();
         }
 
         public void PrintMineBoard()
-        {
-            if (MineBoard == null)
+        { 
+            Console.WriteLine();
+            var sb = new StringBuilder();
+
+            for (int i = 0; i < Width; i++)
             {
-                CreateMindBoard();
+                sb.Append(" _");
             }
+
+            var topLine = sb.ToString();
+            var startPosition = (Console.WindowWidth / 2) - (topLine.Length / 2);
+            Console.CursorLeft = startPosition;
+            Console.WriteLine(topLine);
+
+            for (int y = 0; y < Height; y++)
+            {
+                Console.CursorLeft = startPosition;
+                for (int x = 0; x < Width; x++)
+                {
+                    Console.Write("|_");
+                    MineBoard[y, x].YPosition = Console.CursorTop;
+                    MineBoard[y, x].XPosition = Console.CursorLeft;
+                }
+                Console.Write("|\n");
+            }
+            Console.WriteLine();
         }
 
         private void CreateMindBoard()
