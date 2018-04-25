@@ -14,8 +14,9 @@ namespace Memento
 
             while(true)
             {
-                var mine = new Mine(10, 10, 5, 20);
+                var mine = new Mine(15, 7, 5, 20);
                 mine.PrintMineBoard();
+                Console.WriteLine();
 
                 if (!ContinuationDeterminer.GoAgain())
                 {

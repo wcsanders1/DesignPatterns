@@ -22,45 +22,49 @@ namespace Memento
         }
 
         public void PrintMineBoard()
-        { 
-            Console.WriteLine();
-            var sb = new StringBuilder();
-
-            for (int i = 0; i < Width; i++)
-            {
-                sb.Append(" _");
-            }
-
-            var topLine = sb.ToString();
-            var startPosition = (Console.WindowWidth / 2) - (topLine.Length / 2);
-            Console.CursorLeft = startPosition;
-            Console.WriteLine(topLine);
-
+        {
             for (int y = 0; y < Height; y++)
             {
-                Console.CursorLeft = startPosition;
                 for (int x = 0; x < Width; x++)
                 {
-                    Console.Write("|_");
-                    MineBoard[y, x].YPosition = Console.CursorTop;
-                    MineBoard[y, x].XPosition = Console.CursorLeft;
+                    var xPosition = MineBoard[y, x].XPosition;
+                    var yPosition = MineBoard[y, x].YPosition;
+
+                    Console.CursorLeft = xPosition;
+                    Console.CursorTop = yPosition - 1;
+                    Console.WriteLine("___");
+                    Console.CursorLeft = xPosition - 1;
+                    Console.WriteLine("|   |");
+                    Console.CursorLeft = xPosition - 1;
+                    Console.WriteLine("| X |");
+                    Console.CursorLeft = xPosition - 1;
+                    Console.WriteLine("|___|");
                 }
-                Console.Write("|\n");
             }
-            Console.WriteLine();
         }
 
         private void CreateMindBoard()
         {
             var rnd = new Random();
+            var topLine = new string('_', Width * 4);
+            var xStartPosition = (Console.WindowWidth / 2) - (topLine.Length / 2);
+            var yPosition = Console.CursorTop;
 
             for (int y = 0; y < Height; y++)
             {
+                var currentXPosition = xStartPosition;
                 for (int x = 0; x < Width; x++)
                 {
-                    var mineSpace = new MineSpace { ExplosionValue = rnd.Next(MinVal, MaxVal) };
+                    var mineSpace = new MineSpace
+                    {
+                        ExplosionValue = rnd.Next(MinVal, MaxVal),
+                        XPosition = currentXPosition,
+                        YPosition = yPosition
+                    };
                     MineBoard[y, x] = mineSpace;
+                    currentXPosition += 4;
                 }
+                yPosition += 3;
             }
         }
 
