@@ -56,7 +56,53 @@ namespace Memento
 
         public void MoveRight()
         {
-            CurrentPosition[0, 1]++;
+            if (CurrentPosition[0, 1] == Width - 1)
+            {
+                CurrentPosition[0, 1] = 0;
+            }
+            else
+            {
+                CurrentPosition[0, 1]++;
+            }
+            PrintMineBoard();
+        }
+
+        public void MoveLeft()
+        {
+            if (CurrentPosition[0, 1] == 0)
+            {
+                CurrentPosition[0, 1] = Width - 1;
+            }
+            else
+            {
+                CurrentPosition[0, 1]--;
+            }
+            PrintMineBoard();
+        }
+
+        public void MoveDown()
+        {
+            if (CurrentPosition[0, 0] == Height - 1)
+            {
+                CurrentPosition[0, 0] = 0;
+            }
+            else
+            {
+                CurrentPosition[0, 0]++;
+            }
+            PrintMineBoard();
+        }
+
+        public void MoveUp()
+        {
+            if (CurrentPosition[0, 0] == 0)
+            {
+                CurrentPosition[0, 0] = Height - 1;
+            }
+            else
+            {
+                CurrentPosition[0, 0]--;
+            }
             PrintMineBoard();
         }
 

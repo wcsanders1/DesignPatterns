@@ -23,9 +23,22 @@ namespace Memento
                 while (key != ConsoleKey.D0)
                 {
                     key = Console.ReadKey().Key;
-                    if (key == ConsoleKey.RightArrow)
+                    switch (key)
                     {
-                        mine.MoveRight();
+                        case ConsoleKey.RightArrow:
+                            mine.MoveRight();
+                            break;
+                        case ConsoleKey.LeftArrow:
+                            mine.MoveLeft();
+                            break;
+                        case ConsoleKey.DownArrow:
+                            mine.MoveDown();
+                            break;
+                        case ConsoleKey.UpArrow:
+                            mine.MoveUp();
+                            break;
+                        default:
+                            break;
                     }
                 }
 
