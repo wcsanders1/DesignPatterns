@@ -27,8 +27,10 @@ namespace Memento
             {
                 for (int x = 0; x < Width; x++)
                 {
-                    var xPosition = MineBoard[y, x].XPosition;
-                    var yPosition = MineBoard[y, x].YPosition;
+                    var mineSpace = MineBoard[y, x];
+                    var xPosition = mineSpace.XPosition;
+                    var yPosition = mineSpace.YPosition;
+                    
 
                     Console.CursorLeft = xPosition;
                     Console.CursorTop = yPosition - 1;
@@ -36,7 +38,16 @@ namespace Memento
                     Console.CursorLeft = xPosition - 1;
                     Console.WriteLine("|   |");
                     Console.CursorLeft = xPosition - 1;
-                    Console.WriteLine("| X |");
+                    Console.Write("|");
+
+                    if (mineSpace.IsOccupied)
+                    {
+                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                    }
+
+                    Console.Write(" X ");
+                    Console.ResetColor();
+                    Console.WriteLine("|");
                     Console.CursorLeft = xPosition - 1;
                     Console.WriteLine("|___|");
                 }
@@ -59,7 +70,8 @@ namespace Memento
                     {
                         ExplosionValue = rnd.Next(MinVal, MaxVal),
                         XPosition = currentXPosition,
-                        YPosition = yPosition
+                        YPosition = yPosition,
+                        IsOccupied = (y == 0 && x == 0) ? true : false
                     };
                     MineBoard[y, x] = mineSpace;
                     currentXPosition += 4;

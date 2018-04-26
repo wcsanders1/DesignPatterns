@@ -18,6 +18,8 @@ namespace Memento
                 mine.PrintMineBoard();
                 Console.WriteLine();
 
+                
+
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
