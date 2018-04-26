@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 
 namespace Memento
 {
@@ -10,6 +9,7 @@ namespace Memento
         private int MinVal { get; }
         private int MaxVal { get; }
         private MineSpace[,] MineBoard { get; }
+        private int[,] CurrentPosition { get; }
 
         public Mine(int width, int height, int minVal, int maxVal)
         {
@@ -18,6 +18,7 @@ namespace Memento
             MinVal = minVal;
             MaxVal = maxVal;
             MineBoard = new MineSpace[Height, Width];
+            CurrentPosition = new int[,] { { 0, 0 } };
             CreateMindBoard();
         }
 
@@ -31,7 +32,6 @@ namespace Memento
                     var xPosition = mineSpace.XPosition;
                     var yPosition = mineSpace.YPosition;
                     
-
                     Console.CursorLeft = xPosition;
                     Console.CursorTop = yPosition - 1;
                     Console.WriteLine("___");
@@ -40,7 +40,7 @@ namespace Memento
                     Console.CursorLeft = xPosition - 1;
                     Console.Write("|");
 
-                    if (mineSpace.IsOccupied)
+                    if (CurrentPosition[0,0] == y && CurrentPosition[0,1] == x)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                     }
@@ -52,6 +52,12 @@ namespace Memento
                     Console.WriteLine("|___|");
                 }
             }
+        }
+
+        public void MoveRight()
+        {
+            CurrentPosition[0, 1]++;
+            PrintMineBoard();
         }
 
         private void CreateMindBoard()
@@ -70,8 +76,7 @@ namespace Memento
                     {
                         ExplosionValue = rnd.Next(MinVal, MaxVal),
                         XPosition = currentXPosition,
-                        YPosition = yPosition,
-                        IsOccupied = (y == 0 && x == 0) ? true : false
+                        YPosition = yPosition
                     };
                     MineBoard[y, x] = mineSpace;
                     currentXPosition += 4;

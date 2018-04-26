@@ -18,8 +18,18 @@ namespace Memento
                 mine.PrintMineBoard();
                 Console.WriteLine();
 
-                
+                Console.CursorVisible = false;
+                var key = new ConsoleKey();
+                while (key != ConsoleKey.D0)
+                {
+                    key = Console.ReadKey().Key;
+                    if (key == ConsoleKey.RightArrow)
+                    {
+                        mine.MoveRight();
+                    }
+                }
 
+                Console.CursorVisible = true;
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
