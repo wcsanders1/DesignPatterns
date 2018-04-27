@@ -31,7 +31,7 @@ namespace Memento
                     var mineSpace = MineBoard[y, x];
                     var xPosition = mineSpace.XPosition;
                     var yPosition = mineSpace.YPosition;
-                    
+
                     Console.CursorLeft = xPosition;
                     Console.CursorTop = yPosition - 1;
                     Console.WriteLine("___");
@@ -40,7 +40,7 @@ namespace Memento
                     Console.CursorLeft = xPosition - 1;
                     Console.Write("|");
 
-                    if (CurrentPosition[0,0] == y && CurrentPosition[0,1] == x)
+                    if (CurrentPosition[0, 0] == y && CurrentPosition[0, 1] == x)
                     {
                         Console.BackgroundColor = ConsoleColor.DarkGreen;
                     }
@@ -104,6 +104,51 @@ namespace Memento
                 CurrentPosition[0, 0]--;
             }
             PrintMineBoard();
+        }
+
+        public void Blast()
+        {
+            var occupiedMineSpace = GetOccupiedMineSpace();
+            var explosionValue = occupiedMineSpace.ExplosionValue;
+
+        }
+
+        private void ExplodeSpace(MineSpace mineSpace, int explosionValue)
+        {
+
+        }
+
+        private Direction GetRandomDirection()
+        {
+            var rnd = new Random();
+            var direction = rnd.Next(0, Enum.GetNames(typeof(Direction)).Length);
+
+            return (Direction)direction;
+        }
+
+        private MineSpace GetSpaceAbove(MineSpace mineSpace)
+        {
+            return null;
+        }
+
+        private MineSpace GetSpaceBelow(MineSpace mineSpace)
+        {
+            return null;
+        }
+
+        private MineSpace GetSpaceLeft(MineSpace mineSpace)
+        {
+            return null;
+        }
+
+        private MineSpace GetSpaceRight(MineSpace mineSpace)
+        {
+            return null;
+        }
+
+        private MineSpace GetOccupiedMineSpace()
+        {
+            return MineBoard[CurrentPosition[0, 0], CurrentPosition[0, 1]];
         }
 
         private void CreateMindBoard()
