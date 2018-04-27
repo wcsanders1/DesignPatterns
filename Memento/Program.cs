@@ -16,13 +16,14 @@ namespace Memento
             {
                 var mine = new Mine(15, 7, 5, 20);
                 mine.PrintMineBoard();
-                Console.WriteLine();
+                Console.WriteLine("\nUse the arrow keys to move around the mine. Press ESC to quit.");
+                var cursorReturnPosition = Console.CursorTop;
 
                 Console.CursorVisible = false;
                 var key = new ConsoleKey();
-                while (key != ConsoleKey.D0)
+                while (key != ConsoleKey.Escape)
                 {
-                    key = Console.ReadKey().Key;
+                    key = Console.ReadKey(true).Key;
                     switch (key)
                     {
                         case ConsoleKey.RightArrow:
@@ -43,6 +44,7 @@ namespace Memento
                 }
 
                 Console.CursorVisible = true;
+                Console.CursorTop = ++cursorReturnPosition;
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
