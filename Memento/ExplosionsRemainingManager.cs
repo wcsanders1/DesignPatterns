@@ -13,7 +13,9 @@ namespace Memento
         public ExplosionsRemainingManager(int explosionsAmount, int[,] boardTopLeftPosition)
         {
             ExplosionsRemaining = explosionsAmount;
-            Initialize(boardTopLeftPosition);
+            YMessagePosition = boardTopLeftPosition[0, 0] - 2;
+            XMessagePosition = boardTopLeftPosition[0, 1] - 1;
+            PrintMessage();
         }
 
         public void ReduceExplosionsRemaining()
@@ -31,13 +33,6 @@ namespace Memento
         public bool ExplosionsRemain()
         {
             return ExplosionsRemaining > 0;
-        }
-
-        private void Initialize(int[,] boardTopLeftPosition)
-        {
-            YMessagePosition = boardTopLeftPosition[0, 0] - 2;
-            XMessagePosition = boardTopLeftPosition[0, 1] - 1;
-            PrintMessage();
         }
 
         private void PrintMessage()

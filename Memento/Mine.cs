@@ -14,6 +14,7 @@ namespace Memento
         private MineSpace[,] MineBoard { get; }
         private int[,] CurrentPosition { get; }
         private ExplosionsRemainingManager ExplosionsRemainingManager { get; }
+        private WinLoseMessageManager WinLoseMessageManager { get; }
         private GameState GameState { get; set; }
 
         public Mine(int width, int height, int numExplosions)
@@ -26,7 +27,9 @@ namespace Memento
             GameState = GameState.InProgress;
 
             var topLeftPosition = new[,] { { MineBoard[0, 0].YPosition, MineBoard[0, 0].XPosition } };
+            var boardMiddleXPosition = MineBoard[0, Width / 2].XPosition;
             ExplosionsRemainingManager = new ExplosionsRemainingManager(numExplosions, topLeftPosition);
+            WinLoseMessageManager = new WinLoseMessageManager(topLeftPosition[0,0], boardMiddleXPosition);
         }
 
         public void PrintMineBoard()
@@ -169,6 +172,7 @@ namespace Memento
             if (!ExplosionsRemainingManager.ExplosionsRemain())
             {
                 GameState = GameState.Lost;
+                WinLoseMessageManager.PrintMessage(GameState);
             }
         }
 
