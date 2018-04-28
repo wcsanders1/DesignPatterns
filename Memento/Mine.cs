@@ -8,18 +8,25 @@ namespace Memento
     public class Mine
     {
         private const int ExplosionValue = 15;
+
         private int Width { get; }
         private int Height { get; }
         private MineSpace[,] MineBoard { get; }
         private int[,] CurrentPosition { get; }
+        private ExplosionsRemainingManager ExplosionsRemainingManager { get; }
+        private GameState GameState { get; set; }
 
-        public Mine(int width, int height)
+        public Mine(int width, int height, int numExplosions)
         {
             Width = width;
             Height = height;
             MineBoard = new MineSpace[Height, Width];
             CurrentPosition = new [,] {{0,0}};
             CreateMindBoard();
+            GameState = GameState.InProgress;
+
+            var topLeftPosition = new[,] { { MineBoard[0, 0].YPosition, MineBoard[0, 0].XPosition } };
+            ExplosionsRemainingManager = new ExplosionsRemainingManager(numExplosions, topLeftPosition);
         }
 
         public void PrintMineBoard()
@@ -68,6 +75,11 @@ namespace Memento
                     Console.WriteLine("|___|");
                 }
             }
+        }
+
+        public GameState GetGameState()
+        {
+            return GameState;
         }
 
         public void MoveRight()
@@ -133,6 +145,7 @@ namespace Memento
             var explosionValue = ExplosionValue;
             occupiedMineSpace.IsExploded = true;
             explosionValue--;
+            ExplosionsRemainingManager.ReduceExplosionsRemaining();
 
             var possibleExplosionDirections = new List<Direction>();
 
@@ -152,6 +165,11 @@ namespace Memento
             });
 
             PrintMineBoard();
+
+            if (!ExplosionsRemainingManager.ExplosionsRemain())
+            {
+                GameState = GameState.Lost;
+            }
         }
 
         private int[,] GetWinningPosition()
@@ -163,10 +181,9 @@ namespace Memento
             return new[,] { { yPosition, xPosition } };
         }
 
-        private int ExplodeSpace(MineSpace mineSpace, int explosionValue, int numSpacesExploded = 0)
+        private void ExplodeSpace(MineSpace mineSpace, int explosionValue)
         {
             mineSpace.IsExploded = true;
-            numSpacesExploded++;
             explosionValue--;
 
             if (explosionValue > 0)
@@ -176,11 +193,9 @@ namespace Memento
 
                 if (nextSpaceToExplode != null)
                 {
-                    numSpacesExploded += ExplodeSpace(nextSpaceToExplode, explosionValue, numSpacesExploded);
+                    ExplodeSpace(nextSpaceToExplode, explosionValue);
                 }
             }
-
-            return numSpacesExploded;
         }
 
         private Direction GetRandomDirection()
@@ -269,7 +284,7 @@ namespace Memento
         {
             var topLine = new string('_', Width * 4);
             var xStartPosition = (Console.WindowWidth / 2) - (topLine.Length / 2);
-            var yPosition = Console.CursorTop;
+            var yPosition = Console.CursorTop + 1;
             var winningPosition = GetWinningPosition();
 
             for (int y = 0; y < Height; y++)
