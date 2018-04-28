@@ -154,6 +154,15 @@ namespace Memento
             PrintMineBoard();
         }
 
+        private int[,] GetWinningPosition()
+        {
+            var rnd = new Random();
+            var yPosition = rnd.Next(0, Height);
+            var xPosition = rnd.Next(0, Width);
+
+            return new[,] { { yPosition, xPosition } };
+        }
+
         private int ExplodeSpace(MineSpace mineSpace, int explosionValue, int numSpacesExploded = 0)
         {
             mineSpace.IsExploded = true;
@@ -261,6 +270,7 @@ namespace Memento
             var topLine = new string('_', Width * 4);
             var xStartPosition = (Console.WindowWidth / 2) - (topLine.Length / 2);
             var yPosition = Console.CursorTop;
+            var winningPosition = GetWinningPosition();
 
             for (int y = 0; y < Height; y++)
             {
@@ -271,7 +281,8 @@ namespace Memento
                     {
                         XPosition = currentXPosition,
                         YPosition = yPosition,
-                        BoardPosition = new int[,] {{y,x}}
+                        BoardPosition = new int[,] {{y,x}},
+                        HasTreasure = y == winningPosition[0,0] && x == winningPosition[0,1]
                     };
                     MineBoard[y, x] = mineSpace;
                     currentXPosition += 4;
