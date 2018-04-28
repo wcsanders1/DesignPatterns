@@ -66,6 +66,7 @@ namespace Memento
                     {
                         Console.ForegroundColor = ConsoleColor.Green;
                         Console.Write(" $ ");
+                        GameState = GameState.Won;
                     }
                     else
                     {
@@ -77,6 +78,11 @@ namespace Memento
                     Console.CursorLeft = xPosition - 1;
                     Console.WriteLine("|___|");
                 }
+            }
+
+            if (GameState == GameState.Won)
+            {
+                WinLoseMessageManager.PrintMessage(GameState);
             }
         }
 
@@ -169,7 +175,7 @@ namespace Memento
 
             PrintMineBoard();
 
-            if (!ExplosionsRemainingManager.ExplosionsRemain())
+            if (!ExplosionsRemainingManager.ExplosionsRemain() && GameState != GameState.Won)
             {
                 GameState = GameState.Lost;
                 WinLoseMessageManager.PrintMessage(GameState);
