@@ -14,9 +14,9 @@ namespace Memento
 
             while(true)
             {
-                var mine = new Mine(15, 7, 5, 20);
+                var mine = new Mine(20, 7);
                 mine.PrintMineBoard();
-                Console.WriteLine("\nUse the arrow keys to move around the mine. Press ESC to quit.");
+                Console.WriteLine("\nUse the arrow keys to move around the mine. Press Space to explode a space. Press ESC to quit.");
                 var cursorReturnPosition = Console.CursorTop;
 
                 Console.CursorVisible = false;
@@ -37,6 +37,9 @@ namespace Memento
                             break;
                         case ConsoleKey.UpArrow:
                             mine.MoveUp();
+                            break;
+                        case ConsoleKey.Spacebar:
+                            mine.Blast();
                             break;
                         default:
                             break;

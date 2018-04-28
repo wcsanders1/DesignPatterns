@@ -1,24 +1,24 @@
 ﻿using System;
+using System.Text;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Memento
 {
     public class Mine
     {
+        private const int ExplosionValue = 15;
         private int Width { get; }
         private int Height { get; }
-        private int MinVal { get; }
-        private int MaxVal { get; }
         private MineSpace[,] MineBoard { get; }
         private int[,] CurrentPosition { get; }
 
-        public Mine(int width, int height, int minVal, int maxVal)
+        public Mine(int width, int height)
         {
             Width = width;
             Height = height;
-            MinVal = minVal;
-            MaxVal = maxVal;
             MineBoard = new MineSpace[Height, Width];
-            CurrentPosition = new int[,] { { 0, 0 } };
+            CurrentPosition = new [,] {{0,0}};
             CreateMindBoard();
         }
 
@@ -42,10 +42,26 @@ namespace Memento
 
                     if (CurrentPosition[0, 0] == y && CurrentPosition[0, 1] == x)
                     {
-                        Console.BackgroundColor = ConsoleColor.DarkGreen;
+                        Console.BackgroundColor = ConsoleColor.Blue;
                     }
 
-                    Console.Write(" X ");
+                    if (mineSpace.IsExploded && !mineSpace.HasTreasure)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Red;
+                        Console.OutputEncoding = Encoding.UTF8;
+                        Console.Write(" \u263A ");
+                        Console.OutputEncoding = Encoding.ASCII;
+                    }
+                    else if (mineSpace.IsExploded && mineSpace.HasTreasure)
+                    {
+                        Console.ForegroundColor = ConsoleColor.Green;
+                        Console.Write(" $ ");
+                    }
+                    else
+                    {
+                        Console.Write(" X ");
+                    }
+
                     Console.ResetColor();
                     Console.WriteLine("|");
                     Console.CursorLeft = xPosition - 1;
@@ -109,13 +125,53 @@ namespace Memento
         public void Blast()
         {
             var occupiedMineSpace = GetOccupiedMineSpace();
-            var explosionValue = occupiedMineSpace.ExplosionValue;
+            if (occupiedMineSpace.IsExploded)
+            {
+                return;
+            }
 
+            var explosionValue = ExplosionValue;
+            occupiedMineSpace.IsExploded = true;
+            explosionValue--;
+
+            var possibleExplosionDirections = new List<Direction>();
+
+            Enum.GetValues(typeof(Direction)).Cast<Direction>().ToList().ForEach(direction =>
+            {
+                if (GetAdjacentSpace(occupiedMineSpace, direction) != null)
+                {
+                    possibleExplosionDirections.Add(direction);
+                }
+            });
+
+            var apportionedExplosionValue = explosionValue / possibleExplosionDirections.Count;
+            possibleExplosionDirections.ForEach(direction =>
+            {
+                var spaceToExplode = GetAdjacentSpace(occupiedMineSpace, direction);
+                ExplodeSpace(spaceToExplode, apportionedExplosionValue);
+            });
+
+            PrintMineBoard();
         }
 
-        private void ExplodeSpace(MineSpace mineSpace, int explosionValue)
+        private int ExplodeSpace(MineSpace mineSpace, int explosionValue, int numSpacesExploded = 0)
         {
+            mineSpace.IsExploded = true;
+            numSpacesExploded++;
+            explosionValue--;
 
+            if (explosionValue > 0)
+            {
+                var nextDirectionToExplode = GetRandomDirection();
+                var nextSpaceToExplode = GetAdjacentSpace(mineSpace, nextDirectionToExplode);
+
+                if (nextSpaceToExplode != null)
+                {
+                    numSpacesExploded += ExplodeSpace(nextSpaceToExplode, explosionValue, numSpacesExploded);
+                }
+            }
+
+            return numSpacesExploded;
         }
 
         private Direction GetRandomDirection()
@@ -126,24 +182,73 @@ namespace Memento
             return (Direction)direction;
         }
 
+        private MineSpace GetAdjacentSpace(MineSpace mineSpace, Direction direction)
+        {
+            switch(direction)
+            {
+                case Direction.Above:
+                    return GetSpaceAbove(mineSpace);
+                case Direction.Below:
+                    return GetSpaceBelow(mineSpace);
+                case Direction.Left:
+                    return GetSpaceLeft(mineSpace);
+                case Direction.Right:
+                    return GetSpaceRight(mineSpace);
+                default:
+                    return null;
+            }
+        }
+
         private MineSpace GetSpaceAbove(MineSpace mineSpace)
         {
-            return null;
+            var yPosition = mineSpace.BoardPosition[0, 0];
+            if (yPosition < 1)
+            {
+                return null;
+            }
+
+            var xPosition = mineSpace.BoardPosition[0, 1];
+
+            return MineBoard[--yPosition, xPosition];
         }
 
         private MineSpace GetSpaceBelow(MineSpace mineSpace)
         {
-            return null;
+            var yPosition = mineSpace.BoardPosition[0, 0];
+            if (yPosition >= Height - 1)
+            {
+                return null;
+            }
+
+            var xPosition = mineSpace.BoardPosition[0, 1];
+
+            return MineBoard[++yPosition, xPosition];
         }
 
         private MineSpace GetSpaceLeft(MineSpace mineSpace)
         {
-            return null;
+            var xPosition = mineSpace.BoardPosition[0, 1];
+            if (xPosition < 1)
+            {
+                return null;
+            }
+
+            var yPosition = mineSpace.BoardPosition[0, 0];
+
+            return MineBoard[yPosition, --xPosition];
         }
 
         private MineSpace GetSpaceRight(MineSpace mineSpace)
         {
-            return null;
+            var xPosition = mineSpace.BoardPosition[0, 1];
+            if (xPosition >= Width - 1)
+            {
+                return null;
+            }
+
+            var yPosition = mineSpace.BoardPosition[0, 0];
+
+            return MineBoard[yPosition, ++xPosition];
         }
 
         private MineSpace GetOccupiedMineSpace()
@@ -153,7 +258,6 @@ namespace Memento
 
         private void CreateMindBoard()
         {
-            var rnd = new Random();
             var topLine = new string('_', Width * 4);
             var xStartPosition = (Console.WindowWidth / 2) - (topLine.Length / 2);
             var yPosition = Console.CursorTop;
@@ -165,9 +269,9 @@ namespace Memento
                 {
                     var mineSpace = new MineSpace
                     {
-                        ExplosionValue = rnd.Next(MinVal, MaxVal),
                         XPosition = currentXPosition,
-                        YPosition = yPosition
+                        YPosition = yPosition,
+                        BoardPosition = new int[,] {{y,x}}
                     };
                     MineBoard[y, x] = mineSpace;
                     currentXPosition += 4;
