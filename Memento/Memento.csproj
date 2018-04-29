@@ -6,17 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\CommonClientLib\CommonClientLib.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="PersonalInformation\ConfigurableQuestionsAndAnswers.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
