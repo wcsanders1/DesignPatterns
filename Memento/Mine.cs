@@ -24,6 +24,7 @@ namespace Memento
             Height = height;
             MineBoard = new MineSpace[Height, Width];
             CurrentPosition = new [,] {{0,0}};  // Start at the top left of the board, just because that seems natural I guess.
+            States = new Stack<IMineMemento>();
             CreateMindBoard();
             GameState = GameState.InProgress;
 
@@ -31,7 +32,6 @@ namespace Memento
             var boardMiddleXPosition = MineBoard[0, Width / 2].XPosition;
             ExplosionsRemainingManager = new ExplosionsRemainingManager(numExplosions, topLeftPosition);
             WinLoseMessageManager = new WinLoseMessageManager(topLeftPosition[0,0], boardMiddleXPosition);
-            States = new Stack<IMineMemento>();
         }
 
         public void PrintMineBoard()
@@ -330,6 +330,8 @@ namespace Memento
                 }
                 yPosition += 3;
             }
+
+            StoreState();
         }
 
         public IMineMemento CreateMemento()
@@ -344,7 +346,7 @@ namespace Memento
 
         public void SetMemento(IMineMemento mineMemento)
         {
-            MineBoard = (MineSpace[,])mineMemento.State;
+            MineBoard = ((MineSpace[,])mineMemento.State).Copy();
             PrintMineBoard();
         }
 
