@@ -7,7 +7,7 @@ namespace Memento
     {
         private static TextPrinter TxtPrinter = new TextPrinter();
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
-        private const int NumberOfExplositionsAllowed = 10;
+        private const int NumberOfExplositionsAllowed = 8;
         private const int NumberOfUndosAllowed = 5;
         private const int MineWidth = 20;
         private const int MineHeight = 7;
