@@ -15,10 +15,11 @@ namespace Memento
         private int[,] CurrentPosition { get; }
         private ExplosionsRemainingManager ExplosionsRemainingManager { get; }
         private WinLoseMessageManager WinLoseMessageManager { get; }
+        private UndosRemainingManager UndosRemainingManager { get; }
         private GameState GameState { get; set; }
         private Stack<IMineMemento> States { get; }
 
-        public Mine(int width, int height, int numExplosions)
+        public Mine(int width, int height, int numExplosions, int numUndos)
         {
             Width = width;
             Height = height;
@@ -29,9 +30,13 @@ namespace Memento
             GameState = GameState.InProgress;
 
             var topLeftPosition = new[,] { { MineBoard[0, 0].YPosition, MineBoard[0, 0].XPosition } };
-            var boardMiddleXPosition = MineBoard[0, Width / 2].XPosition;
             ExplosionsRemainingManager = new ExplosionsRemainingManager(numExplosions, topLeftPosition);
+
+            var boardMiddleXPosition = MineBoard[0, Width / 2].XPosition;
             WinLoseMessageManager = new WinLoseMessageManager(topLeftPosition[0,0], boardMiddleXPosition);
+
+            var topRightPosision = new[,] { { MineBoard[0, 0].YPosition, MineBoard[0, Width - 1].XPosition } };
+            UndosRemainingManager = new UndosRemainingManager(numUndos, topRightPosision);
         }
 
         public void PrintMineBoard()
@@ -188,7 +193,7 @@ namespace Memento
 
         public void UndoBlast()
         {
-            if (States.Count < 2)
+            if (States.Count < 2 || !UndosRemainingManager.UndosRemain())
             {
                 return;
             }
@@ -196,6 +201,7 @@ namespace Memento
             States.Pop();
             var lastState = States.Peek();
             SetMemento(lastState);
+            UndosRemainingManager.RedudeUndosRemaining();
         }
 
         private int[,] GetWinningPosition()
