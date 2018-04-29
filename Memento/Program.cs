@@ -45,10 +45,10 @@ namespace Memento
                             mine.MoveUp();
                             break;
                         case ConsoleKey.Spacebar:
-                            mine.Blast();
+                            mine.Explode();
                             break;
                         case ConsoleKey.U:
-                            mine.UndoBlast();
+                            mine.UndoExplode();
                             break;
                         default:
                             break;

@@ -18,7 +18,7 @@ namespace Memento.Managers
             PrintMessage();
         }
 
-        public void RedudeUndosRemaining()
+        public void ReduceUndosRemaining()
         {
             UndosRemaining--;
             PrintMessage();

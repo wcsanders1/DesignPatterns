@@ -151,7 +151,7 @@ namespace Memento
             PrintMineBoard();
         }
 
-        public void Blast()
+        public void Explode()
         {
             var occupiedMineSpace = GetOccupiedMineSpace();
             if (occupiedMineSpace.IsExploded)
@@ -192,7 +192,7 @@ namespace Memento
             StoreState();
         }
 
-        public void UndoBlast()
+        public void UndoExplode()
         {
             if (States.Count < 2 || !UndosRemainingManager.UndosRemain())
             {
@@ -202,7 +202,8 @@ namespace Memento
             States.Pop();
             var lastState = States.Peek();
             SetMemento(lastState);
-            UndosRemainingManager.RedudeUndosRemaining();
+            UndosRemainingManager.ReduceUndosRemaining();
+            ExplosionsRemainingManager.IncreaseExplosionsRemaining();
         }
 
         private int[,] GetWinningPosition()
