@@ -11,18 +11,19 @@ namespace Memento
 
         private int Width { get; }
         private int Height { get; }
-        private MineSpace[,] MineBoard { get; }
+        private MineSpace[,] MineBoard { get; set; }
         private int[,] CurrentPosition { get; }
         private ExplosionsRemainingManager ExplosionsRemainingManager { get; }
         private WinLoseMessageManager WinLoseMessageManager { get; }
         private GameState GameState { get; set; }
+        private Stack<IMineMemento> States { get; }
 
         public Mine(int width, int height, int numExplosions)
         {
             Width = width;
             Height = height;
             MineBoard = new MineSpace[Height, Width];
-            CurrentPosition = new [,] {{0,0}};
+            CurrentPosition = new [,] {{0,0}};  // Start at the top left of the board, just because that seems natural I guess.
             CreateMindBoard();
             GameState = GameState.InProgress;
 
@@ -30,6 +31,7 @@ namespace Memento
             var boardMiddleXPosition = MineBoard[0, Width / 2].XPosition;
             ExplosionsRemainingManager = new ExplosionsRemainingManager(numExplosions, topLeftPosition);
             WinLoseMessageManager = new WinLoseMessageManager(topLeftPosition[0,0], boardMiddleXPosition);
+            States = new Stack<IMineMemento>();
         }
 
         public void PrintMineBoard()
@@ -180,6 +182,20 @@ namespace Memento
                 GameState = GameState.Lost;
                 WinLoseMessageManager.PrintMessage(GameState);
             }
+
+            StoreState();
+        }
+
+        public void UndoBlast()
+        {
+            if (States.Count < 2)
+            {
+                return;
+            }
+
+            States.Pop();
+            var lastState = States.Peek();
+            SetMemento(lastState);
         }
 
         private int[,] GetWinningPosition()
@@ -318,12 +334,24 @@ namespace Memento
 
         public IMineMemento CreateMemento()
         {
-            var copy = MineBoard.Clone();
+            var copy = MineBoard.Copy();
 
             return new MineMemento
             {
                 State = copy
             };
+        }
+
+        public void SetMemento(IMineMemento mineMemento)
+        {
+            MineBoard = (MineSpace[,])mineMemento.State;
+            PrintMineBoard();
+        }
+
+        public void StoreState()
+        {
+            var memento = CreateMemento();
+            States.Push(memento);
         }
 
         public class MineMemento : IMineMemento

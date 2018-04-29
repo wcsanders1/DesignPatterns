@@ -44,6 +44,9 @@ namespace Memento
                         case ConsoleKey.Spacebar:
                             mine.Blast();
                             break;
+                        case ConsoleKey.U:
+                            mine.UndoBlast();
+                            break;
                         default:
                             break;
                     }
