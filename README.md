@@ -76,3 +76,7 @@ This is a simple program that allows the user to enter strings onto a custom sta
 ### Mediator
 
 Did you come here for a debate? Good, because the debators are ready for you. Enter any argument, and they'll each provide a well-reasoned response. The debate mediator, implemented with the **mediator pattern**, will ensure that each debator takes a turn and provides a unique response.
+
+### Memento
+
+There is a treasure somewhere in the mine. Move through the mine and blast spaces in it to find the treasure. You only have a few chances! However, undo functionality implemented using the **memento pattern** allows you to undo a certain number of unsuccessful blasts.

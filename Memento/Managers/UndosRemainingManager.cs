@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Memento
+namespace Memento.Managers
 {
     public class UndosRemainingManager
     {
@@ -18,7 +18,7 @@ namespace Memento
             PrintMessage();
         }
 
-        public void RedudeUndosRemaining()
+        public void ReduceUndosRemaining()
         {
             UndosRemaining--;
             PrintMessage();
