@@ -326,14 +326,13 @@ namespace Memento
                 var currentXPosition = xStartPosition;
                 for (int x = 0; x < Width; x++)
                 {
-                    var mineSpace = new MineSpace
+                    MineBoard[y, x] = new MineSpace
                     {
                         XPosition = currentXPosition,
                         YPosition = yPosition,
                         BoardPosition = new int[,] {{y,x}},
                         HasTreasure = y == winningPosition[0,0] && x == winningPosition[0,1]
                     };
-                    MineBoard[y, x] = mineSpace;
                     currentXPosition += 4;
                 }
                 yPosition += 3;
