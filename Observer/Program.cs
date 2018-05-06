@@ -116,7 +116,7 @@ namespace Observer
 
         private static void AddSubscriber(NewsPublisher newsPublisher, List<Response> responses)
         {
-            var name = Asker.GetValue<string>("What is the name of the new subscriber?");
+            var name = Asker.GetValue<string>("\nWhat is the name of the new subscriber?");
             var subscriber = new Person(name, responses);
             NewsSubscribers.Add(subscriber);
             subscriber.Subscribe(newsPublisher);
@@ -126,12 +126,12 @@ namespace Observer
         {
             if (!NewsSubscribers.Any())
             {
-                Console.WriteLine("There are no news subscribers to remove.");
+                Console.WriteLine("\nThere are no news subscribers to remove.\n");
 
                 return;
             }
 
-            var subscriber = NewsSubscribers[Asker.GetChoiceFromList("Which subscriber do you want to remove?", 
+            var subscriber = NewsSubscribers[Asker.GetChoiceFromList("\nWhich subscriber do you want to remove?", 
                 NewsSubscribers.Select(n => n.Name).ToList())];
 
             NewsSubscribers.Remove(subscriber);
@@ -143,9 +143,12 @@ namespace Observer
             var newsType = (NewsType)Asker.GetChoiceFromList("What kind of news do you want to publish?", 
                 Enum.GetValues(typeof(NewsType)).Cast<NewsType>().Select(n => n.ToString()).ToList());
 
-            var chosenNews = news[Asker.GetChoiceFromList($"What {newsType.ToString().ToLower()} do you want to publish?",
-                news.Where(n => n.NewsType == newsType).Select(n => n.NewsItem).ToList())];
+            var newsChoices = news.Where(n => n.NewsType == newsType).ToList();
 
+            var chosenNews = newsChoices[Asker.GetChoiceFromList($"What {newsType.ToString().ToLower()} news do you want to publish?",
+                newsChoices.Select(n => n.NewsItem).ToList())];
+
+            Console.WriteLine();
             newsPublisher.PublishNews(chosenNews);
         }
     }
