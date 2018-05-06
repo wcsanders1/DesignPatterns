@@ -28,9 +28,12 @@ namespace Observer
             throw new NotImplementedException();
         }
 
-        public void OnNext(News value)
+        public void OnNext(News news)
         {
-            throw new NotImplementedException();
+            Console.WriteLine($"{Name}'s response to '{news.NewsItem}':\n");
+            Console.ForegroundColor = ConsoleColor.DarkRed;
+            Console.WriteLine("Hi!");
+            Console.ResetColor();
         }
 
         public void Unsubscribe()

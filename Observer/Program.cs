@@ -104,7 +104,7 @@ namespace Observer
                         RemoveSubscriber();
                         break;
                     case 2:
-                        PublishNewsItem();
+                        PublishNewsItem(news, newsPublisher);
                         break;
                     case 3:
                         Environment.Exit(0);
@@ -139,9 +139,15 @@ namespace Observer
             subscriber.Unsubscribe();
         }
 
-        private static void PublishNewsItem()
+        private static void PublishNewsItem(List<News> news, NewsPublisher newsPublisher)
         {
+            var newsType = (NewsType)Asker.GetChoiceFromList("What kind of news do you want to publish?", 
+                Enum.GetValues(typeof(NewsType)).Cast<NewsType>().Select(n => n.ToString()).ToList());
 
+            var chosenNews = news[Asker.GetChoiceFromList($"What {newsType.ToString().ToLower()} do you want to publish?",
+                news.Where(n => n.NewsType == newsType).Select(n => n.NewsItem).ToList())];
+
+            newsPublisher.PublishNews(chosenNews);
         }
     }
 }

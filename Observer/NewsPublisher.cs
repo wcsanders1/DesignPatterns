@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Observer
 {
@@ -20,6 +21,21 @@ namespace Observer
             }
 
             return new Unsubscriber<News>(Observers, observer);
+        }
+
+        public void PublishNews(News news)
+        {
+            if (!Observers.Any())
+            {
+                Console.WriteLine("There are no subscribers to the news.");
+
+                return;
+            }
+
+            foreach (var observer in Observers)
+            {
+                observer.OnNext(news);
+            }
         }
     }
 }
