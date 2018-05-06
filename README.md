@@ -85,4 +85,4 @@ There is a treasure somewhere in the mine. Move through the mine and blast space
 
 ### Observer
 
-Choose subscribers and publish news to them. The subscribers' responses to the news will in part be determined by whether the news is good or bad. The **observer pattern** allows for news publication to any number of subscribers, and provides the option of unsubscribing any particular subscriber.
+Choose subscribers and publish news to them. The subscribers' responses to the news will in part be determined by whether the news is good or bad. The **observer pattern** allows for news publication to any number of subscribers, and makes it easy to unsubscribe any particular subscriber.
