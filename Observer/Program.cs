@@ -39,10 +39,10 @@ namespace Observer
                         switch (obj.Key)
                         {
                             case "good":
-                                news.AddRange(((JArray)obj.Value).Select(n => n.ToNews(NewsType.Good)));
+                                news.AddRange(obj.Value.Select(n => n.ToNews(NewsType.Good)));
                                 break;
                             case "bad":
-                                news.AddRange(((JArray)obj.Value).Select(n => n.ToNews(NewsType.Bad)));
+                                news.AddRange(obj.Value.Select(n => n.ToNews(NewsType.Bad)));
                                 break;
                             default:
                                 break;
@@ -58,8 +58,7 @@ namespace Observer
                 Environment.Exit(1);
             }
 
-            var responsesGoodNews = new List<string>();
-            var responsesBadNews = new List<string>();
+            var responses = new List<Response>();
             try
             {
                 using (var reader = new StreamReader(ResponsesPath))
@@ -71,10 +70,10 @@ namespace Observer
                         switch (obj.Key)
                         {
                             case "good":
-                                responsesGoodNews.AddRange(((JArray)obj.Value).Select(r => r.ToString()));
+                                responses.AddRange(obj.Value.Select(r => r.ToResponse(NewsType.Good)));
                                 break;
                             case "bad":
-                                responsesBadNews.AddRange(((JArray)obj.Value).Select(r => r.ToString()));
+                                responses.AddRange(obj.Value.Select(r => r.ToResponse(NewsType.Bad)));
                                 break;
                             default:
                                 break;
@@ -98,7 +97,7 @@ namespace Observer
                 switch (choice)
                 {
                     case 0:
-                        AddSubscriber(newsPublisher);
+                        AddSubscriber(newsPublisher, responses);
                         break;
                     case 1:
                         RemoveSubscriber();
@@ -115,10 +114,10 @@ namespace Observer
             }
         }
 
-        private static void AddSubscriber(NewsPublisher newsPublisher)
+        private static void AddSubscriber(NewsPublisher newsPublisher, List<Response> responses)
         {
             var name = Asker.GetValue<string>("What is the name of the new subscriber?");
-            var subscriber = new Person(name);
+            var subscriber = new Person(name, responses);
             NewsSubscribers.Add(subscriber);
             subscriber.Subscribe(newsPublisher);
         }

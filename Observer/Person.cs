@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Observer
 {
@@ -6,11 +7,13 @@ namespace Observer
     {
         public string Name { get; set; }
 
+        private List<Response> Responses { get; }
         private IDisposable Cancellation;
 
-        public Person(string name)
+        public Person(string name, List<Response> responses)
         {
             Name = name;
+            Responses = responses;
         }
 
         public void Subscribe(NewsPublisher provider)
