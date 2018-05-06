@@ -12,6 +12,7 @@ namespace Observer
     {
         private static TextPrinter TxtPrinter = new TextPrinter();
         private static string NewsItemsPath = "NewsItems.json";
+        private static string ResponsesPath = "Responses.json";
         private static QuestionAsker Asker = new QuestionAsker();
         private static List<Person> NewsSubscribers = new List<Person>();
         private static readonly List<string> Choices = new List<string>
@@ -52,6 +53,39 @@ namespace Observer
             catch (Exception ex)
             {
                 Console.WriteLine($"Unable to load news items from {NewsItemsPath}. Exception: {ex.Message}\n " +
+                    $"Press any key to exit.");
+                Console.ReadKey();
+                Environment.Exit(1);
+            }
+
+            var responsesGoodNews = new List<string>();
+            var responsesBadNews = new List<string>();
+            try
+            {
+                using (var reader = new StreamReader(ResponsesPath))
+                {
+                    var json = reader.ReadToEnd();
+                    var jObject = JObject.Parse(json);
+                    foreach (var obj in jObject)
+                    {
+                        switch (obj.Key)
+                        {
+                            case "good":
+                                responsesGoodNews.AddRange(((JArray)obj.Value).Select(r => r.ToString()));
+                                break;
+                            case "bad":
+                                responsesBadNews.AddRange(((JArray)obj.Value).Select(r => r.ToString()));
+                                break;
+                            default:
+                                break;
+                        }
+                        
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Unable to load responses from {ResponsesPath}. Exception: {ex.Message}\n " +
                     $"Press any key to exit.");
                 Console.ReadKey();
                 Environment.Exit(1);
