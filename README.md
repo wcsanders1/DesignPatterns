@@ -82,3 +82,7 @@ Did you come here for a debate? Good, because the debators are ready for you. En
 There is a treasure somewhere in the mine. Move through the mine and blast spaces in it to find the treasure. You only have a few chances! However, undo functionality implemented using the **memento pattern** allows you to undo a certain number of unsuccessful blasts.
 
 ![Memento gif](/../screenshots/Memento_GIF_1.gif)
+
+### Observer
+
+Choose subscribers and publish news to them. The subscribers' responses to the news will in part be determined by whether the news is good or bad. The **observer pattern** allows for news publication to any number of subscribers, and provides the option of unsubscribing any particular subscriber.
