@@ -19,7 +19,7 @@ namespace Observer
                 Observers.Add(observer);
             }
 
-            return new Unsubscriber<News>();
+            return new Unsubscriber<News>(Observers, observer);
         }
     }
 }
