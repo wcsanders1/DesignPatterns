@@ -32,5 +32,10 @@ namespace Observer
         {
             throw new NotImplementedException();
         }
+
+        public void Unsubscribe()
+        {
+            Cancellation.Dispose();
+        }
     }
 }

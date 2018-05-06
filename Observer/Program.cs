@@ -11,8 +11,16 @@ namespace Observer
     class Program
     {
         private static TextPrinter TxtPrinter = new TextPrinter();
-        private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private static string NewsItemsPath = "NewsItems.json";
+        private static QuestionAsker Asker = new QuestionAsker();
+        private static List<Person> NewsSubscribers = new List<Person>();
+        private static readonly List<string> Choices = new List<string>
+        {
+            "Add news subscriber",
+            "Remove news subscriber",
+            "Publish news item",
+            "End this"
+        };
 
         static void Main(string[] args)
         {
@@ -43,17 +51,63 @@ namespace Observer
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Unable to load news items from {NewsItemsPath}. Exception: {ex.Message}");
+                Console.WriteLine($"Unable to load news items from {NewsItemsPath}. Exception: {ex.Message}\n " +
+                    $"Press any key to exit.");
+                Console.ReadKey();
                 Environment.Exit(1);
             }
 
+            var newsPublisher = new NewsPublisher();
             while (true)
             {
-                if (!ContinuationDeterminer.GoAgain())
+                var choice = Asker.GetChoiceFromList("What do you want to do?", Choices);
+                switch (choice)
                 {
-                    Environment.Exit(0);
+                    case 0:
+                        AddSubscriber(newsPublisher);
+                        break;
+                    case 1:
+                        RemoveSubscriber();
+                        break;
+                    case 2:
+                        PublishNewsItem();
+                        break;
+                    case 3:
+                        Environment.Exit(0);
+                        break;
+                    default:
+                        break;
                 }
             }
+        }
+
+        private static void AddSubscriber(NewsPublisher newsPublisher)
+        {
+            var name = Asker.GetValue<string>("What is the name of the new subscriber?");
+            var subscriber = new Person(name);
+            NewsSubscribers.Add(subscriber);
+            subscriber.Subscribe(newsPublisher);
+        }
+
+        private static void RemoveSubscriber()
+        {
+            if (!NewsSubscribers.Any())
+            {
+                Console.WriteLine("There are no news subscribers to remove.");
+
+                return;
+            }
+
+            var subscriber = NewsSubscribers[Asker.GetChoiceFromList("Which subscriber do you want to remove?", 
+                NewsSubscribers.Select(n => n.Name).ToList())];
+
+            NewsSubscribers.Remove(subscriber);
+            subscriber.Unsubscribe();
+        }
+
+        private static void PublishNewsItem()
+        {
+
         }
     }
 }
