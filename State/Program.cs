@@ -14,6 +14,8 @@ namespace State
 
             while (true)
             {
+                var mathGame = new MathGame();
+                mathGame.PlayGame();
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
