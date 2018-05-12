@@ -23,5 +23,10 @@ namespace State
                 keepPlaying = ContinuationDeterminer.GoAgain("Do you want another question?");
             }
         }
+
+        public void ChangeState(GameState newState)
+        {
+            GameState = newState;
+        }
     }
 }

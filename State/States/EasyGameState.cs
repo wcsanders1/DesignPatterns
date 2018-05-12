@@ -5,6 +5,7 @@ namespace State.States
     public class EasyGameState : GameState
     {
         private const int NumberLimit = 100;
+        private const int EasyModeLimit = 5;
         private static Random Random = new Random();
 
         public EasyGameState(GameState gameState) :
@@ -20,6 +21,11 @@ namespace State.States
 
         public override void AskQuestion()
         {
+            Console.Write("You're in the ");
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.Write("easy");
+            Console.ResetColor();
+            Console.WriteLine($" mode. Answer {EasyModeLimit - QuestionsCorrect} more questions correctly to get to the next level.");
             var (question, answer) = GetQuestionAndCorrectAnswer();
             var answerGiven = GetAnswer(question);
 
@@ -33,6 +39,7 @@ namespace State.States
                 Console.WriteLine($"Nope. The right answer is {answer}");
             }
             QuestionsAttempted++;
+            StateChangeCheck();
         }
 
         private (string, int) GetQuestionAndCorrectAnswer()
@@ -69,6 +76,14 @@ namespace State.States
             var operation = Random.Next(0, 2);
 
             return (Operation)operation;
+        }
+
+        private void StateChangeCheck()
+        {
+            if (QuestionsCorrect >= 5)
+            {
+                MathGame.ChangeState(new ModerateGameState(this));
+            }
         }
     }
 }

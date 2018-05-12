@@ -16,6 +16,7 @@ namespace State
             {
                 var mathGame = new MathGame();
                 mathGame.PlayGame();
+
                 if (!ContinuationDeterminer.GoAgain())
                 {
                     Environment.Exit(0);
