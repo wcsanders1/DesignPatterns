@@ -86,3 +86,7 @@ There is a treasure somewhere in the mine. Move through the mine and blast space
 ### Observer
 
 Choose subscribers and publish news to them. The subscribers' responses to the news will in part be determined by whether the news is good or bad. The **observer pattern** allows for news publication to any number of subscribers, and makes it easy to unsubscribe any particular subscriber.
+
+### State
+
+This math game starts off fairly easy, but the questions get more difficult as you answer more of them correctly. The **state pattern** is implemented to allow for easy transition from one level of difficulty to another. 
