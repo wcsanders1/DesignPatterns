@@ -2,17 +2,18 @@
 
 namespace State.States
 {
-    public class EasyGameState : GameState
+    public class HardGameState : GameState
     {
-        private const int NumberLimit = 100;
-        private const int EasyModeLimit = 5;
+        private const int NumberMax = 10000;
+        private const int NumberMin = 1001;
+        private const int HardModeLimit = int.MaxValue;
         private static Random Random = new Random();
 
-        public EasyGameState(GameState gameState) :
+        public HardGameState(GameState gameState) :
             this(gameState.QuestionsAttempted, gameState.QuestionsCorrect, gameState.MathGame)
         { }
 
-        public EasyGameState(int questionsAttempted, int questionsCorrect, MathGame mathGame)
+        public HardGameState(int questionsAttempted, int questionsCorrect, MathGame mathGame)
         {
             QuestionsAttempted = questionsAttempted;
             QuestionsCorrect = questionsCorrect;
@@ -21,14 +22,13 @@ namespace State.States
 
         public override void AskQuestion()
         {
-            var questionsTillNextLevel = EasyModeLimit - QuestionsCorrect;
-            Console.Write("\nYou're in the ");
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write("easy");
+            var questionsTillNextLevel = HardModeLimit - QuestionsCorrect;
+            Console.Write("You're in the ");
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.Write("hard");
             Console.ResetColor();
             Console.WriteLine($" mode. Answer {questionsTillNextLevel} " +
-                $"{(QuestionsCorrect == 0 ? string.Empty : "more ")}{(questionsTillNextLevel > 1 ? "questions " : "question ")}" +
-                $"correctly to get to the next level.\n");
+                $"more {(questionsTillNextLevel > 1 ? "questions " : "question ")}correctly to get back to the easy level.");
 
             var (question, answer) = GetQuestionAndCorrectAnswer();
             var answerGiven = GetAnswer(question);
@@ -47,16 +47,28 @@ namespace State.States
             switch (operation)
             {
                 case Operation.Add:
-                    digitOne = Random.Next(1, NumberLimit);
-                    digitTwo = Random.Next(1, NumberLimit);
+                    digitOne = Random.Next(NumberMin, NumberMax);
+                    digitTwo = Random.Next(NumberMin, NumberMax);
                     answer = Add(digitOne, digitTwo);
                     opSign = "+";
                     break;
                 case Operation.Subtract:
-                    digitOne = Random.Next(NumberLimit / 2, NumberLimit);
-                    digitTwo = Random.Next(1, NumberLimit / 2);
+                    digitOne = Random.Next(NumberMax / 2, NumberMax);
+                    digitTwo = Random.Next(NumberMin, NumberMax / 2);
                     answer = Subtract(digitOne, digitTwo);
                     opSign = "-";
+                    break;
+                case Operation.Divide:
+                    digitOne = Random.Next(NumberMax / 2, NumberMax);
+                    digitTwo = Random.Next(NumberMin, NumberMax / 2);
+                    answer = Divide(digitOne, digitTwo);
+                    opSign = "/";
+                    break;
+                case Operation.Multiply:
+                    digitOne = Random.Next(NumberMin, NumberMax);
+                    digitTwo = Random.Next(NumberMin, NumberMax);
+                    answer = Multiply(digitOne, digitTwo);
+                    opSign = "*";
                     break;
                 default:
                     opSign = string.Empty;
@@ -68,16 +80,16 @@ namespace State.States
 
         private Operation GetRandomOperation()
         {
-            var operation = Random.Next(0, Enum.GetNames(typeof(Operation)).Length / 2);
+            var operation = Random.Next(0, Enum.GetNames(typeof(Operation)).Length);
 
             return (Operation)operation;
         }
 
         private void StateChangeCheck()
         {
-            if (QuestionsCorrect >= EasyModeLimit)
+            if (QuestionsCorrect >= HardModeLimit)
             {
-                MathGame.ChangeState(new ModerateGameState(this));
+                MathGame.ChangeState(new EasyGameState(this));
             }
         }
     }

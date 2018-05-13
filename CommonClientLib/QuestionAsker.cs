@@ -126,7 +126,15 @@ namespace CommonClientLib
                     continue;
                 }
 
-                return (T)converter.ConvertFromString(strAnswer);
+                try
+                {
+                    var converted = (T)converter.ConvertFromString(strAnswer);
+                    return converted;
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("That value is improper. Try again. And thank you.");
+                }
             }
         }
     }
