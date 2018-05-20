@@ -12,7 +12,7 @@ namespace Strategy
             Calculator = calculator;
         }
 
-        public decimal CalculateTax()
+        public decimal CalculateTax(string country)
         {
             if (Calculator == null)
             {
@@ -21,7 +21,7 @@ namespace Strategy
                 return 0;
             }
 
-            return Calculator.CalculateTax();
+            return Calculator.CalculateTax(country);
         }
     }
 }

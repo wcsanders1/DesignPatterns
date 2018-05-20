@@ -4,20 +4,20 @@ using System.Collections.Generic;
 
 namespace Strategy.TaxCalculators
 {
-    public class ProgressiveTax : ITaxCalculator
+    public class CommunistTax : ITaxCalculator
     {
         private static readonly QuestionAsker Asker = new QuestionAsker();
 
         public List<string> TaxableCountries { get; }
 
-        public ProgressiveTax(List<string> taxableCountries)
+        public CommunistTax(List<string> taxableCountries)
         {
             TaxableCountries = taxableCountries;
         }
 
         public decimal CalculateTax(string country)
         {
-            Console.WriteLine($"\nThe country of {country} uses the progressive tax system.\n");
+            Console.WriteLine($"\nThe country of {country} uses the communist tax system.\n");
             return 0;
         }
     }

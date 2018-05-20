@@ -84,7 +84,12 @@ namespace Strategy
                 var currentCountry = allCountries[Asker.GetChoiceFromList("What country do you live in?", allCountries)];
                 var taxCalculator = taxCalculators.FirstOrDefault(c => c.TaxableCountries.Contains(currentCountry));
                 calculatorContext.SetCalculator(taxCalculator);
-                calculatorContext.CalculateTax();
+                var tax = calculatorContext.CalculateTax(currentCountry);
+
+                Console.Write("Your tax is: ");
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine($"{tax}\n");
+                Console.ResetColor();
 
                 if (!ContinuationDeterminer.GoAgain())
                 {

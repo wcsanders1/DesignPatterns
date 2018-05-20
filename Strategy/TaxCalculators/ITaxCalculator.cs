@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using CommonClientLib;
+using System.Collections.Generic;
 
 namespace Strategy.TaxCalculators
 {
@@ -6,6 +7,6 @@ namespace Strategy.TaxCalculators
     {
         List<string> TaxableCountries { get; }
 
-        decimal CalculateTax();
+        decimal CalculateTax(string country);
     }
 }
