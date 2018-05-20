@@ -1,0 +1,10 @@
+﻿{
+  "flatTax": [
+    "Mordonia",
+    "Halsentein"
+  ],
+  "progressiveTax": [
+    "Delmonte",
+    "Trasenford"
+  ]
+}
