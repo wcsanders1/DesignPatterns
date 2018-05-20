@@ -17,8 +17,12 @@ namespace Strategy.TaxCalculators
 
         public decimal CalculateTax(string country)
         {
-            Console.WriteLine($"\nThe country of {country} uses the communist tax system.\n");
-            return 0;
+            Console.WriteLine($"\nThe country of {country} uses the communist tax system.");
+            Console.WriteLine("The communist tax system confiscates all of your assets.");
+
+            var totalAssets = Asker.GetValue<decimal>("What is the total value of everything you own?");
+
+            return totalAssets;
         }
     }
 }

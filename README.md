@@ -90,3 +90,7 @@ Choose subscribers and publish news to them. The subscribers' responses to the n
 ### State
 
 This math game starts off fairly easy, but the questions get more difficult as you answer more of them correctly. The **state pattern** is implemented to allow for easy transition from one level of difficulty to another. 
+
+### Strategy
+
+This program calculates how much you owe in income taxes depending on the country in which you earned your money. Each country uses a different system to calculate income taxes, which can complicate the calculation. However, the **strategy pattern** allows for a separate class for each tax system, any of which can be passed to the `CalculatorContext` class.

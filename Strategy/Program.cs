@@ -86,9 +86,9 @@ namespace Strategy
                 calculatorContext.SetCalculator(taxCalculator);
                 var tax = calculatorContext.CalculateTax(currentCountry);
 
-                Console.Write("Your tax is: ");
+                Console.Write("\nYour tax is: ");
                 Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine($"{tax}\n");
+                Console.WriteLine($"{tax.ToString("0.00")}\n");
                 Console.ResetColor();
 
                 if (!ContinuationDeterminer.GoAgain())

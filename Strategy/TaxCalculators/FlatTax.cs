@@ -13,13 +13,21 @@ namespace Strategy.TaxCalculators
         public FlatTax(List<string> taxableCountries)
         {
             TaxableCountries = taxableCountries;
-
         }
 
         public decimal CalculateTax(string country)
         {
-            Console.WriteLine($"\nThe country of {country} uses the flat tax system.\n");
-            return 0;
+            Console.WriteLine($"\nThe country of {country} uses the flat-tax system.");
+            Console.WriteLine("The flat-tax system taxes all income at a rate of 5%.\n");
+
+            var lastYearEarnings = Asker.GetValue<decimal>($"How much money did you earn last year in the country of {country}?");
+            if (lastYearEarnings < 1)
+            {
+                Console.WriteLine("There is no tax on earnings lest than $1");
+                return 0;
+            }
+
+            return lastYearEarnings * .05M;
         }
     }
 }
