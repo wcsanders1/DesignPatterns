@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 namespace Strategy.TaxCalculators
 {
@@ -13,6 +14,7 @@ namespace Strategy.TaxCalculators
 
         public decimal CalculateTax()
         {
+            Console.WriteLine("This is the progressive tax calculator");
             return 0;
         }
     }
