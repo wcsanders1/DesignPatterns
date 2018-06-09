@@ -94,3 +94,7 @@ This math game starts off fairly easy, but the questions get more difficult as y
 ### Strategy
 
 This program calculates how much you owe in income taxes depending on the country in which you earned your money. Each country uses a different system to calculate income taxes, which can complicate the calculation. However, the **strategy pattern** allows for a separate class for each tax system, any of which can be passed to the `CalculatorContext` class.
+
+### Template Method
+
+The company has several departments to which you may apply for a job. Although the hiring process for every department consists of the same steps, each department's steps have slightly different implementations. The **template method** pattern makes it easy to preserve the order of the steps and ensure they all occur, while also allowing for different implementations.
