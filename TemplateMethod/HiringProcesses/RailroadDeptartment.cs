@@ -18,7 +18,7 @@ namespace TemplateMethod.HiringProcesses
         protected override void ConductInterview()
         {
             Asker.GetValue<string>("What are your strengths with trains?");
-            Asker.GetValue<string>("Did you ever drive a train?");
+            Asker.GetValue<string>("Did you ever drive a train? If so, what did you think of that?");
         }
     }
 }

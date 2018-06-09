@@ -17,7 +17,7 @@ namespace TemplateMethod.HiringProcesses
         protected override void ConductInterview()
         {
             Asker.GetValue<string>("What food do you eat in a day?");
-            Asker.GetValue<string>("Do you like large food?");
+            Asker.GetValue<string>("What do you think of large food?");
         }
     }
 }
