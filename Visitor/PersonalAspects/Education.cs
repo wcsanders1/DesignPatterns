@@ -17,7 +17,7 @@ namespace Visitor.PersonalAspects
             TxtPrinter.PrintInformation("Now we'll get information regarding your education.", '-', ConsoleColor.DarkGreen);
             EducationLevel = (EducationLevel)(Asker.GetChoiceFromList("What is the highest level of education you've attained?",
                 TypParser.GetEnumValuesList<EducationLevel>()));
-            GPA = Asker.GetValue<decimal>($"What was your average GPQ in {EducationLevel}?");
+            GPA = Asker.GetValue<decimal>($"What was your average GPA in {EducationLevel}?");
         }
 
         public void Accept(IVisitor visitor)
