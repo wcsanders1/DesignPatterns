@@ -98,3 +98,6 @@ This program calculates how much you owe in income taxes depending on the countr
 ### Template Method
 
 The company has several departments to which you may apply for a job. Although the hiring process for every department consists of the same steps, each department's steps have slightly different implementations. The **template method** pattern makes it easy to preserve the order of the steps and ensure they all occur, while also allowing for different implementations.
+
+### Visitor
+After asking you a series of questions about various aspects of your person, this program will calculate your level of sophistication. It implements the **visitor pattern** to separate the calculation logic from the models containing personal-aspect information.
