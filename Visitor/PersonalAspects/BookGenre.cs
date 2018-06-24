@@ -5,6 +5,7 @@
         History,
         Horror,
         SciFi,
-        Literature
+        Literature,
+        Silliness
     }
 }
