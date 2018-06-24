@@ -6,7 +6,7 @@ namespace Strategy
 {
     class Program
     {
-        private static TextPrinter TxtPrinter = new TextPrinter();        
+        private static TextPrinter TxtPrinter = new TextPrinter();
         private static ContinuationDeterminer ContinuationDeterminer = new ContinuationDeterminer();
         private static QuestionAsker Asker = new QuestionAsker();
         private static TypeParser TypParser = new TypeParser(new TextParser());
