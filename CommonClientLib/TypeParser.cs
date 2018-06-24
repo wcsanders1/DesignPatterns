@@ -67,6 +67,21 @@ namespace CommonClientLib
             return true;
         }
 
+        /// <summary>
+        /// Returns a list of values of an enum as strings.
+        /// </summary>
+        /// <typeparam name="T">The enum type</typeparam>
+        /// <returns>List of values of enum as strings</returns>
+        public List<string> GetEnumValuesList<T>() where T : struct, IConvertible
+        {
+            if (!typeof(T).IsEnum)
+            {
+                return null;
+            }
+
+            return Enum.GetValues(typeof(T)).Cast<T>().Select(v => v.ToString()).ToList();
+        }
+
         private List<T> GetInstantiatedTypeList<T>() where T : class
         {
             var types = GetTypeList<T>();
